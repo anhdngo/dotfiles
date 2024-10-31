@@ -9,10 +9,11 @@ FirstRun=false
 [Shortcuts]
 new-session=Ctrl+Shift+T; Ctrl++
 next-session=Shift+Right; Ctrl+=
-next-terminal=Ctrl+Tab; Ctrl+]
+next-terminal=Alt+L; Ctrl+]
 previous-session=Shift+Left; Ctrl+-
-previous-terminal=Ctrl+Shift+Tab; Ctrl+[
+previous-terminal=Alt+H; Ctrl+[
 split-left-right=Ctrl+(; Ctrl+|
+toggle-window-state=F12; Ctrl+\\
 
 [Window]
 Height=100
