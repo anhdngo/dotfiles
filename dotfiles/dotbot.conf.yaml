@@ -27,8 +27,8 @@
       path: kde/kcminputrc
     ~/.config/kwinrc:
       path: kde/kwinrc
-
-
+    ~/.config/kwinrulesrc:
+      path: kde/kwinrulesrc
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

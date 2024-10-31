@@ -1,0 +1,12 @@
+[96e80910-f52a-4218-957f-2fd38fe088a5]
+Description=brave-browser
+maximizehoriz=true
+maximizehorizrule=3
+maximizevert=true
+maximizevertrule=3
+wmclass=Brave-browser
+wmclassmatch=1
+
+[General]
+count=1
+rules=96e80910-f52a-4218-957f-2fd38fe088a5

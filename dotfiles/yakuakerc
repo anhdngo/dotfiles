@@ -7,9 +7,12 @@ Translucency=true
 FirstRun=false
 
 [Shortcuts]
-new-session=Ctrl+T; Ctrl+=
-next-session=Ctrl+]
-previous-session=Ctrl+[
+new-session=Ctrl+Shift+T; Ctrl++
+next-session=Shift+Right; Ctrl+=
+next-terminal=Ctrl+Tab; Ctrl+]
+previous-session=Shift+Left; Ctrl+-
+previous-terminal=Ctrl+Shift+Tab; Ctrl+[
+split-left-right=Ctrl+(; Ctrl+|
 
 [Window]
 Height=100
