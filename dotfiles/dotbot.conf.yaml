@@ -17,10 +17,18 @@
       path: gitconfig
     ~/.profile:
       path: profile
+    ~/.config/yakuakerc:
+      path: yakuakerc
     ~/.config/kglobalshortcutsrc:
       path: kde/kglobalshortcutsrc
     ~/.config/khotkeysrc:
       path: kde/khotkeysrc
+    ~/.config/kcminputrc:
+      path: kde/kcminputrc
+    ~/.config/kwinrc:
+      path: kde/kwinrc
+
+
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

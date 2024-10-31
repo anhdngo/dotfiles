@@ -5,7 +5,7 @@ org.cryptomator.Cryptomator
 org.keepassxc.KeePassXC
 
 # Utilities
-org.gnome.SimpleScan
+com.github.PintaProject.Pinta
 
 # Media
 org.videolan.VLC

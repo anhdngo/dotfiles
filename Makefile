@@ -23,3 +23,6 @@ dotbot:
 gitignore-global:
 	git config --global core.excludesfile $(shell pwd)/dotfiles/gitignore_global
 
+.PHONY: zerotier
+zerotier:
+	curl -s https://install.zerotier.com | sudo bash
