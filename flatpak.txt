@@ -1,0 +1,26 @@
+# Essentials
+com.github.tchx84.Flatseal
+com.brave.Browser
+org.cryptomator.Cryptomator
+org.keepassxc.KeePassXC
+
+# Utilities
+org.gnome.SimpleScan
+
+# Media
+org.videolan.VLC
+org.qbittorrent.qBittorrent
+com.stremio.Stremio
+com.obsproject.Studio
+org.audacityteam.Audacity
+
+# Development
+com.visualstudio.code
+org.godotengine.Godot
+
+# Art
+org.kde.krita
+
+# Gaming
+# org.libretro.RetroArch
+com.discordapp.Discord

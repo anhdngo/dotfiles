@@ -1,0 +1,42 @@
+# Environment Variables
+export WS=$HOME/workspace
+export DOTFILES=$HOME/.dotfiles
+
+# Ease of Use
+alias sl="ls"
+alias l="ls"
+alias ll="ls -lahF"
+alias rl="exec $SHELL"
+alias :q=exit
+alias c=clear
+alias vo=nvim
+alias vi=nvim
+alias vim=nvim
+alias g=git
+alias dk=docker
+alias ack=ag
+alias pthon=python
+alias py=python
+alias e="thunar . &; disown"
+alias f="thunar . &; disown"
+
+alias encrypt="7z a -p -mx=9 -mhe -t7z"
+
+# Open File/Application, Detach from Terminal
+# xdg() { nohup xdg-open $1 >/dev/null 2>&1  &; disown }
+# o() { nohup xdg-open $1 >/dev/null 2>&1  &; disown }
+# open() { nohup xdg-open $1 >/dev/null 2>&1  &; disown }
+# run() { nohup $1 >/dev/null 2>&1 &; disown }
+
+# Directory Shortcuts
+alias dt="~/Desktop"
+alias dl="~/Downloads"
+alias doc="~/Documents"
+# alias cf="$CONFIG"
+alias cf="$DOTFILES"
+alias ws="$WS"
+
+alias pc="~/pCloudDrive"
+alias cm="~/.local/share/Cryptomator/mnt/"
+alias vaults="~/.local/share/Cryptomator/mnt/"
+

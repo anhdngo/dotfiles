@@ -1,0 +1,17 @@
+# Nvim Kickstart Utilities
+gcc
+make
+git-core
+ripgrep
+fd-find
+unzip
+neovim
+
+# Essentials
+make
+yakuake
+powerline-fonts
+fastfetch
+p7zip
+
+# Applications

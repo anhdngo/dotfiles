@@ -1,0 +1,18 @@
+[user]
+	name = Anh Ngo
+	email = code@anhngo.me
+[core]
+	editor = vim
+	excludesfile = ~/.linux-configs/dotfiles/gitignore_global
+[alias]
+    cane = commit --amend --no-edit
+    l = log --oneline
+    s = status
+    a = add .
+    c = commit -m
+    co = checkout
+    cob = checkout -b
+    po = push origin
+    pfo = push -f origin
+    pu = pull origin
+    d = diff

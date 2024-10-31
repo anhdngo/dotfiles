@@ -1,0 +1,73 @@
+" Spaces & Tabs {{{
+set tabstop=4       " number of visual spaces per TAB
+set softtabstop=4   " number of spaces in tab when editing
+set expandtab       " tabs are expanded to spaces
+set smarttab        " auto indents
+set shiftwidth=4    " stops smarttab from double-indenting
+" }}}
+
+" UI Config {{{
+set number          " show line numbers
+set showcmd         " show command in bottom bar
+set cursorline      " underline current line
+filetype plugin indent on  " load filetype-specific indent files
+set wildmenu        " visual autocomplete for command menu
+set showmatch       " highlight matching [{(}}]
+set ruler           " Show line number on bottom right of screen
+set bg=dark
+" }}}
+
+" Searching {{{
+set incsearch       " search as characters are entered
+set hlsearch        " highlight matches
+
+" turn off search highlight
+nnoremap <leader><space> :nohlsearch<CR> 
+nnoremap <leader><backspace> :nohlsearch<CR> 
+" }}}
+
+" Folding {{{
+set foldenable          " enable folding
+set foldlevelstart=100    " close most folds by default
+set foldmethod=syntax   " fold option
+
+" space to toggle fold
+nnoremap <space> za
+" }}}
+
+" Movement {{{
+
+" move vertically by visual line
+" nnoremap j gj
+" nnoremap k gk
+
+" move to beginning or end of line
+" noremap B ^
+" noremap E $
+
+" highlight last inserted text
+nnoremap gV `[v`]
+
+" }}}
+
+" Programming {{{
+set backspace=indent,eol,start  " Proper backspace behavior
+" }}}
+
+" Backups {{{
+" move backups to tmp folder
+set backup
+set backupdir=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set backupskip=/tmp/*,/private/tmp/*
+set directory=~/.vim-tmp,~/.tmp,~/tmp,/var/tmp,/tmp
+set writebackup
+" }}}
+
+" CUSTOM FUNCTIONS {{{
+set clipboard=unnamedplus
+set modeline
+set modelines=1
+
+" }}}
+
+" vim:foldmethod=marker:foldlevel=0
