@@ -31,6 +31,8 @@
       path: kde/kwinrulesrc
     ~/.config/plasma-org.kde.plasma.desktop-appletsrc:
       path: kde/plasma-org.kde.plasma.desktop-appletsrc
+    ~/.config/kactivitymanagerdrc:
+      path: kde/kactivitymanagerdrc
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

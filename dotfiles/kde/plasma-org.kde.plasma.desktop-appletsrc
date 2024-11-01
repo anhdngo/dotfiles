@@ -16,16 +16,16 @@ plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
 
 [Containments][1][ConfigDialog]
-DialogHeight=540
-DialogWidth=720
+DialogHeight=1008
+DialogWidth=1920
 
 [Containments][1][General]
 positions={"1920x1080":[]}
 sortMode=-1
 
 [Containments][1][Wallpaper][org.kde.image][General]
-Image=/usr/share/wallpapers/Elarun/
-PreviewImage=/usr/share/wallpapers/Elarun/
+Image=/usr/share/wallpapers/Altai/
+PreviewImage=/usr/share/wallpapers/Altai/
 SlidePaths=/usr/share/wallpapers/
 
 [Containments][2]
