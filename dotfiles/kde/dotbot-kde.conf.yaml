@@ -21,6 +21,8 @@
       path: plasma-org.kde.plasma.desktop-appletsrc
     ~/.config/kactivitymanagerdrc:
       path: kactivitymanagerdrc
+    ~/.config/kxkbrc:
+      path: kxkbrc
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

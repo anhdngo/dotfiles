@@ -4,10 +4,16 @@ Id_2=e63f7eb8-4eea-487c-aec4-e9e22d418dcc
 Id_3=fe462382-09cf-4d22-955e-e92e67e16878
 Id_4=a6b17151-7cff-4e9b-93e4-fa7f014c5716
 Number=4
-Rows=2
+Rows=1
 
 [Effect-overview]
 BorderActivate=3
+
+[TabBox]
+DesktopMode=2
+
+[TabBoxAlternative]
+DesktopMode=2
 
 [Tiling]
 padding=4
@@ -17,9 +23,6 @@ tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"wi
 
 [Tiling][f74c44f3-1d6a-5fb8-b292-baca70835fb0]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
-
-[Windows]
-Placement=Maximizing
 
 [Xwayland]
 Scale=1.25

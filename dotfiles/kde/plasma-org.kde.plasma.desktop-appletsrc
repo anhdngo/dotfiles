@@ -75,16 +75,20 @@ immutability=1
 plugin=org.kde.plasma.pager
 
 [Containments][2][Applets][32][Configuration][ConfigDialog]
-DialogHeight=1008
-DialogWidth=1920
+DialogHeight=540
+DialogWidth=720
+
+[Containments][2][Applets][32][Configuration][General]
+currentDesktopSelected=ShowDesktop
+showWindowIcons=true
 
 [Containments][2][Applets][5]
 immutability=1
 plugin=org.kde.plasma.icontasks
 
 [Containments][2][Applets][5][Configuration][ConfigDialog]
-DialogHeight=1008
-DialogWidth=1920
+DialogHeight=540
+DialogWidth=720
 
 [Containments][2][Applets][5][Configuration][General]
 launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:com.visualstudio.code.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.godotengine.Godot.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.krita.desktop
@@ -98,7 +102,7 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][2][Applets][7][Configuration]
-PreloadWeight=85
+PreloadWeight=90
 SystrayContainmentId=8
 
 [Containments][2][General]
@@ -179,6 +183,9 @@ plugin=org.kde.plasma.vault
 immutability=1
 plugin=org.kde.plasma.volume
 
+[Containments][8][Applets][20][Configuration]
+PreloadWeight=55
+
 [Containments][8][Applets][20][Configuration][General]
 migrated=true
 
@@ -187,14 +194,14 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][8][Applets][23][Configuration]
-PreloadWeight=60
+PreloadWeight=75
 
 [Containments][8][Applets][24]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
 
 [Containments][8][Applets][24][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 
 [Containments][8][Applets][25]
 immutability=1
@@ -219,13 +226,14 @@ immutability=1
 plugin=org.kde.kdeconnect
 
 [Containments][8][ConfigDialog]
-DialogHeight=1008
-DialogWidth=1920
+DialogHeight=540
+DialogWidth=720
 
 [Containments][8][General]
 extraItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.plasma.volume
-hiddenItems=Yakuake
+hiddenItems=Yakuake,org.kde.plasma.clipboard,org.kde.plasma.brightness
 knownItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.plasma.volume
+shownItems=org.kde.plasma.battery
 
 [ScreenMapping]
 itemsOnDisabledScreens=
