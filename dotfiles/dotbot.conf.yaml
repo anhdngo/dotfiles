@@ -9,6 +9,8 @@
 - link:
     ~/.bashrc:
       path: bashrc
+    ~/.vimrc:
+      path: vimrc
     ~/.config/nvim/init.lua:
       path: nvim.init.lua
     ~/.aliases:
@@ -19,20 +21,6 @@
       path: profile
     ~/.config/yakuakerc:
       path: yakuakerc
-    ~/.config/kglobalshortcutsrc:
-      path: kde/kglobalshortcutsrc
-    ~/.config/khotkeysrc:
-      path: kde/khotkeysrc
-    ~/.config/kcminputrc:
-      path: kde/kcminputrc
-    ~/.config/kwinrc:
-      path: kde/kwinrc
-    ~/.config/kwinrulesrc:
-      path: kde/kwinrulesrc
-    ~/.config/plasma-org.kde.plasma.desktop-appletsrc:
-      path: kde/plasma-org.kde.plasma.desktop-appletsrc
-    ~/.config/kactivitymanagerdrc:
-      path: kde/kactivitymanagerdrc
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

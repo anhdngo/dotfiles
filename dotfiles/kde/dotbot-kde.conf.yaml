@@ -1,0 +1,26 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- clean: ['~']
+
+- link:
+    ~/.config/kglobalshortcutsrc:
+      path: kglobalshortcutsrc
+    ~/.config/khotkeysrc:
+      path: khotkeysrc
+    ~/.config/kcminputrc:
+      path: kcminputrc
+    ~/.config/kwinrc:
+      path: kwinrc
+    ~/.config/kwinrulesrc:
+      path: kwinrulesrc
+    ~/.config/plasma-org.kde.plasma.desktop-appletsrc:
+      path: plasma-org.kde.plasma.desktop-appletsrc
+    ~/.config/kactivitymanagerdrc:
+      path: kactivitymanagerdrc
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
