@@ -23,6 +23,8 @@
       path: kactivitymanagerdrc
     ~/.config/kxkbrc:
       path: kxkbrc
+    ~/.local/share/user-places.xbel:
+      path: user-places.xbel
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

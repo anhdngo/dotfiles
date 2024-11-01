@@ -1,6 +1,10 @@
 # Environment Variables
-export WS=$HOME/workspace
+export WS=$HOME/Workspace
+export AS=$HOME/Assets
 export DOTFILES=$HOME/.dotfiles
+
+mkdir -p "$WS"
+mkdir -p "$AS"
 
 # Ease of Use
 alias sl="ls"
@@ -35,6 +39,7 @@ alias doc="~/Documents"
 # alias cf="$CONFIG"
 alias cf="$DOTFILES"
 alias ws="$WS"
+alias as="$AS"
 
 alias pc="~/pCloudDrive"
 alias cm="~/.local/share/Cryptomator/mnt/"
