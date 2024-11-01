@@ -87,7 +87,7 @@ DialogHeight=1008
 DialogWidth=1920
 
 [Containments][2][Applets][5][Configuration][General]
-launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,[8abcba7d-7fdd-4f7e-a8b1-dca38b77aa7e]\napplications:org.godotengine.Godot.desktop,[8abcba7d-7fdd-4f7e-a8b1-dca38b77aa7e]\napplications:com.visualstudio.code.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[f2c11590-77cf-4938-8683-bfe977fc7dc7]\napplications:org.kde.krita.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop
+launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:com.visualstudio.code.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.godotengine.Godot.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.krita.desktop
 
 [Containments][2][Applets][6]
 immutability=1
@@ -104,30 +104,10 @@ SystrayContainmentId=8
 [Containments][2][General]
 AppletOrder=3;32;5;6;7;21;22
 
-[Containments][28]
+[Containments][33]
 ItemGeometries-1920x1080=
 ItemGeometriesHorizontal=
-activityId=f2c11590-77cf-4938-8683-bfe977fc7dc7
-formfactor=0
-immutability=1
-lastScreen=0
-location=0
-plugin=org.kde.plasma.folder
-wallpaperplugin=org.kde.image
-
-[Containments][28][ConfigDialog]
-DialogHeight=1008
-DialogWidth=1920
-
-[Containments][28][Wallpaper][org.kde.image][General]
-Image=/usr/share/wallpapers/ScarletTree/
-PreviewImage=/usr/share/wallpapers/ScarletTree/
-SlidePaths=/usr/share/wallpapers/
-
-[Containments][29]
-ItemGeometries-1920x1080=
-ItemGeometriesHorizontal=
-activityId=8abcba7d-7fdd-4f7e-a8b1-dca38b77aa7e
+activityId=0eddb640-d3ec-46dc-afbc-8804a3d3fc22
 formfactor=0
 immutability=1
 lastScreen=0

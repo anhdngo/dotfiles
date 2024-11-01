@@ -1,13 +1,11 @@
 [activities]
+0eddb640-d3ec-46dc-afbc-8804a3d3fc22=Work
 1cef1081-ea11-4e44-9615-8bc2fe5db00a=Default
-8abcba7d-7fdd-4f7e-a8b1-dca38b77aa7e=Coding
-f2c11590-77cf-4938-8683-bfe977fc7dc7=Art
 
 [activities-icons]
-8abcba7d-7fdd-4f7e-a8b1-dca38b77aa7e=activities
-f2c11590-77cf-4938-8683-bfe977fc7dc7=activities
+0eddb640-d3ec-46dc-afbc-8804a3d3fc22=activities
 
 [main]
-currentActivity=1cef1081-ea11-4e44-9615-8bc2fe5db00a
-runningActivities=1cef1081-ea11-4e44-9615-8bc2fe5db00a,8abcba7d-7fdd-4f7e-a8b1-dca38b77aa7e,f2c11590-77cf-4938-8683-bfe977fc7dc7
+currentActivity=0eddb640-d3ec-46dc-afbc-8804a3d3fc22
+runningActivities=1cef1081-ea11-4e44-9615-8bc2fe5db00a
 stoppedActivities=
