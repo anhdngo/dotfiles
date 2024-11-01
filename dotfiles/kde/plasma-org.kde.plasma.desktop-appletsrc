@@ -20,7 +20,7 @@ DialogHeight=1008
 DialogWidth=1920
 
 [Containments][1][General]
-positions={"1920x1080":[]}
+positions={"1920x1080":[]\\,"1536x1024":[]}
 sortMode=-1
 
 [Containments][1][Wallpaper][org.kde.image][General]
@@ -98,13 +98,15 @@ immutability=1
 plugin=org.kde.plasma.systemtray
 
 [Containments][2][Applets][7][Configuration]
-PreloadWeight=80
+PreloadWeight=85
 SystrayContainmentId=8
 
 [Containments][2][General]
 AppletOrder=3;32;5;6;7;21;22
 
 [Containments][33]
+ItemGeometries-1280x853=
+ItemGeometries-1536x1024=
 ItemGeometries-1920x1080=
 ItemGeometriesHorizontal=
 activityId=0eddb640-d3ec-46dc-afbc-8804a3d3fc22
@@ -114,6 +116,10 @@ lastScreen=0
 location=0
 plugin=org.kde.plasma.folder
 wallpaperplugin=org.kde.image
+
+[Containments][33][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][8]
 activityId=
@@ -180,6 +186,9 @@ migrated=true
 immutability=1
 plugin=org.kde.plasma.bluetooth
 
+[Containments][8][Applets][23][Configuration]
+PreloadWeight=60
+
 [Containments][8][Applets][24]
 immutability=1
 plugin=org.kde.plasma.networkmanagement
@@ -192,14 +201,14 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][8][Applets][25][Configuration]
-PreloadWeight=0
+PreloadWeight=26
 
 [Containments][8][Applets][26]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=0
+PreloadWeight=26
 
 [Containments][8][Applets][27]
 immutability=1

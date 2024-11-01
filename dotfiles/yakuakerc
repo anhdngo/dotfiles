@@ -6,6 +6,9 @@ Translucency=true
 [Dialogs]
 FirstRun=false
 
+[FileDialogSize]
+1280x853 screen: Window-Maximized=true
+
 [Shortcuts]
 new-session=Ctrl+Shift+T; Ctrl++
 next-session=Shift+Right; Ctrl+=

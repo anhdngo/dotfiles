@@ -15,8 +15,11 @@ padding=4
 [Tiling][4ef57ebe-d1b2-548b-99f7-95926df4e579]
 tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
 
+[Tiling][f74c44f3-1d6a-5fb8-b292-baca70835fb0]
+tiles={"layoutDirection":"horizontal","tiles":[{"width":0.25},{"width":0.5},{"width":0.25}]}
+
 [Windows]
 Placement=Maximizing
 
 [Xwayland]
-Scale=1
+Scale=1.25

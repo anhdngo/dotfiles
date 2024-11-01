@@ -1,14 +1,13 @@
 # Nvim Kickstart Utilities
 gcc
 make
-git-core
+git
 ripgrep
 fd-find
 unzip
 neovim
 
 # Essentials
-make
 yakuake
 powerline-fonts
 fastfetch

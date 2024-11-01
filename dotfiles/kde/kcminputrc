@@ -1,3 +1,7 @@
 [ButtonRebinds][Mouse]
 ExtraButton1=Key,Meta+H
 ExtraButton2=Key,Meta+L
+
+[Libinput][1739][52912][SYNA32BF:00 06CB:CEB0 Touchpad]
+NaturalScroll=true
+ScrollFactor=0.5
