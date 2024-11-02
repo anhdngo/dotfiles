@@ -5,7 +5,7 @@ klipperClearHistoryAskAgain=false
 PreloadWeight=26
 
 [PlasmaViews][Panel 2]
-floating=1
+floating=0
 
 [PlasmaViews][Panel 2][Defaults]
 thickness=27
