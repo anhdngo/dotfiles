@@ -34,7 +34,7 @@ activityId=
 formfactor=2
 immutability=1
 lastScreen=0
-location=4
+location=3
 plugin=org.kde.panel
 wallpaperplugin=org.kde.image
 
@@ -43,16 +43,12 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][2][Applets][21][Configuration]
-PreloadWeight=55
+PreloadWeight=70
 popupHeight=450
 popupWidth=560
 
 [Containments][2][Applets][21][Configuration][Appearance]
 fontWeight=400
-
-[Containments][2][Applets][22]
-immutability=1
-plugin=org.kde.plasma.showdesktop
 
 [Containments][2][Applets][3]
 immutability=1
@@ -83,20 +79,21 @@ DialogWidth=720
 currentDesktopSelected=ShowDesktop
 showWindowIcons=true
 
-[Containments][2][Applets][5]
+[Containments][2][Applets][38]
 immutability=1
-plugin=org.kde.plasma.icontasks
+plugin=org.kde.plasma.panelspacer
 
-[Containments][2][Applets][5][Configuration][ConfigDialog]
-DialogHeight=540
-DialogWidth=720
-
-[Containments][2][Applets][5][Configuration][General]
-launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:com.visualstudio.code.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.godotengine.Godot.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.krita.desktop
+[Containments][2][Applets][39]
+immutability=1
+plugin=org.kde.plasma.panelspacer
 
 [Containments][2][Applets][6]
 immutability=1
 plugin=org.kde.plasma.marginsseparator
+
+[Containments][2][Applets][6][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
 
 [Containments][2][Applets][7]
 immutability=1
@@ -107,7 +104,7 @@ PreloadWeight=100
 SystrayContainmentId=8
 
 [Containments][2][General]
-AppletOrder=3;32;5;6;7;21;22
+AppletOrder=3;32;39;21;38;6;7
 
 [Containments][33]
 ItemGeometries-1280x853=
@@ -126,12 +123,35 @@ wallpaperplugin=org.kde.image
 DialogHeight=540
 DialogWidth=720
 
-[Containments][8]
+[Containments][36]
 activityId=
 formfactor=2
 immutability=1
 lastScreen=0
 location=4
+plugin=org.kde.panel
+wallpaperplugin=org.kde.image
+
+[Containments][36][Applets][5]
+immutability=1
+plugin=org.kde.plasma.icontasks
+
+[Containments][36][Applets][5][Configuration][ConfigDialog]
+DialogHeight=540
+DialogWidth=720
+
+[Containments][36][Applets][5][Configuration][General]
+launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:com.visualstudio.code.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.godotengine.Godot.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.krita.desktop
+
+[Containments][36][General]
+AppletOrder=5
+
+[Containments][8]
+activityId=
+formfactor=2
+immutability=1
+lastScreen=0
+location=3
 plugin=org.kde.plasma.private.systemtray
 popupHeight=432
 popupWidth=432
@@ -245,6 +265,9 @@ hiddenItems=Yakuake,org.kde.plasma.clipboard,org.kde.plasma.brightness
 knownItems=org.kde.kdeconnect,org.kde.kscreen,org.kde.plasma.battery,org.kde.plasma.bluetooth,org.kde.plasma.brightness,org.kde.plasma.cameraindicator,org.kde.plasma.clipboard,org.kde.plasma.devicenotifier,org.kde.plasma.keyboardindicator,org.kde.plasma.keyboardlayout,org.kde.plasma.manage-inputmethod,org.kde.plasma.mediacontroller,org.kde.plasma.networkmanagement,org.kde.plasma.notifications,org.kde.plasma.printmanager,org.kde.plasma.vault,org.kde.plasma.volume
 shownItems=org.kde.plasma.battery
 
+[Containments1Appletsts][37][Configuration][Appearance]
+compactView=true
+
 [ScreenMapping]
 itemsOnDisabledScreens=
-screenMapping=desktop:/dconf_output,0,1cef1081-ea11-4e44-9615-8bc2fe5db00a
+screenMapping=desktop:/dconf_output,0,1cef1081-ea11-4e44-9615-8bc2fe5db00a,desktop:/dconf_output,0,0eddb640-d3ec-46dc-afbc-8804a3d3fc22
