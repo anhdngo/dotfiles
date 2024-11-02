@@ -12,5 +12,6 @@ yakuake
 powerline-fonts
 fastfetch
 p7zip
+gparted
 
 # Applications

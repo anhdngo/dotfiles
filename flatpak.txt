@@ -18,7 +18,7 @@ org.audacityteam.Audacity
 com.visualstudio.code
 org.godotengine.Godot
 
-# Art
+# Creative
 org.kde.krita
 
 # Gaming
