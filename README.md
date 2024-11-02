@@ -10,3 +10,4 @@ On kernel 6.11.5-300, waking up from sleep takes 40+ seconds. Running `journalct
 To fix, edit the `/etc/default/grub` file to include the line:  
 ```GRUB_CMDLINE_LINUX_DEFAULT="intel_idle.max_cstate=4"```  
 Then, update grub.
+```grub2-mkconfig -o /boot/grub2/grub.cfg```
