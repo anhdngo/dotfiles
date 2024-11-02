@@ -17,6 +17,8 @@
       path: kwinrc
     ~/.config/kwinrulesrc:
       path: kwinrulesrc
+    ~/.config/plasmashellrc:
+      path: plasmashellrc
     ~/.config/plasma-org.kde.plasma.desktop-appletsrc:
       path: plasma-org.kde.plasma.desktop-appletsrc
     ~/.config/kactivitymanagerdrc:
@@ -25,6 +27,8 @@
       path: kxkbrc
     ~/.local/share/user-places.xbel:
       path: user-places.xbel
+    ~/.config/konsolerc:
+      path: konsolerc
     ~/.local/share/kxmlgui5/konsole/konsoleui.rc:
       path: konsole/kxmlgui5/konsoleui.rc
     ~/.local/share/kxmlgui5/konsole/partui.rc:
