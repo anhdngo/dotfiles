@@ -19,8 +19,6 @@
       path: gitconfig
     ~/.profile:
       path: profile
-    ~/.config/yakuakerc:
-      path: yakuakerc
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

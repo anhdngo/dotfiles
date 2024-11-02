@@ -39,6 +39,9 @@
       path: konsole/slug.profile
     ~/.local/share/konsole/BreezeTransparent.colorscheme:
       path: konsole/BreezeTransparent.colorscheme
+    ~/.config/yakuakerc:
+      path: yakuakerc
+
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
