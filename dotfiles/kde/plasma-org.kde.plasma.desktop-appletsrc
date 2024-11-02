@@ -5,6 +5,7 @@ RightButton;NoModifier=org.kde.contextmenu
 RightButton;NoModifier=org.kde.contextmenu
 
 [Containments][1]
+ItemGeometries-1536x1024=
 ItemGeometries-1920x1080=
 ItemGeometriesHorizontal=
 activityId=1cef1081-ea11-4e44-9615-8bc2fe5db00a
@@ -194,7 +195,7 @@ immutability=1
 plugin=org.kde.plasma.bluetooth
 
 [Containments][8][Applets][23][Configuration]
-PreloadWeight=75
+PreloadWeight=67
 
 [Containments][8][Applets][24]
 immutability=1
@@ -208,14 +209,14 @@ immutability=1
 plugin=org.kde.plasma.brightness
 
 [Containments][8][Applets][25][Configuration]
-PreloadWeight=26
+PreloadWeight=18
 
 [Containments][8][Applets][26]
 immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=26
+PreloadWeight=18
 
 [Containments][8][Applets][27]
 immutability=1

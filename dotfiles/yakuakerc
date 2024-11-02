@@ -3,6 +3,9 @@ Skin=yakuake-breeze_perfect_dark-2.0
 SkinInstalledWithKns=true
 Translucency=true
 
+[Desktop Entry]
+DefaultProfile=slug.profile
+
 [Dialogs]
 FirstRun=false
 
@@ -10,13 +13,13 @@ FirstRun=false
 1280x853 screen: Window-Maximized=true
 
 [Shortcuts]
-new-session=Ctrl+Shift+T; Ctrl++
-next-session=Shift+Right; Ctrl+=
-next-terminal=Alt+L; Ctrl+]
-previous-session=Shift+Left; Ctrl+-
-previous-terminal=Alt+H; Ctrl+[
-split-left-right=Ctrl+(; Ctrl+|
-toggle-window-state=F12; Ctrl+\\
+new-session=Ctrl+Shift+T; Alt+|
+next-session=Shift+Right; Alt+Shift+L
+next-terminal=Ctrl+Tab; Alt+L
+previous-session=Shift+Left; Alt+Shift+H
+previous-terminal=Ctrl+Shift+Tab; Alt+H
+split-left-right=Ctrl+(; Alt+\\
+toggle-window-state=;\s
 
 [Window]
 Height=100

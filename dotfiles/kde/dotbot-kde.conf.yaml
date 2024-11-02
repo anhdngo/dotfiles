@@ -25,6 +25,16 @@
       path: kxkbrc
     ~/.local/share/user-places.xbel:
       path: user-places.xbel
+    ~/.local/share/kxmlgui5/konsole/konsoleui.rc:
+      path: konsole/kxmlgui5/konsoleui.rc
+    ~/.local/share/kxmlgui5/konsole/partui.rc:
+      path: konsole/kxmlgui5/partui.rc
+    ~/.local/share/kxmlgui5/konsole/sessionui.rc:
+      path: konsole/kxmlgui5/sessionui.rc
+    ~/.local/share/konsole/slug.profile:
+      path: konsole/slug.profile
+    ~/.local/share/konsole/BreezeTransparent.colorscheme:
+      path: konsole/BreezeTransparent.colorscheme
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]
