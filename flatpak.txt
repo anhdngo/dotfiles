@@ -13,6 +13,7 @@ org.qbittorrent.qBittorrent
 com.stremio.Stremio
 com.obsproject.Studio
 org.audacityteam.Audacity
+org.gnome.NetworkDisplays
 
 # Development
 com.visualstudio.code
