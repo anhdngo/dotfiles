@@ -2,7 +2,7 @@
 klipperClearHistoryAskAgain=false
 
 [PlasmaTransientsConfig]
-PreloadWeight=26
+PreloadWeight[$d]
 
 [PlasmaViews][Panel 2]
 floating=0
