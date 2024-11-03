@@ -4,6 +4,9 @@ com.brave.Browser
 org.cryptomator.Cryptomator
 org.keepassxc.KeePassXC
 
+# Themes (to fix white title bar)
+org.gtk.Gtk3theme.Breeze-Dark
+
 # Utilities
 com.github.PintaProject.Pinta
 
@@ -21,6 +24,7 @@ org.godotengine.Godot
 
 # Creative
 org.kde.krita
+org.twinery.Twine
 
 # Gaming
 # org.libretro.RetroArch
