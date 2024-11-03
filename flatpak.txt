@@ -1,8 +1,9 @@
 # Essentials
-com.github.tchx84.Flatseal
+# com.github.tchx84.Flatseal
 com.brave.Browser
 org.cryptomator.Cryptomator
 org.keepassxc.KeePassXC
+it.mijorus.gearlever
 
 # Themes (to fix white title bar)
 org.gtk.Gtk3theme.Breeze-Dark
@@ -17,6 +18,7 @@ com.stremio.Stremio
 com.obsproject.Studio
 org.audacityteam.Audacity
 org.gnome.NetworkDisplays
+com.github.unrud.VideoDownloader
 
 # Development
 com.visualstudio.code
@@ -25,6 +27,7 @@ org.godotengine.Godot
 # Creative
 org.kde.krita
 org.twinery.Twine
+org.gimp.GIMP
 
 # Gaming
 # org.libretro.RetroArch
