@@ -39,8 +39,6 @@
       path: konsole/slug.profile
     ~/.local/share/konsole/BreezeTransparent.colorscheme:
       path: konsole/BreezeTransparent.colorscheme
-    ~/.config/kactivitymanagerd-statsrc:
-      path: kactivitymanagerd-statsrc
     ~/.config/yakuakerc:
       path: yakuakerc
 

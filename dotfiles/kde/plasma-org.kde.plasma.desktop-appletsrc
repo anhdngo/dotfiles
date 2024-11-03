@@ -87,6 +87,14 @@ plugin=org.kde.plasma.panelspacer
 immutability=1
 plugin=org.kde.plasma.panelspacer
 
+[Containments][2][Applets][43]
+immutability=1
+plugin=org.kde.plasma.icon
+
+[Containments][2][Applets][43][Configuration]
+localPath=/home/slug/.local/share/plasma_icons/org.gnome.NetworkDisplays (1).desktop
+url=file:///var/lib/flatpak/exports/share/applications/org.gnome.NetworkDisplays.desktop
+
 [Containments][2][Applets][6]
 immutability=1
 plugin=org.kde.plasma.marginsseparator
@@ -104,7 +112,7 @@ PreloadWeight=100
 SystrayContainmentId=8
 
 [Containments][2][General]
-AppletOrder=3;32;39;21;38;6;7
+AppletOrder=3;32;39;21;38;6;43;7
 
 [Containments][33]
 ItemGeometries-0x0=
@@ -272,7 +280,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=9
+PreloadWeight=0
 
 [Containments][8][Applets][27]
 immutability=1
