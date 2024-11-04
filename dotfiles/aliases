@@ -1,4 +1,5 @@
 # Environment Variables
+export EDITOR=/usr/bin/nvim
 export WS=$HOME/Workspace
 export AS=$HOME/Assets
 export DOTFILES=$HOME/.dotfiles
