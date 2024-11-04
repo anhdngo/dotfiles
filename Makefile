@@ -36,3 +36,8 @@ gitignore-global:
 .PHONY: zerotier
 zerotier:
 	curl -s https://install.zerotier.com | sudo bash
+
+.PHONY: ghostwriter
+ghostwriter:
+	mkdir -p ~/.config/kde.org
+	echo -e "[Preview]\nlastUsedExporter=cmark-gfm" > ~/.config/kde.org/ghostwriter.conf

@@ -9,6 +9,7 @@ it.mijorus.gearlever
 org.gtk.Gtk3theme.Breeze-Dark
 
 # Utilities
+org.gimp.GIMP
 com.github.PintaProject.Pinta
 
 # Media
@@ -27,7 +28,6 @@ org.godotengine.Godot
 # Creative
 org.kde.krita
 org.twinery.Twine
-org.gimp.GIMP
 
 # Gaming
 # org.libretro.RetroArch
