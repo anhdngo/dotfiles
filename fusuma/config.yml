@@ -1,0 +1,6 @@
+swipe:
+  3:
+    up:
+      command: 'YDOTOOL_SOCKET="$HOME/.ydotool_socket" ydotool key 125:1 42:1 104:1 104:0 42:0 125:0'
+    down:
+      command: 'YDOTOOL_SOCKET="$HOME/.ydotool_socket" ydotool key 125:1 42:1 109:1 109:0 42:0 125:0'

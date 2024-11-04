@@ -42,8 +42,8 @@ _k_friendly_name=Session Management
 
 [kwin]
 Activate Window Demanding Attention=Meta+Ctrl+A,Meta+Ctrl+A,Activate Window Demanding Attention
-Cycle Overview=none,none,Cycle through Overview and Grid View
-Cycle Overview Opposite=none,none,Cycle through Grid View and Overview
+Cycle Overview=Meta+Shift+PgUp,none,Cycle through Overview and Grid View
+Cycle Overview Opposite=Meta+Shift+PgDown,none,Cycle through Grid View and Overview
 Decrease Opacity=none,,Decrease Opacity of Active Window by 5%
 Edit Tiles=Meta+T,Meta+T,Toggle Tiles Editor
 Expose=Ctrl+F9\tMeta+Shift,Ctrl+F9,Toggle Present Windows (Current desktop)
