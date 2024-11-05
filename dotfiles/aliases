@@ -2,6 +2,7 @@
 export EDITOR=/usr/bin/nvim
 export WS=$HOME/Workspace
 export AS=$HOME/Assets
+export CONFIG=$HOME/.config
 export DOTFILES=$HOME/.dotfiles
 
 mkdir -p "$WS"
@@ -38,8 +39,8 @@ alias encrypt="7z a -p -mx=9 -mhe -t7z"
 alias dt="~/Desktop"
 alias dl="~/Downloads"
 alias doc="~/Documents"
-# alias cf="$CONFIG"
-alias cf="$DOTFILES"
+alias cf="$CONFIG"
+alias df="$DOTFILES"
 alias ws="$WS"
 alias as="$AS"
 
