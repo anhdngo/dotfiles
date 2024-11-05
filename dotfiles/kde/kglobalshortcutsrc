@@ -120,7 +120,7 @@ Walk Through Windows of Current Application Alternative (Reverse)=none,,Walk Thr
 Window Above Other Windows=none,,Keep Window Above Others
 Window Below Other Windows=none,,Keep Window Below Others
 Window Close=Ctrl+Alt+Backspace\tAlt+F4,Alt+F4,Close Window
-Window Fullscreen=Meta+Space,,Make Window Fullscreen
+Window Fullscreen=Meta+F,,Make Window Fullscreen
 Window Grow Horizontal=none,,Expand Window Horizontally
 Window Grow Vertical=none,,Expand Window Vertically
 Window Lower=none,,Lower Window
@@ -261,7 +261,7 @@ new-private-window=Ctrl+Alt+Shift+B
 _launch=Ctrl+Alt+E\tMeta+E
 
 [services][org.kde.krunner.desktop]
-_launch=Search\tAlt+F2\tAlt+Space\tCtrl+Space\tCtrl+Alt+Space
+_launch=Alt+F2\tCtrl+Alt+Space\tAlt+Space\tMeta+Space\tCtrl+Space\tSearch
 
 [services][org.kde.plasma-systemmonitor.desktop]
 _launch=Meta+Esc\tCtrl+Shift+Esc
