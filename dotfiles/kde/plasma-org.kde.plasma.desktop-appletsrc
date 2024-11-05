@@ -43,7 +43,7 @@ immutability=1
 plugin=org.kde.plasma.digitalclock
 
 [Containments][2][Applets][21][Configuration]
-PreloadWeight=90
+PreloadWeight=100
 popupHeight=450
 popupWidth=560
 
@@ -56,23 +56,6 @@ fontWeight=400
 [Containments][2][Applets][21][Configuration][ConfigDialog]
 DialogHeight=540
 DialogWidth=720
-
-[Containments][2][Applets][3]
-immutability=1
-plugin=org.kde.plasma.kickoff
-
-[Containments][2][Applets][3][Configuration]
-PreloadWeight=100
-popupHeight=510
-popupWidth=647
-
-[Containments][2][Applets][3][Configuration][ConfigDialog]
-DialogHeight=1008
-DialogWidth=1920
-
-[Containments][2][Applets][3][Configuration][General]
-favoritesPortedToKAstats=true
-systemFavorites=suspend\\,hibernate\\,reboot\\,shutdown
 
 [Containments][2][Applets][32]
 immutability=1
@@ -102,6 +85,18 @@ plugin=org.kde.plasma.icon
 localPath=/home/slug/.local/share/plasma_icons/org.gnome.NetworkDisplays (1).desktop
 url=file:///var/lib/flatpak/exports/share/applications/org.gnome.NetworkDisplays.desktop
 
+[Containments][2][Applets][44]
+immutability=1
+plugin=org.kde.plasma.kicker
+
+[Containments][2][Applets][44][Configuration]
+PreloadWeight=100
+popupHeight=439
+popupWidth=300
+
+[Containments][2][Applets][44][Configuration][General]
+favoritesPortedToKAstats=true
+
 [Containments][2][Applets][6]
 immutability=1
 plugin=org.kde.plasma.marginsseparator
@@ -119,7 +114,7 @@ PreloadWeight=100
 SystrayContainmentId=8
 
 [Containments][2][General]
-AppletOrder=3;32;39;21;38;6;43;7
+AppletOrder=44;32;39;21;38;6;43;7
 
 [Containments][33]
 ItemGeometries-0x0=
@@ -157,7 +152,7 @@ DialogHeight=540
 DialogWidth=720
 
 [Containments][36][Applets][5][Configuration][General]
-launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,applications:upnote.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:md.obsidian.Obsidian.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:com.visualstudio.code.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.godotengine.Godot.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.krita.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.ghostwriter.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop
+launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:upnote.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:md.obsidian.Obsidian.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:com.visualstudio.code.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.godotengine.Godot.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.krita.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.ghostwriter.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop
 
 [Containments][36][General]
 AppletOrder=5
@@ -287,7 +282,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=2
+PreloadWeight=0
 
 [Containments][8][Applets][27]
 immutability=1
