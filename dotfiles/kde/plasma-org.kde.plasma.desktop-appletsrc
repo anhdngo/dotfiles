@@ -153,6 +153,7 @@ DialogWidth=720
 
 [Containments][36][Applets][5][Configuration][General]
 launchers=applications:org.kde.konsole.desktop,preferred://filemanager,file:///var/lib/flatpak/exports/share/applications/com.brave.Browser.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:upnote.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:md.obsidian.Obsidian.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:com.visualstudio.code.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.godotengine.Godot.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.krita.desktop,[0eddb640-d3ec-46dc-afbc-8804a3d3fc22]\napplications:org.kde.ghostwriter.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.discordapp.Discord.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:com.stremio.Stremio.desktop,[1cef1081-ea11-4e44-9615-8bc2fe5db00a]\napplications:org.libretro.RetroArch.desktop
+showOnlyCurrentDesktop=false
 
 [Containments][36][General]
 AppletOrder=5
