@@ -85,5 +85,6 @@
  </ToolBar>
  <ActionProperties scheme="Default">
   <Action name="close-session" shortcut="Ctrl+Shift+W; "/>
+  <Action name="open-browser" shortcut="Ctrl+Alt+Shift+E"/>
  </ActionProperties>
 </gui>
