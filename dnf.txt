@@ -13,9 +13,7 @@ powerline-fonts
 fastfetch
 p7zip
 gparted
-
-# Themes
-gtk3
+syncthing
 
 # Applications
 ghostwriter

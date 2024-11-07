@@ -11,6 +11,7 @@ org.gtk.Gtk3theme.Breeze-Dark
 # Utilities
 org.gimp.GIMP
 com.github.PintaProject.Pinta
+com.github.johnfactotum.Foliate
 
 # Media
 org.videolan.VLC

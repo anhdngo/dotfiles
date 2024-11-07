@@ -105,28 +105,6 @@
    </metadata>
   </info>
  </bookmark>
- <bookmark href="file:///home/slug/Videos">
-  <title>Videos</title>
-  <info>
-   <metadata owner="http://freedesktop.org">
-    <bookmark:icon name="folder-videos"/>
-   </metadata>
-   <metadata owner="http://www.kde.org">
-    <ID>1730842163/1</ID>
-   </metadata>
-  </info>
- </bookmark>
- <bookmark href="file:///home/slug/Assets">
-  <title>Assets</title>
-  <info>
-   <metadata owner="http://freedesktop.org">
-    <bookmark:icon name="inode-directory"/>
-   </metadata>
-   <metadata owner="http://www.kde.org">
-    <ID>1730501557/1</ID>
-   </metadata>
-  </info>
- </bookmark>
  <bookmark href="file:///home/slug/Workspace">
   <title>Workspace</title>
   <info>
@@ -135,6 +113,17 @@
    </metadata>
    <metadata owner="http://www.kde.org">
     <ID>1730501529/0</ID>
+   </metadata>
+  </info>
+ </bookmark>
+ <bookmark href="file:///home/slug/Sync">
+  <title>Sync</title>
+  <info>
+   <metadata owner="http://freedesktop.org">
+    <bookmark:icon name="inode-directory"/>
+   </metadata>
+   <metadata owner="http://www.kde.org">
+    <ID>1731021077/0</ID>
    </metadata>
   </info>
  </bookmark>
