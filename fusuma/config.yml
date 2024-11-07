@@ -7,7 +7,3 @@ swipe:
       command: 'YDOTOOL_SOCKET="$HOME/.ydotool_socket" ydotool key 125:1 42:1 109:1 109:0 42:0 125:0'
       # meta + shift + pgdown
 
-hold:
-  3:
-    command: 'YDOTOOL_SOCKET="$HOME/.ydotool_socket" ydotool key 29:1 67:1 67:0 29:0'
-    # ctrl + f9 to toggle windows view
