@@ -17,6 +17,8 @@
       path: kwinrc
     ~/.config/kwinrulesrc:
       path: kwinrulesrc
+    ~/.config/kdeglobals:
+      path: kdeglobals
     ~/.config/plasmashellrc:
       path: plasmashellrc
     ~/.config/plasma-org.kde.plasma.desktop-appletsrc:
