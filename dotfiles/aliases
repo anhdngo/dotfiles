@@ -40,7 +40,7 @@ alias dt="~/Desktop"
 alias dl="~/Downloads"
 alias doc="~/Documents"
 alias cf="$CONFIG"
-alias df="$DOTFILES"
+alias dff="$DOTFILES"
 alias ws="$WS"
 alias as="$AS"
 
