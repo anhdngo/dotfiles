@@ -30,3 +30,6 @@ ElectricBorderDelay=0
 
 [Xwayland]
 Scale=1.25
+
+[org.kde.kdecoration2]
+ButtonsOnLeft=MNS
