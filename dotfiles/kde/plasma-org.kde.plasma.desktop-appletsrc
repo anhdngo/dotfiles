@@ -97,6 +97,10 @@ popupWidth=822
 [Containments][2][Applets][44][Configuration][General]
 favoritesPortedToKAstats=true
 
+[Containments][2][Applets][45]
+immutability=1
+plugin=org.kde.plasma.appmenu
+
 [Containments][2][Applets][6]
 immutability=1
 plugin=org.kde.plasma.marginsseparator
@@ -114,7 +118,7 @@ PreloadWeight=100
 SystrayContainmentId=8
 
 [Containments][2][General]
-AppletOrder=44;32;39;21;38;6;43;7
+AppletOrder=44;32;45;39;21;38;6;43;7
 
 [Containments][33]
 ItemGeometries-0x0=
@@ -291,7 +295,7 @@ immutability=1
 plugin=org.kde.plasma.battery
 
 [Containments][8][Applets][26][Configuration]
-PreloadWeight=18
+PreloadWeight=0
 
 [Containments][8][Applets][27]
 immutability=1
