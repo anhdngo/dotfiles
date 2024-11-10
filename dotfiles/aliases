@@ -48,3 +48,4 @@ alias pc="~/pCloudDrive"
 alias cm="~/.local/share/Cryptomator/mnt/"
 alias vaults="~/.local/share/Cryptomator/mnt/"
 
+alias serve="python -m http.server"
