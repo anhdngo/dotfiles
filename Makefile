@@ -37,6 +37,10 @@ gitignore-global:
 zerotier:
 	curl -s https://install.zerotier.com | sudo bash
 
+.PHONY: tailscale
+tailscale:
+	curl -fsSL https://tailscale.com/install.sh | sh
+
 .PHONY: ghostwriter
 ghostwriter:
 	mkdir -p ~/.config/kde.org
