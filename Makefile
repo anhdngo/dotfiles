@@ -45,3 +45,8 @@ tailscale:
 ghostwriter:
 	mkdir -p ~/.config/kde.org
 	echo -e "[Preview]\nlastUsedExporter=cmark-gfm" > ~/.config/kde.org/ghostwriter.conf
+
+.PHONY: nvidia
+nvidia:
+	sudo dnf install -y akmod-nvidia
+	sudo dnf install -y xorg-x11-drv-nvidia-cuda

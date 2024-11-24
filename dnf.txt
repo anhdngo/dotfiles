@@ -14,6 +14,8 @@ fastfetch
 p7zip
 gparted
 syncthing
+vsftpd
 
-# Applications
-ghostwriter
+# For oh-my-bash
+mercurial
+

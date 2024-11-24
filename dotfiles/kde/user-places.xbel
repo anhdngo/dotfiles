@@ -94,6 +94,17 @@
    </metadata>
   </info>
  </bookmark>
+ <bookmark href="file:///home/slug/Desktop">
+  <title>Desktop</title>
+  <info>
+   <metadata owner="http://freedesktop.org">
+    <bookmark:icon name="user-desktop"/>
+   </metadata>
+   <metadata owner="http://www.kde.org">
+    <ID>1731741027/0</ID>
+   </metadata>
+  </info>
+ </bookmark>
  <bookmark href="file:///home/slug/Pictures">
   <title>Pictures</title>
   <info>
