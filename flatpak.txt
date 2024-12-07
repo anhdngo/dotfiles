@@ -4,6 +4,7 @@ com.brave.Browser
 org.cryptomator.Cryptomator
 org.keepassxc.KeePassXC
 it.mijorus.gearlever
+io.github.flattool.Warehouse
 
 # Themes (to fix white title bar)
 org.gtk.Gtk3theme.Breeze-Dark
