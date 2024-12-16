@@ -49,3 +49,4 @@ alias cm="~/.local/share/Cryptomator/mnt/"
 alias vaults="~/.local/share/Cryptomator/mnt/"
 
 alias serve="python -m http.server"
+alias steam="cd /home/slug/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common"
