@@ -45,3 +45,7 @@ tailscale:
 nvidia:
 	sudo dnf install -y akmod-nvidia
 	sudo dnf install -y xorg-x11-drv-nvidia-cuda
+
+.PHONY: dconf
+dconf:
+	dconf dump / > dconf-settings-backup.ini
