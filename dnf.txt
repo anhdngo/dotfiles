@@ -18,3 +18,4 @@ mercurial
 
 # Gnome only
 gnome-tweaks
+input-remapper

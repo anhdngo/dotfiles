@@ -29,6 +29,10 @@ dotbot-terminal:
 dotbot-kde:
 	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/kde/dotbot-kde.conf.yaml
 
+.PHONY: dotbot-gnome
+dotbot-gnome:
+	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/dotbot-gnome.conf.yaml
+
 .PHONY: gitignore-global
 gitignore-global:
 	git config --global core.excludesfile $(shell pwd)/dotfiles/gitignore_global
