@@ -12,10 +12,10 @@ flatpak:
 
 .PHONY: oh-my-bash
 oh-my-bash:
-	bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)"
+	bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
 
 .PHONY: dotbot
-dotbot: dotbot-install dotbot-terminal dotbot-kde
+dotbot: dotbot-install dotbot-terminal
 
 .PHONY: dotbot-install
 dotbot:
@@ -40,11 +40,6 @@ zerotier:
 .PHONY: tailscale
 tailscale:
 	curl -fsSL https://tailscale.com/install.sh | sh
-
-.PHONY: ghostwriter
-ghostwriter:
-	mkdir -p ~/.config/kde.org
-	echo -e "[Preview]\nlastUsedExporter=cmark-gfm" > ~/.config/kde.org/ghostwriter.conf
 
 .PHONY: nvidia
 nvidia:

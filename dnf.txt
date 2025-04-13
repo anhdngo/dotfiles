@@ -8,13 +8,10 @@ unzip
 neovim
 
 # Essentials
-yakuake
 powerline-fonts
 fastfetch
 p7zip
 gparted
-syncthing
-vsftpd
 
 # For oh-my-bash
 mercurial
