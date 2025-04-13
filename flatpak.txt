@@ -1,13 +1,11 @@
 # Essentials
-# com.github.tchx84.Flatseal
-com.brave.Browser
 org.cryptomator.Cryptomator
 org.keepassxc.KeePassXC
 it.mijorus.gearlever
 io.github.flattool.Warehouse
 
 # Themes (to fix white title bar)
-org.gtk.Gtk3theme.Breeze-Dark
+# org.gtk.Gtk3theme.Breeze-Dark
 
 # Utilities
 org.gimp.GIMP
@@ -17,12 +15,10 @@ org.remmina.Remmina
 
 # Media
 org.videolan.VLC
-org.qbittorrent.qBittorrent
 com.stremio.Stremio
 com.obsproject.Studio
 org.audacityteam.Audacity
 org.gnome.NetworkDisplays
-com.github.unrud.VideoDownloader
 
 # Development
 com.visualstudio.code
@@ -30,8 +26,3 @@ org.godotengine.Godot
 
 # Creative
 org.kde.krita
-org.twinery.Twine
-
-# Gaming
-# org.libretro.RetroArch
-com.discordapp.Discord

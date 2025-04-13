@@ -16,3 +16,5 @@ gparted
 # For oh-my-bash
 mercurial
 
+# Gnome only
+gnome-tweaks
