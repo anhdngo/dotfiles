@@ -11,6 +11,8 @@
       path: input-remapper/config.json
     ~/.config/input-remapper-2/presets/MX Anywhere 3S Mouse/MX Anywhere.json:
       path: input-remapper/MX Anywhere.json
+    ~/.config/gtk-3.0/bookmarks:
+      path: bookmarks
 
 - shell:
     - [git submodule update --init --recursive, Installing submodules]

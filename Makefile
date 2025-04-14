@@ -31,7 +31,7 @@ dotbot-kde:
 
 .PHONY: dotbot-gnome
 dotbot-gnome:
-	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/dotbot-gnome.conf.yaml
+	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/gnome/dotbot-gnome.conf.yaml
 
 .PHONY: gitignore-global
 gitignore-global:
