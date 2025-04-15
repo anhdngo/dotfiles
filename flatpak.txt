@@ -1,6 +1,6 @@
 # Essentials
+org.chromium.Chromium
 org.cryptomator.Cryptomator
-org.keepassxc.KeePassXC
 it.mijorus.gearlever
 io.github.flattool.Warehouse
 
@@ -11,7 +11,6 @@ io.github.flattool.Warehouse
 org.gimp.GIMP
 com.github.PintaProject.Pinta
 com.github.johnfactotum.Foliate
-org.remmina.Remmina
 io.github.peazip.PeaZip
 
 # Media
