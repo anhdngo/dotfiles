@@ -12,6 +12,7 @@ org.gimp.GIMP
 com.github.PintaProject.Pinta
 com.github.johnfactotum.Foliate
 org.remmina.Remmina
+io.github.peazip.PeaZip
 
 # Media
 org.videolan.VLC
