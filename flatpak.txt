@@ -23,6 +23,7 @@ org.gnome.NetworkDisplays
 # Development
 com.visualstudio.code
 org.godotengine.Godot
+org.standardnotes.standardnotes
 
 # Creative
 org.kde.krita
