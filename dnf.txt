@@ -20,3 +20,4 @@ mercurial
 gnome-tweaks
 input-remapper
 seahorse
+gnome-shell-extension-appindicator

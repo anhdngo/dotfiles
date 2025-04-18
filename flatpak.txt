@@ -27,3 +27,6 @@ org.standardnotes.standardnotes
 
 # Creative
 org.kde.krita
+
+# Gnome
+flathub org.gnome.Extensions
