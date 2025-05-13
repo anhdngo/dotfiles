@@ -1,6 +1,7 @@
 {
     "version": "2.1.1",
     "autoload": {
-        "MX Anywhere 3S Mouse": "MX Anywhere"
+        "MX Anywhere 3S Mouse": "MX Anywhere",
+        "Logitech USB Receiver": "MX Anywhere Receiver"
     }
 }

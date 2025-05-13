@@ -25,9 +25,9 @@ dotbot:
 dotbot-terminal:
 	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/dotbot.conf.yaml
 
-.PHONY: dotbot-kde
-dotbot-kde:
-	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/kde/dotbot-kde.conf.yaml
+#.PHONY: dotbot-kde
+#dotbot-kde:
+#	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/kde/dotbot-kde.conf.yaml
 
 .PHONY: dotbot-gnome
 dotbot-gnome:
