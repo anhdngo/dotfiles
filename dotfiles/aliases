@@ -45,6 +45,7 @@ alias ws="$WS"
 alias as="$AS"
 
 alias pc="~/pCloudDrive"
+alias fln="~/Filen"
 alias cm="~/.local/share/Cryptomator/mnt/"
 alias vaults="~/.local/share/Cryptomator/mnt/"
 

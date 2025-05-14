@@ -1,6 +1,6 @@
 # Essentials
 org.chromium.Chromium
-org.cryptomator.Cryptomator
+#org.cryptomator.Cryptomator #use appimage version to access mounted drives
 it.mijorus.gearlever
 io.github.flattool.Warehouse
 
@@ -12,6 +12,7 @@ org.gimp.GIMP
 com.github.PintaProject.Pinta
 com.github.johnfactotum.Foliate
 io.github.peazip.PeaZip
+com.github.tchx84.Flatseal
 
 # Media
 org.videolan.VLC
