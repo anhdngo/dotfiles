@@ -13,6 +13,7 @@ com.github.PintaProject.Pinta
 com.github.johnfactotum.Foliate
 io.github.peazip.PeaZip
 com.github.tchx84.Flatseal
+com.github.xournalpp.xournalpp
 
 # Media
 org.videolan.VLC
