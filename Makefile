@@ -57,3 +57,7 @@ dconf-save:
 .PHONY: dconf-load
 dconf-load:
 	dconf load / < dconf.ini
+
+.PHONY: gnome-shell-extensions
+gnome-shell-extensions:
+	@cat gnome-shell-extensions.txt | while read -r url; do xdg-open "$$url" 2>/dev/null; done
