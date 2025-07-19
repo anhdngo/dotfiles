@@ -1,0 +1,86 @@
+[
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 275,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Control_L+Alt_L+KEY_LEFT",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 276,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Control_L+Alt_L+KEY_RIGHT",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 29,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9"
+            },
+            {
+                "type": 1,
+                "code": 56,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9"
+            },
+            {
+                "type": 1,
+                "code": 15,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "KEY_LEFTMETA",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 2,
+                "code": 6,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9",
+                "analog_threshold": -1
+            },
+            {
+                "type": 2,
+                "code": 12,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9",
+                "analog_threshold": -1
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Control_L+Alt_L+Shift_L+KEY_LEFT",
+        "mapping_type": "key_macro"
+    },
+    {
+        "input_combination": [
+            {
+                "type": 2,
+                "code": 6,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9",
+                "analog_threshold": 1
+            },
+            {
+                "type": 2,
+                "code": 12,
+                "origin_hash": "c527e148deb113355972bb7908fcb5b9",
+                "analog_threshold": 1
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Control_L+Alt_L+Shift_L+KEY_RIGHT",
+        "mapping_type": "key_macro"
+    }
+]

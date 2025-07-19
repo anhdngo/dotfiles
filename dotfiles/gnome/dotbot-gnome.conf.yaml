@@ -13,6 +13,10 @@
       path: input-remapper/MX Anywhere.json
     ~/.config/input-remapper-2/presets/Logitech USB Receiver/MX Anywhere Receiver.json:
       path: input-remapper/MX Anywhere Receiver.json
+    ~/.config/input-remapper-2/presets/Logitech M720 Triathlon/M720 Triathlon Receiver.json:
+      path: input-remapper/M720 Triathlon Receiver.json
+    ~/.config/input-remapper-2/presets/Logitech M720 Triathlon Multi-Device Mouse/M720 Triathlon Bluetooth.json:
+      path: input-remapper/M720 Triathlon Bluetooth.json
     ~/.config/gtk-3.0/bookmarks:
       path: bookmarks
 

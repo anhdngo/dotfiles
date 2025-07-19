@@ -2,6 +2,8 @@
     "version": "2.1.1",
     "autoload": {
         "MX Anywhere 3S Mouse": "MX Anywhere",
-        "Logitech USB Receiver": "MX Anywhere Receiver"
+        "Logitech USB Receiver": "MX Anywhere Receiver",
+        "Logitech M720 Triathlon Multi-Device Mouse": "M720 Triathlon Bluetooth",
+        "Logitech M720 Triathlon": "M720 Triathlon Receiver"
     }
 }
