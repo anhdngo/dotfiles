@@ -23,8 +23,8 @@ alias dk=docker
 alias ack=ag
 alias pthon=python
 alias py=python
-alias e="dolphin . &; disown"
-alias f="dolphin . &; disown"
+alias e="nautilus . & disown"
+alias f="nautilus . & disown"
 alias neofetch="fastfetch"
 
 alias encrypt="7z a -p -mx=9 -mhe -t7z"
