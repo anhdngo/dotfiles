@@ -1,0 +1,17 @@
+- defaults:
+    link:
+      relink: true
+      create: true
+      force: true
+
+- clean: ['~']
+
+- link:
+    ~/.var/app/org.godotengine.Godot/config/godot/editor_layouts.cfg:
+      path: editor_layouts.cfg
+    ~/.var/app/org.godotengine.Godot/config/godot/editor_settings-4.4.tres:
+      path: editor_settings-4.4.tres
+
+- shell:
+    - [git submodule update --init --recursive, Installing submodules]
+    - [sudo systemctl enable input-remapper, Enabling input remapper]

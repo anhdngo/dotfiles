@@ -33,6 +33,10 @@ dotbot-terminal:
 dotbot-gnome:
 	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/gnome/dotbot-gnome.conf.yaml
 
+.PHONY: dotbot-godot
+dotbot-godot:
+	sh ./dotfiles/dotbot/bin/dotbot -c ./dotfiles/godot/dotbot-godot.conf.yaml
+
 .PHONY: gitignore-global
 gitignore-global:
 	git config --global core.excludesfile $(shell pwd)/dotfiles/gitignore_global
