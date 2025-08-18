@@ -2,7 +2,7 @@
 	name = Anh Ngo
 	email = code@anhngo.me
 [core]
-	editor = vim
+	editor = nvim
 	excludesfile = ~/.linux-configs/dotfiles/gitignore_global
 [alias]
     cane = commit --amend --no-edit
