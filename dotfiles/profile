@@ -18,3 +18,5 @@ export EDITOR=/usr/bin/nvim
 
 export CONFIG=$HOME/.config/
 export DOTFILES=$HOME/.dotfiles/
+
+. "$HOME/.local/bin/env"

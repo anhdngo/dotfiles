@@ -16,3 +16,5 @@
     pfo = push -f origin
     pu = pull origin
     d = diff
+[init]
+	defaultBranch = main
