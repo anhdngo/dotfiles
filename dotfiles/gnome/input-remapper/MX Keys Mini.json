@@ -1,0 +1,24 @@
+[
+    {
+        "input_combination": [
+            {
+                "type": 1,
+                "code": 125,
+                "origin_hash": "2378a05114d68696d68f9a0caf6c33bb"
+            },
+            {
+                "type": 1,
+                "code": 42,
+                "origin_hash": "2378a05114d68696d68f9a0caf6c33bb"
+            },
+            {
+                "type": 1,
+                "code": 31,
+                "origin_hash": "2378a05114d68696d68f9a0caf6c33bb"
+            }
+        ],
+        "target_uinput": "keyboard",
+        "output_symbol": "Print",
+        "mapping_type": "key_macro"
+    }
+]

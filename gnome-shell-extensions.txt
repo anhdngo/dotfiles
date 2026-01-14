@@ -1,2 +1,3 @@
 https://extensions.gnome.org/extension/3780/ddterm/
 https://extensions.gnome.org/extension/4222/hot-edge/
+https://extensions.gnome.org/extension/7065/tiling-shell/
