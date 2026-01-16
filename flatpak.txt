@@ -1,5 +1,5 @@
 # Essentials
-org.chromium.Chromium
+org.mozilla.firefox
 #org.cryptomator.Cryptomator #use appimage version to access mounted drives
 it.mijorus.gearlever
 io.github.flattool.Warehouse
@@ -13,7 +13,7 @@ com.github.PintaProject.Pinta
 com.github.johnfactotum.Foliate
 io.github.peazip.PeaZip
 com.github.tchx84.Flatseal
-com.github.xournalpp.xournalpp
+com.github.unrud.VideoDownloader
 
 # Media
 org.videolan.VLC
@@ -23,9 +23,9 @@ org.audacityteam.Audacity
 org.gnome.NetworkDisplays
 
 # Development
+md.obsidian.Obsidian
 com.visualstudio.code
 org.godotengine.Godot
-org.standardnotes.standardnotes
 
 # Creative
-org.kde.krita
+# org.kde.krita
