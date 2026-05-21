@@ -1,12 +1,14 @@
 # Environment Variables
 export EDITOR=/usr/bin/nvim
 export WS=$HOME/Workspace
+export GWS=$HOME/GodotProjects
 export AS=$HOME/Assets
 export CONFIG=$HOME/.config
 export DOTFILES=$HOME/.dotfiles
 
 mkdir -p "$WS"
 mkdir -p "$AS"
+mkdir -p "$GWS"
 
 # Ease of Use
 alias sl="ls"
@@ -43,6 +45,7 @@ alias cf="$CONFIG"
 alias dff="$DOTFILES"
 alias ws="$WS"
 alias as="$AS"
+alias gws="$GWS"
 
 alias pc="~/pCloudDrive"
 alias fln="~/Filen"
