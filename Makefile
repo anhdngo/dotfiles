@@ -65,3 +65,9 @@ dconf-load:
 .PHONY: gnome-shell-extensions
 gnome-shell-extensions:
 	@cat gnome-shell-extensions.txt | while read -r url; do xdg-open "$$url" 2>/dev/null; done
+
+.PHONY: firefox-policies
+firefox-policies:
+	mkdir -p /etc/firefox/policies/
+	cp ./firefox-policies.json /etc/firefox/policies
+

@@ -1,0 +1,10 @@
+{
+  "policies": {
+    "Extensions": {
+      "Locked": [
+        "leechblockng@proginosko.com",
+        "{37cf1a46-0300-4893-a483-248807035bbf}"
+      ]
+    }
+  }
+}
