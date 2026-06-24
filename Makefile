@@ -71,3 +71,7 @@ firefox-policies:
 	mkdir -p /etc/firefox/policies/
 	cp ./firefox-policies.json /etc/firefox/policies
 
+.PHONY: desktop-files
+desktop-files:
+	bash ./scripts/install-desktop-files.sh
+

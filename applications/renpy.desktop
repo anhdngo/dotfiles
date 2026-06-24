@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Ren'Py
+Comment=Visual novel engine
+Exec=/opt/renpy/renpy.sh %f
+Icon=/home/slug/.local/share/icons/renpy.svg
+Terminal=false
+Type=Application
+Categories=Development;Game;
+Keywords=renpy;visual;novel;game;engine;
+StartupNotify=true
