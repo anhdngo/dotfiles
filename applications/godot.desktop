@@ -1,7 +1,7 @@
 [Desktop Entry]
 Name=Godot Engine
 Comment=2D and 3D cross-platform game engine
-Exec=/opt/Godot_v4.6.3-stable_linux.x86_64 %f
+Exec=/opt/Godot_v4.7-stable_linux.x86_64 %f
 Icon=/home/slug/.local/share/icons/godot.svg
 Terminal=false
 Type=Application
