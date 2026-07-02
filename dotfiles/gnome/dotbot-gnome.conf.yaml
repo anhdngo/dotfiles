@@ -11,6 +11,8 @@
       path: input-remapper/config.json
     ~/.config/input-remapper-2/presets/MX Anywhere 3S Mouse/MX Anywhere.json:
       path: input-remapper/MX Anywhere.json
+    ~/.config/input-remapper-2/presets/Logitech MX Anywhere 3S/MX Anywhere 3S BT.json:
+      path: input-remapper/MX Anywhere 3S BT.json
     ~/.config/input-remapper-2/presets/Logitech USB Receiver/MX Anywhere Receiver.json:
       path: input-remapper/MX Anywhere Receiver.json
     ~/.config/input-remapper-2/presets/MX Keys Mini/MX Keys Mini.json:
