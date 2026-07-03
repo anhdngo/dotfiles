@@ -6,7 +6,7 @@ export AS=$HOME/Assets
 export CONFIG=$HOME/.config
 export DOTFILES=$HOME/.dotfiles
 
-export GODOT_PATH=/opt/Godot_v4.6.3-stable_linux.x86_64
+export GODOT_PATH=/opt/Godot_v4.7-stable_linux.x86_64
 export DEBUG=true
 
 mkdir -p "$WS"
