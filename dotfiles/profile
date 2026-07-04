@@ -20,3 +20,7 @@ export CONFIG=$HOME/.config/
 export DOTFILES=$HOME/.dotfiles/
 
 . "$HOME/.local/bin/env"
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/slug/.local/bin:$PATH"
