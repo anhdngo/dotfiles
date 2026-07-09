@@ -6,16 +6,21 @@ GNOME settings and GUI apps.
 
 ## Install
 
-On a fresh OS (git recommended; chezmoi falls back to its builtin git if missing):
+On a fresh OS (git recommended; chezmoi falls back to its builtin git if
+missing), paste the line for the machine's [profile](#profiles):
 
 ```sh
-sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo
+# coding — programming tools only (work computer)
+sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo --promptChoice "Machine profile=coding"
+
+# gamedev — everything: coding + Godot + art/media
+sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo --promptChoice "Machine profile=gamedev"
 ```
 
 That's it. This installs chezmoi to `~/.local/bin`, clones this repo to
-`~/.local/share/chezmoi`, detects the machine type, asks for the profile,
-writes all dotfiles, and runs the install scripts. Re-running it (or
-`chezmoi update`) is always safe.
+`~/.local/share/chezmoi`, detects the machine type, writes all dotfiles, and
+runs the install scripts. (Leave the `--promptChoice` flag off to be asked for
+the profile interactively.) Re-running it (or `chezmoi update`) is always safe.
 
 Then **open a new shell** (or `exec bash -l`) — `~/.local/bin` lands on PATH
 via the just-applied dotfiles, so the shell that ran the one-liner won't see
@@ -31,15 +36,18 @@ chezmoi runs natively on Windows — same repo, no WSL required. In PowerShell:
 
 ```powershell
 winget install twpayne.chezmoi
-chezmoi init --apply anhdngo
+chezmoi init --apply anhdngo --promptChoice "Machine profile=coding"   # work computer
+chezmoi init --apply anhdngo --promptChoice "Machine profile=gamedev"  # gamedev machine
 ```
 
 This installs Chocolatey + packages (the script self-elevates), puts the
 AutoHotkey hotkeys in the Startup folder (and launches them), and writes the
 Windows Terminal config (Ctrl+\ quake mode). Shared dotfiles (`.vimrc`,
-`.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME/Godot files are
-skipped automatically. WSL on the same machine is set up separately with the
-Linux one-liner above (it gets the shell setup and `~/winhome`).
+`.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME files are
+skipped automatically. On the gamedev profile the Godot editor settings apply
+as well — see [Godot](#godot) below. WSL on the same machine is set up
+separately with the Linux one-liner above (it gets the shell setup and
+`~/winhome`).
 
 ## Profiles
 
@@ -63,7 +71,7 @@ profiles: add a choice in `.chezmoi.toml.tmpl` and gate lists/files on it.
 | Fedora on WSL | kernel contains `microsoft` | terminal setup, dnf packages, `~/winhome` (headless — no Godot) |
 | Steam Deck | `ID=steamos` | terminal setup, user-scope flatpaks (never pacman — SteamOS updates wipe it), Godot |
 | Debian server | `ID=debian` | terminal setup, apt packages (no GUI, no Godot) |
-| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, shared dotfiles (vim, git) |
+| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, shared dotfiles (vim, git), Godot editor settings (symlinked) |
 
 (Godot and art/media apps additionally require the `gamedev` profile.)
 
@@ -74,6 +82,20 @@ from the official builds into `~/.local/lib/godot`, keeping only the current
 version. `godot` and `godotnet` are on PATH, and `$GODOT_PATH` /
 `$GODOT_NET_PATH` point at stable symlinks that survive updates. It runs
 automatically on first install; run it manually to update.
+
+The editor settings (`editor_settings-*.tres`, `editor_layouts.cfg`) live in
+`.config/godot/` in this repo — one copy for every OS. On Linux that's the
+path Godot reads natively; on Windows chezmoi applies the same files to
+`~\.config\godot` and creates `%APPDATA%\Godot` as a symlink pointing there,
+so the editor reads and writes through it and `chezmoi re-add` picks up
+changes identically on both OSes.
+
+> **Windows notes:** creating the symlink needs Developer Mode enabled (or an
+> elevated `chezmoi apply`). If a real `%APPDATA%\Godot` directory already
+> exists, chezmoi won't replace it with a symlink — move it aside first
+> (`Rename-Item $env:APPDATA\Godot Godot.bak`), apply, then copy anything you
+> want to keep (e.g. `app_userdata`, `export_templates`) back into the new
+> location.
 
 ## Day-2 commands
 
