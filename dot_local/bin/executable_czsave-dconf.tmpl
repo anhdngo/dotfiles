@@ -1,0 +1,11 @@
+#!/bin/bash
+# Saves the scoped GNOME settings (paths in .chezmoidata/dconf.yaml) into the
+# chezmoi source repo. Review with `git diff` and commit.
+set -eu
+
+src="$(chezmoi source-path)"
+mkdir -p "$src/dconf"
+{{ range $name, $path := .dconf -}}
+dconf dump {{ $path }} > "$src/dconf/{{ $name }}.ini"
+{{ end -}}
+echo "Saved dconf scopes to $src/dconf/ - review with 'git -C $src diff' and commit"

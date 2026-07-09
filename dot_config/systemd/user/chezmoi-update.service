@@ -1,0 +1,9 @@
+[Unit]
+Description=Update dotfiles with chezmoi
+After=network-online.target
+
+[Service]
+Type=oneshot
+# Upgrade the chezmoi binary itself first; tolerate failure (offline, etc.)
+ExecStartPre=-%h/.local/bin/chezmoi upgrade
+ExecStart=%h/.local/bin/chezmoi update --no-tty

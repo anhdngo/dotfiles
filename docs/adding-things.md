@@ -49,11 +49,17 @@ only apply to some machines, add it to the conditional section of
 ## Save changed GNOME settings
 
 ```sh
-czsave-dconf     # dumps dconf to the repo's dconf.ini
+czsave-dconf     # dumps the scoped dconf paths into the repo's dconf/ dir
 ```
 
-Then commit. Other GNOME machines pick it up on `chezmoi update` (the dconf
-script re-runs because the file's hash changed).
+Then review with `git diff` and commit. Other GNOME machines pick it up on
+`chezmoi update` (the dconf script re-runs because a file's hash changed).
+
+Only the paths listed in `.chezmoidata/dconf.yaml` are saved/loaded (desktop,
+shell + extensions, settings-daemon, mutter, nautilus, ddterm) — deliberate,
+to keep runtime noise like recent files and window state from syncing. If a
+setting you care about lives elsewhere (`dconf watch /` shows where a setting
+lands as you change it), add its path to `dconf.yaml` and run `czsave-dconf`.
 
 ## Add a GNOME shell extension
 

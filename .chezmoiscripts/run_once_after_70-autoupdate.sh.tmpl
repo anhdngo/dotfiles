@@ -1,0 +1,17 @@
+#!/bin/bash
+# Enables the daily chezmoi-update systemd user timer.
+set -eu
+
+if systemctl --user is-enabled chezmoi-update.timer >/dev/null 2>&1; then
+    exit 0
+fi
+
+systemctl --user daemon-reload || true
+systemctl --user enable --now chezmoi-update.timer \
+    || echo "warning: could not enable chezmoi-update.timer (no systemd user session? enable it manually later)" >&2
+{{ if .headless }}
+
+# Headless: user timers only run while a session exists — linger keeps the
+# user manager (and this timer) alive without anyone logged in
+sudo loginctl enable-linger "$USER" || true
+{{ end }}

@@ -82,4 +82,17 @@ for d in "$LIB_DIR"/*/; do
 done
 echo "$tag" > "$LIB_DIR/VERSION"
 
+# Godot reads editor_settings-<major.minor>.tres and starts fresh if it's
+# missing. Link this version's filename to the newest existing settings file
+# so the chezmoi-managed settings carry forward across Godot versions.
+minor="${tag%-stable}"
+godot_cfg="$HOME/.config/godot"
+if [ -d "$godot_cfg" ] && [ ! -e "$godot_cfg/editor_settings-${minor}.tres" ]; then
+    newest=$(ls -v "$godot_cfg"/editor_settings-*.tres 2>/dev/null | tail -n 1 || true)
+    if [ -n "$newest" ]; then
+        ln -s "$(basename "$newest")" "$godot_cfg/editor_settings-${minor}.tres"
+        echo "Linked editor_settings-${minor}.tres -> $(basename "$newest")"
+    fi
+fi
+
 echo "Godot $tag installed. Run with: godot / godotnet"

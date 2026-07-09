@@ -53,7 +53,7 @@ automatically on first install; run it manually to update.
 
 | Task | Command |
 |---|---|
-| pull latest dotfiles + apply | `chezmoi update` |
+| pull latest dotfiles + apply | `chezmoi update` (also runs daily via `chezmoi-update.timer`) |
 | apply local changes | `chezmoi apply` |
 | cd into this repo | `czd` (alias for `chezmoi cd`) |
 | see what would change | `chezmoi diff` |
@@ -72,10 +72,11 @@ for the design of the chezmoi migration.
 ```
 .chezmoi.toml.tmpl       machine detection (gui / wsl / steamdeck / headless)
 .chezmoidata/packages.yaml   all package lists (dnf/apt/flatpak/extensions)
+.chezmoidata/dconf.yaml  which dconf paths are saved/loaded
 .chezmoiscripts/         install scripts, run by `chezmoi apply` in order
 dot_*                    the dotfiles themselves (dot_bashrc -> ~/.bashrc, ...)
-dot_local/bin/           godot-update + optional install-* helpers
+dot_local/bin/           godot-update, czsave-dconf + optional install-* helpers
 windows/                 Windows-native: setup.ps1, choco list, AutoHotkey
 docs/                    recipes, roadmap, recovered notes, backups
-dconf.ini                GNOME settings dump (loaded on desktop, saved via czsave-dconf)
+dconf/                   scoped GNOME settings dumps (loaded on desktop, saved via czsave-dconf)
 ```

@@ -2,7 +2,7 @@
 README.md
 docs
 windows
-dconf.ini
+dconf
 firefox-policies.json
 
 {{ if not .gui }}
@@ -11,6 +11,7 @@ firefox-policies.json
 .config/gtk-3.0
 .local/share/applications
 .local/share/icons
+.local/bin/czsave-dconf
 {{ end }}
 
 {{ if .headless }}

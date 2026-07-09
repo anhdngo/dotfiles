@@ -1,0 +1,11 @@
+# dconf paths that are saved/loaded, each to its own file in dconf/<name>.ini.
+# Scoped on purpose: a full `dconf dump /` drags in runtime noise (recent
+# files, portal permissions, per-app window state) that shouldn't sync
+# between machines.
+dconf:
+  desktop: /org/gnome/desktop/
+  shell: /org/gnome/shell/
+  settings-daemon: /org/gnome/settings-daemon/
+  mutter: /org/gnome/mutter/
+  nautilus: /org/gnome/nautilus/
+  ddterm: /com/github/amezin/ddterm/

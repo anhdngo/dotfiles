@@ -41,12 +41,9 @@ alias f="nautilus . & disown"
 alias encrypt="7z a -p -mx=9 -mhe -t7z"
 alias serve="python -m http.server"
 
-# chezmoi
+# chezmoi (GNOME settings are saved with the czsave-dconf command in ~/.local/bin)
 alias cz=chezmoi
 alias czd="chezmoi cd"
-{{- if .gui }}
-alias czsave-dconf='dconf dump / > "$(chezmoi source-path)/dconf.ini" && echo "dconf.ini updated - remember to commit"'
-{{- end }}
 {{- if .wsl }}
 alias windows-setup='powershell.exe -ExecutionPolicy Bypass -File "$(wslpath -w "$(chezmoi source-path)/windows/setup.ps1")"'
 {{- end }}
