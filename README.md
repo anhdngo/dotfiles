@@ -60,7 +60,13 @@ automatically on first install; run it manually to update.
 | start managing a new file | `chezmoi add ~/.config/foo/bar` |
 | save current GNOME settings | `czsave-dconf` (then commit) |
 | update Godot | `godot-update` |
+| unlock Bitwarden for this shell | `bwu` |
+| add an encrypted secret | `chezmoi add --encrypt <file>` (see docs/adding-things.md) |
 | optional extras | `install-tailscale`, `install-zerotier`, `install-nvidia` |
+
+> **New machine with secrets:** after the one-liner, run `bw login`, `bwu`,
+> `install-age-key`, then `chezmoi apply` — encrypted files can't decrypt
+> until the age key (stored in Bitwarden) is in place.
 
 See [docs/adding-things.md](docs/adding-things.md) for recipes (add an alias, a
 package, a machine type, …), [docs/future-improvements.md](docs/future-improvements.md)

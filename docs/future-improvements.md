@@ -2,10 +2,10 @@
 
 Roughly in priority order.
 
-- **Secrets management (next step).** The Bitwarden CLI is installed on every
-  machine (script 35); wire it up with chezmoi's built-in `bitwarden*`
-  template functions for SSH config, tokens, or the git email on work
-  machines. age encryption is the alternative for offline secrets.
+- **Migrate actual secrets.** The plumbing is done (bw CLI everywhere, age
+  encryption configured, `bwu`/`install-age-key` helpers) — now move the real
+  secrets in: `chezmoi add --encrypt` the SSH keys, convert token-bearing
+  configs to bitwarden-backed templates. See docs/adding-things.md.
 - **Pin/verify Godot downloads.** `godot-update` trusts the GitHub release; the
   releases ship SHA-512 sums that could be verified after download. Could also
   add a `godot-update <version>` form for pinning/downgrading.

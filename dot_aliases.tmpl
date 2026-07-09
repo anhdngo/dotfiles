@@ -44,6 +44,10 @@ alias serve="python -m http.server"
 # chezmoi (GNOME settings are saved with the czsave-dconf command in ~/.local/bin)
 alias cz=chezmoi
 alias czd="chezmoi cd"
+
+# Bitwarden: unlock the vault for this shell (needed before chezmoi can
+# render bitwarden-backed templates or install-age-key can run)
+alias bwu='export BW_SESSION=$(bw unlock --raw)'
 {{- if .wsl }}
 alias windows-setup='powershell.exe -ExecutionPolicy Bypass -File "$(wslpath -w "$(chezmoi source-path)/windows/setup.ps1")"'
 {{- end }}

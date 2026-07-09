@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+# Fetches the chezmoi age identity from Bitwarden onto a new machine.
+# Prereqs: bw login (once), then bwu (unlock). The key is stored in the vault
+# as a secure note named "chezmoi-age-key".
+set -euo pipefail
+
+KEY="$HOME/.config/age/key.txt"
+if [ -e "$KEY" ]; then
+    echo "age key already present at $KEY"
+    exit 0
+fi
+if [ -z "${BW_SESSION:-}" ]; then
+    echo "error: Bitwarden vault is locked. Run 'bw login' (first time) then 'bwu'." >&2
+    exit 1
+fi
+
+mkdir -p "$HOME/.config/age"
+chmod 700 "$HOME/.config/age"
+bw get notes chezmoi-age-key > "$KEY"
+chmod 600 "$KEY"
+echo "age key installed at $KEY - encrypted dotfiles will decrypt on next chezmoi apply"

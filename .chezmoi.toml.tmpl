@@ -6,6 +6,16 @@
 {{-   $wsl = .chezmoi.kernel.osrelease | lower | contains "microsoft" -}}
 {{- end -}}
 
+# age encryption for secrets (SSH keys etc.). The identity is per-machine and
+# NOT in this repo — fetch it on a new machine with `install-age-key`
+# (requires bw login + bwu). Only the public recipient lives here.
+# (top-level keys must come before any [section] in TOML)
+encryption = "age"
+
+[age]
+    identity = "~/.config/age/key.txt"
+    recipient = "age1w5gf2c7jnj3mar2dp7d58d5eaxawkvaltgdw5ax8lrdcslrl2e7svs7qw5"
+
 [data]
     wsl = {{ $wsl }}
     steamdeck = {{ eq $osid "steamos" }}

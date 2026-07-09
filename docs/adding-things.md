@@ -61,6 +61,40 @@ to keep runtime noise like recent files and window state from syncing. If a
 setting you care about lives elsewhere (`dconf watch /` shows where a setting
 lands as you change it), add its path to `dconf.yaml` and run `czsave-dconf`.
 
+## Manage a secret (SSH keys, tokens)
+
+Two mechanisms, pick per secret:
+
+**age-encrypted files** (offline, survives the auto-update timer) — for SSH
+keys and other rarely-changing files:
+
+```sh
+chezmoi add --encrypt ~/.ssh/id_ed25519
+chezmoi add --encrypt ~/.ssh/id_ed25519.pub   # pub key can also go in plain
+chezmoi apply && git -C "$(chezmoi source-path)" diff --stat
+```
+
+The file is stored age-encrypted in the repo (safe to push) and decrypted to
+the right place on apply. The identity at `~/.config/age/key.txt` is
+per-machine and never committed: store it in Bitwarden as a secure note named
+`chezmoi-age-key` (paste the contents of key.txt), and on each new machine run
+`bw login`, `bwu`, `install-age-key` right after the chezmoi one-liner.
+Machines without the age binary are fine — chezmoi has a builtin.
+
+> Until the age key is on a machine, `chezmoi apply` fails on encrypted files.
+> So: one-liner → `bw login` → `bwu` → `install-age-key` → `chezmoi apply`.
+
+**Bitwarden-backed templates** (live vault lookups) — for tokens you rotate:
+
+```
+{{ (bitwarden "item" "github.com").login.password }}
+{{ (bitwardenFields "item" "my-server").api_token.value }}
+```
+
+Put these in a `.tmpl` file, then `bwu && chezmoi apply` (the vault must be
+unlocked to render them — including by the daily update timer, so prefer age
+for anything on headless machines).
+
 ## Add a GNOME shell extension
 
 Add its UUID to `gnome_extensions` in `.chezmoidata/packages.yaml`. The UUID is
