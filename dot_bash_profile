@@ -1,0 +1,19 @@
+# ~/.bash_profile: read by bash login shells.
+# (When this file exists, bash ignores ~/.profile — so this is the one
+# place for login-shell environment.)
+
+# PATH
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+    PATH="$HOME/.local/bin:$PATH"
+fi
+if [ -d "$HOME/.local/share/JetBrains/Toolbox/scripts" ]; then
+    PATH="$PATH:$HOME/.local/share/JetBrains/Toolbox/scripts"
+fi
+export PATH
+
+export EDITOR=nvim
+
+# Aliases and interactive settings
+if [ -f ~/.bashrc ]; then
+    . ~/.bashrc
+fi

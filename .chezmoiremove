@@ -1,0 +1,4 @@
+# Targets chezmoi deletes from the home directory on apply.
+# ~/.profile is replaced by the managed ~/.bash_profile (bash ignores
+# .profile when .bash_profile exists).
+.profile
