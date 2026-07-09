@@ -1,9 +1,29 @@
 # Repo files that are never applied to the home directory
 README.md
 docs
-windows
 dconf
 firefox-policies.json
+
+{{/* On machines whose config predates profiles, .profile is unset until the
+     next `chezmoi init` — default to gamedev so the update timer keeps working */}}
+{{- $profile := default "gamedev" (get . "profile") }}
+
+{{ if eq .chezmoi.os "windows" }}
+# Linux-only files (shared dotfiles like .vimrc, .gitconfig and .config/git
+# still apply on Windows)
+.chezmoiscripts/linux/**
+.bash_profile
+.bashrc
+.aliases
+.config/nvim
+.config/godot
+.config/systemd
+.local
+{{ else }}
+# Windows-only files
+.chezmoiscripts/windows/**
+AppData
+{{ end }}
 
 {{ if not .gui }}
 # Desktop/GNOME-only files
@@ -14,8 +34,8 @@ firefox-policies.json
 .local/bin/czsave-dconf
 {{ end }}
 
-{{ if .headless }}
-# No Godot on the headless server
+{{ if or .headless (ne $profile "gamedev") }}
+# Godot only on gamedev-profile desktop machines
 .config/godot
 .local/bin/godot-update
 {{ end }}

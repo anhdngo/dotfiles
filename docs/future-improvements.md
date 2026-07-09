@@ -12,9 +12,6 @@ Roughly in priority order.
 - **CI on the repo.** GitHub Action running `chezmoi doctor`/`chezmoi apply
   --dry-run` in containers for each target OS, plus `shellcheck` on scripts and
   template lint — catches breakage before it reaches a machine.
-- **Native chezmoi on Windows.** chezmoi runs on Windows; the `windows/` half
-  (choco list, hotkeys, terminal settings) could become a real chezmoi target
-  with PowerShell run-scripts instead of a separate manual setup.ps1.
 - **GNOME extension updates + enabling.** `gext` installs extensions but the
   extras script is run_once; move to run_onchange keyed on the extension list,
   and explicitly `gext enable` each one.
@@ -38,3 +35,8 @@ Roughly in priority order.
   script 70; also upgrades the chezmoi binary; linger enabled on the server).
 - ~~Godot editor settings version drift~~ — `godot-update` links each new
   version's `editor_settings-X.Y.tres` to the newest existing settings file.
+- ~~Native chezmoi on Windows~~ — Windows is a first-class chezmoi target:
+  choco packages in `packages.yaml`, PowerShell run-scripts in
+  `.chezmoiscripts/windows/`, hotkeys.ahk + Windows Terminal settings managed
+  as real dotfiles under `AppData/`. Machine **profiles** (`coding`/`gamedev`)
+  added at the same time gate Godot/art/media software per machine.

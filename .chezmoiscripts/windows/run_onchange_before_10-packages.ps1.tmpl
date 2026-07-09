@@ -1,0 +1,36 @@
+{{- $gamedev := eq (default "gamedev" (get . "profile")) "gamedev" -}}
+# Installs Chocolatey + packages from .chezmoidata/packages.yaml (Windows).
+# run_onchange: re-runs whenever the rendered package list changes.
+$ErrorActionPreference = 'Stop'
+
+$packages = @(
+{{- range .packages.choco.common }}
+    '{{ . }}'
+{{- end }}
+{{- if $gamedev }}
+{{- range .packages.choco.gamedev }}
+    '{{ . }}'
+{{- end }}
+{{- end }}
+)
+
+# Chocolatey needs admin - relaunch this script elevated and wait for it
+$principal = [Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()
+if (-not $principal.IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Host 'Package install needs administrator - relaunching elevated...'
+    Start-Process powershell.exe -Verb RunAs -Wait -ArgumentList @(
+        '-NoLogo', '-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', "`"$PSCommandPath`""
+    )
+    exit
+}
+
+if (-not (Get-Command choco -ErrorAction SilentlyContinue)) {
+    Write-Host '==> Installing Chocolatey'
+    Set-ExecutionPolicy Bypass -Scope Process -Force
+    [System.Net.ServicePointManager]::SecurityProtocol = [System.Net.ServicePointManager]::SecurityProtocol -bor 3072
+    Invoke-Expression ((New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1'))
+    $env:PATH = "$env:ProgramData\chocolatey\bin;$env:PATH"
+}
+
+Write-Host '==> Installing Chocolatey packages'
+choco install -y @packages

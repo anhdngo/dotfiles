@@ -1,5 +1,9 @@
 # Single source of truth for packages on every machine.
 # Editing this file makes the package script re-run on the next `chezmoi apply`.
+#
+# Profile split: `gamedev`-suffixed lists only install on gamedev-profile
+# machines (Godot, art, media). Everything else installs on every profile,
+# so keep work-computer-safe (programming/utility) packages there.
 packages:
   dnf:
     # All Fedora machines (desktop + WSL)
@@ -25,6 +29,8 @@ packages:
       - gnome-shell-extension-appindicator
       - gnome-shell-extension-caffeine
       - pipx # for gnome-extensions-cli
+    # Fedora GNOME desktop, gamedev profile only
+    gui_gamedev:
       - dotnet-sdk-8.0 # for Godot .NET builds
   # Debian headless server (names differ from Fedora on purpose)
   apt:
@@ -40,27 +46,39 @@ packages:
     - p7zip-full
     - mercurial
   flatpak:
-    # Fedora GNOME desktop (system-wide)
+    # Fedora GNOME desktop, every profile (system-wide)
     gui:
       - org.mozilla.firefox
       - it.mijorus.gearlever
       - io.github.flattool.Warehouse
+      - io.github.peazip.PeaZip
+      - com.github.tchx84.Flatseal
+      - md.obsidian.Obsidian
+      - com.visualstudio.code
+    # Fedora GNOME desktop, gamedev profile only (art/media/entertainment)
+    gui_gamedev:
       - org.gimp.GIMP
       - com.github.PintaProject.Pinta
       - com.github.johnfactotum.Foliate
-      - io.github.peazip.PeaZip
-      - com.github.tchx84.Flatseal
       - com.github.unrud.VideoDownloader
       - org.videolan.VLC
       - com.stremio.Stremio
       - com.obsproject.Studio
       - org.audacityteam.Audacity
       - org.gnome.NetworkDisplays
-      - md.obsidian.Obsidian
-      - com.visualstudio.code
     # Steam Deck (user scope — survives SteamOS updates, no sudo)
     deck:
       - io.neovim.nvim
+  choco:
+    # All Windows machines
+    common:
+      - autohotkey
+      - git
+      - 7zip
+      - firefox
+      # - files # "Files" community file manager - uncomment if wanted
+    # Windows, gamedev profile only
+    gamedev: []
   gnome_extensions:
     - ddterm@amezin.github.com # https://extensions.gnome.org/extension/3780/ddterm/
     - hotedge@jonathan.jdoda.ca # https://extensions.gnome.org/extension/4222/hot-edge/

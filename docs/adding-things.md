@@ -19,23 +19,41 @@ Wrap machine-specific entries in a template conditional:
 ```
 
 Available flags: `.gui` (Fedora GNOME), `.wsl`, `.steamdeck`, `.headless`
-(Debian server or WSL — no Godot, linger for the update timer).
+(Debian server or WSL — no Godot, linger for the update timer), `.windows`,
+and `.profile` (`"coding"` or `"gamedev"` — in templates read it defensively
+as `default "gamedev" (get . "profile")` so machines with a pre-profile config
+still render).
 
 ## Add a package
 
 Edit `.chezmoidata/packages.yaml` — pick the right list (`dnf.common`,
-`dnf.gui`, `apt`, `flatpak.gui`, `flatpak.deck`). The package script re-runs
-automatically on the next `chezmoi apply` because its rendered content changed.
-
-## Add a Windows (choco) package
-
-Add a line to `windows/choco-packages.txt`, then re-run `windows-setup`
-(from WSL) or `windows\setup.ps1` (from Windows).
+`dnf.gui`, `apt`, `flatpak.gui`, `flatpak.deck`, `choco.common`). Lists with a
+`gamedev` suffix only install on gamedev-profile machines — put Godot/art/media
+things there, work-computer-safe things in the plain lists. The package script
+re-runs automatically on the next `chezmoi apply` because its rendered content
+changed. (On Windows the choco script self-elevates.)
 
 ## Edit Windows hotkeys
 
-Edit `windows/hotkeys.ahk`, then re-run `windows-setup` — it re-copies the
-script to the Windows side and relaunches it.
+Edit the managed file (in the repo:
+`AppData/.../Start Menu/Programs/Startup/hotkeys.ahk`), then `chezmoi apply`
+on the Windows side — a run_onchange script relaunches AutoHotkey with the
+new hotkeys.
+
+## Change Windows Terminal settings
+
+Either edit the managed `settings.json` under
+`AppData/Local/Packages/Microsoft.WindowsTerminal_.../LocalState/` and apply,
+or tweak in the Terminal UI and run `chezmoi re-add` on Windows to pull the
+result back into the repo (Terminal rewrites the file, so `chezmoi diff` will
+show drift until you do).
+
+## Change a machine's profile (coding ↔ gamedev)
+
+The `chezmoi init` prompt only fires once per machine. To switch later, edit
+`profile` under `[data]` in `~/.config/chezmoi/chezmoi.toml`, then
+`chezmoi apply`. Note the switch only affects what chezmoi manages going
+forward — already-installed packages aren't uninstalled.
 
 ## Start managing a new program's config
 
@@ -110,3 +128,11 @@ with `gext install <uuid>` manually.
 2. Gate files in `.chezmoiignore` and script sections/templates on the flag.
 3. On an existing machine, `chezmoi init` (no URL) regenerates the local config
    from the template.
+
+## Add a new profile
+
+1. Add the choice to the `promptChoiceOnce` list in `.chezmoi.toml.tmpl`.
+2. Gate package lists in `packages.yaml` (add a suffixed list + template
+   conditionals in the package scripts) and files in `.chezmoiignore` on
+   `.profile`, defaulting missing values: `default "gamedev" (get . "profile")`.
+3. Existing machines keep their stored profile; new ones get the prompt.

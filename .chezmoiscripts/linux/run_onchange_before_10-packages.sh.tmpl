@@ -1,3 +1,4 @@
+{{- $gamedev := eq (default "gamedev" (get . "profile")) "gamedev" -}}
 {{ if eq (.chezmoi.osRelease.id | default "") "fedora" -}}
 #!/bin/bash
 # Installs packages from .chezmoidata/packages.yaml (Fedora).
@@ -5,11 +6,11 @@
 set -eu
 
 echo "==> Installing dnf packages"
-sudo dnf install -y --skip-unavailable {{ .packages.dnf.common | join " " }}{{ if .gui }} {{ .packages.dnf.gui | join " " }}{{ end }}
+sudo dnf install -y --skip-unavailable {{ .packages.dnf.common | join " " }}{{ if .gui }} {{ .packages.dnf.gui | join " " }}{{ if $gamedev }} {{ .packages.dnf.gui_gamedev | join " " }}{{ end }}{{ end }}
 {{ if .gui }}
 echo "==> Installing flatpaks"
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
-sudo flatpak install -y --noninteractive flathub {{ .packages.flatpak.gui | join " " }}
+sudo flatpak install -y --noninteractive flathub {{ .packages.flatpak.gui | join " " }}{{ if $gamedev }} {{ .packages.flatpak.gui_gamedev | join " " }}{{ end }}
 {{ end }}
 {{- else if eq (.chezmoi.osRelease.id | default "") "debian" -}}
 #!/bin/bash

@@ -1,10 +1,21 @@
 {{/* Machine detection — computed once at `chezmoi init`, available to all
-     templates and scripts as .wsl, .steamdeck, .headless, .gui */}}
-{{- $osid := .chezmoi.osRelease.id | default "" -}}
+     templates and scripts as .windows, .wsl, .steamdeck, .headless, .gui */}}
+{{- $windows := eq .chezmoi.os "windows" -}}
+{{- $osid := "" -}}
 {{- $wsl := false -}}
-{{- if hasKey .chezmoi.kernel "osrelease" -}}
-{{-   $wsl = .chezmoi.kernel.osrelease | lower | contains "microsoft" -}}
+{{- if eq .chezmoi.os "linux" -}}
+{{-   $osid = .chezmoi.osRelease.id | default "" -}}
+{{-   if hasKey .chezmoi.kernel "osrelease" -}}
+{{-     $wsl = .chezmoi.kernel.osrelease | lower | contains "microsoft" -}}
+{{-   end -}}
 {{- end -}}
+
+{{/* Profile — what this machine is for. Asked once at `chezmoi init` and
+     stored in the local config (never committed); re-run `chezmoi init` to
+     change it, then `chezmoi apply`.
+       coding  — programming tools only (safe for a work computer)
+       gamedev — everything: coding + Godot + art/media apps */}}
+{{- $profile := promptChoiceOnce . "profile" "Machine profile" (list "coding" "gamedev") "gamedev" -}}
 
 # age encryption for secrets (SSH keys etc.). The identity is per-machine and
 # NOT in this repo — fetch it on a new machine with `install-age-key`
@@ -17,7 +28,14 @@ encryption = "age"
     recipient = "age1w5gf2c7jnj3mar2dp7d58d5eaxawkvaltgdw5ax8lrdcslrl2e7svs7qw5"
 
 [data]
+    profile = {{ $profile | quote }}
+    windows = {{ $windows }}
     wsl = {{ $wsl }}
     steamdeck = {{ eq $osid "steamos" }}
     headless = {{ or (eq $osid "debian") $wsl }}
     gui = {{ and (eq $osid "fedora") (not $wsl) }}
+{{ if $windows }}
+[interpreters.ps1]
+    command = "powershell.exe"
+    args = ["-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File"]
+{{ end -}}

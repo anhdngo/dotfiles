@@ -1,0 +1,7 @@
+{{ if and (not .headless) (eq (default "gamedev" (get . "profile")) "gamedev") -}}
+#!/bin/bash
+# Installs Godot on first apply (gamedev profile only). Run `godot-update`
+# any time to update.
+set -eu
+"$HOME/.local/bin/godot-update"
+{{ end -}}

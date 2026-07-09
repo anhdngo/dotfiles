@@ -1,10 +1,13 @@
+{{- $gamedev := eq (default "gamedev" (get . "profile")) "gamedev" -}}
 # Environment Variables
 export EDITOR=nvim
 export WS=$HOME/Workspace
-export GWS=$HOME/GodotProjects
 export AS=$HOME/Assets
 export CONFIG=$HOME/.config
-{{- if not .headless }}
+{{- if $gamedev }}
+export GWS=$HOME/GodotProjects
+{{- end }}
+{{- if and (not .headless) $gamedev }}
 
 # Godot — installed/updated by `godot-update`; these symlink paths stay
 # stable across versions
@@ -12,7 +15,7 @@ export GODOT_PATH="$HOME/.local/lib/godot/godot"
 export GODOT_NET_PATH="$HOME/.local/lib/godot/godotnet"
 {{- end }}
 
-mkdir -p "$WS" "$AS" "$GWS"
+mkdir -p "$WS" "$AS"{{ if $gamedev }} "$GWS"{{ end }}
 
 # Ease of Use
 alias sl="ls"
@@ -48,9 +51,6 @@ alias czd="chezmoi cd"
 # Bitwarden: unlock the vault for this shell (needed before chezmoi can
 # render bitwarden-backed templates or install-age-key can run)
 alias bwu='export BW_SESSION=$(bw unlock --raw)'
-{{- if .wsl }}
-alias windows-setup='powershell.exe -ExecutionPolicy Bypass -File "$(wslpath -w "$(chezmoi source-path)/windows/setup.ps1")"'
-{{- end }}
 
 # Directory Shortcuts
 alias dt='cd ~/Desktop'
@@ -59,7 +59,9 @@ alias doc='cd ~/Documents'
 alias cf='cd $CONFIG'
 alias ws='cd $WS'
 alias as='cd $AS'
+{{- if $gamedev }}
 alias gws='cd $GWS'
+{{- end }}
 {{- if .wsl }}
 alias wh='cd ~/winhome'
 {{- end }}
@@ -71,5 +73,7 @@ alias cm='cd ~/.local/share/Cryptomator/mnt/'
 alias vaults='cd ~/.local/share/Cryptomator/mnt/'
 
 alias steam='cd ~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common'
+{{- if $gamedev }}
 alias gdata='cd ~/.local/share/godot/app_userdata'
+{{- end }}
 {{- end }}

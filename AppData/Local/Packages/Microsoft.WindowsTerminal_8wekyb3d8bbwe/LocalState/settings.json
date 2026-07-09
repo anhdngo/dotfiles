@@ -1,0 +1,14 @@
+// Windows Terminal settings - managed by chezmoi.
+//
+// Terminal rewrites this file whenever you change settings in its UI (it also
+// fills in auto-detected profiles like PowerShell/WSL on first launch, and
+// anything missing here falls back to Terminal defaults). To keep UI changes,
+// run `chezmoi re-add` on the Windows side afterwards; `chezmoi diff` shows
+// the drift. This mirrors the czsave-dconf workflow on GNOME.
+{
+    "$schema": "https://aka.ms/terminal-profiles-schema",
+    "actions": [
+        // Quake-style dropdown terminal (ddterm equivalent on GNOME)
+        { "command": { "action": "quakeMode" }, "keys": "ctrl+\\" }
+    ]
+}

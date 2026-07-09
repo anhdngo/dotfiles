@@ -1,0 +1,4 @@
+# Keep LF everywhere - a Windows clone with core.autocrlf=true would otherwise
+# CRLF-mangle the bash scripts. PowerShell, AutoHotkey v2 and JSON are all
+# fine with LF.
+* text=auto eol=lf

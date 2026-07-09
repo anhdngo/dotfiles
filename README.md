@@ -22,15 +22,33 @@ the install scripts. Re-running it (or `chezmoi update`) is always safe.
 
 ### Windows
 
-Windows needs both halves — run each in the right place:
+chezmoi runs natively on Windows — same repo, no WSL required. In PowerShell:
 
-| Where | Command | What it does |
-|---|---|---|
-| **WSL (bash)** | the one-liner above | shell, aliases, packages, `~/winhome` link |
-| **Windows (PowerShell)** | `windows-setup` (alias, from WSL) — or run `windows\setup.ps1` in PowerShell | Chocolatey + packages, AutoHotkey hotkeys, Ctrl+\ quake terminal |
+```powershell
+winget install twpayne.chezmoi
+chezmoi init --apply anhdngo
+```
 
-`setup.ps1` self-elevates; re-run it after editing `windows/choco-packages.txt`
-or `windows/hotkeys.ahk`.
+This installs Chocolatey + packages (the script self-elevates), puts the
+AutoHotkey hotkeys in the Startup folder (and launches them), and writes the
+Windows Terminal config (Ctrl+\ quake mode). Shared dotfiles (`.vimrc`,
+`.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME/Godot files are
+skipped automatically. WSL on the same machine is set up separately with the
+Linux one-liner above (it gets the shell setup and `~/winhome`).
+
+## Profiles
+
+Besides OS detection, every machine picks a **profile** at `chezmoi init`
+(stored in the local config, never committed):
+
+| Profile | Gets |
+|---|---|
+| `coding` | programming tools only — safe for a work computer |
+| `gamedev` | everything: coding + Godot + art/media apps (GIMP, OBS, VLC, …) |
+
+The prompt only fires once; to change an existing machine, edit `profile` under
+`[data]` in `~/.config/chezmoi/chezmoi.toml`, then `chezmoi apply`. New
+profiles: add a choice in `.chezmoi.toml.tmpl` and gate lists/files on it.
 
 ## What each machine gets
 
@@ -40,6 +58,9 @@ or `windows/hotkeys.ahk`.
 | Fedora on WSL | kernel contains `microsoft` | terminal setup, dnf packages, `~/winhome` (headless — no Godot) |
 | Steam Deck | `ID=steamos` | terminal setup, user-scope flatpaks (never pacman — SteamOS updates wipe it), Godot |
 | Debian server | `ID=debian` | terminal setup, apt packages (no GUI, no Godot) |
+| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, shared dotfiles (vim, git) |
+
+(Godot and art/media apps additionally require the `gamedev` profile.)
 
 ## Godot
 
@@ -76,13 +97,14 @@ for the design of the chezmoi migration.
 ## Layout
 
 ```
-.chezmoi.toml.tmpl       machine detection (gui / wsl / steamdeck / headless)
-.chezmoidata/packages.yaml   all package lists (dnf/apt/flatpak/extensions)
+.chezmoi.toml.tmpl       machine detection (windows / gui / wsl / steamdeck / headless) + profile prompt
+.chezmoidata/packages.yaml   all package lists (dnf/apt/flatpak/choco/extensions)
 .chezmoidata/dconf.yaml  which dconf paths are saved/loaded
-.chezmoiscripts/         install scripts, run by `chezmoi apply` in order
+.chezmoiscripts/linux/   Linux install scripts, run by `chezmoi apply` in order
+.chezmoiscripts/windows/ Windows install scripts (Chocolatey, hotkey relaunch)
 dot_*                    the dotfiles themselves (dot_bashrc -> ~/.bashrc, ...)
 dot_local/bin/           godot-update, czsave-dconf + optional install-* helpers
-windows/                 Windows-native: setup.ps1, choco list, AutoHotkey
+AppData/                 Windows-native dotfiles: Terminal settings, Startup hotkeys.ahk
 docs/                    recipes, roadmap, recovered notes, backups
 dconf/                   scoped GNOME settings dumps (loaded on desktop, saved via czsave-dconf)
 ```

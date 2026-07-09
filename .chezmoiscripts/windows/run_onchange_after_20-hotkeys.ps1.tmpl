@@ -1,0 +1,13 @@
+# (Re)launches hotkeys.ahk after chezmoi updates it in the Startup folder,
+# so hotkeys work without relogging. AutoHotkey v2 defaults to
+# #SingleInstance Force, so relaunching replaces the running instance.
+# hotkeys.ahk hash: {{ include "AppData/Roaming/Microsoft/Windows/Start Menu/Programs/Startup/hotkeys.ahk" | sha256sum }}
+$ErrorActionPreference = 'Stop'
+
+$ahk = Join-Path ([Environment]::GetFolderPath('Startup')) 'hotkeys.ahk'
+try {
+    Start-Process $ahk
+    Write-Host 'hotkeys.ahk (re)launched.'
+} catch {
+    Write-Warning 'Could not launch hotkeys.ahk (is AutoHotkey installed yet?) - it will start at next login.'
+}
