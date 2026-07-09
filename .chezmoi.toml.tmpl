@@ -17,6 +17,14 @@
        gamedev — everything: coding + Godot + art/media apps */}}
 {{- $profile := promptChoiceOnce . "profile" "Machine profile" (list "coding" "gamedev") "gamedev" -}}
 
+{{/* WSL install — asked once on native Windows only (never on headless
+     machines or inside WSL, where chezmoi.os is "linux"). If yes, a
+     windows run-script installs the latest Fedora distro when missing. */}}
+{{- $wslFedora := false -}}
+{{- if $windows -}}
+{{-   $wslFedora = promptBoolOnce . "wsl_fedora" "Install WSL with the latest Fedora" false -}}
+{{- end -}}
+
 # age encryption for secrets (SSH keys etc.). The identity is per-machine and
 # NOT in this repo — fetch it on a new machine with `install-age-key`
 # (requires bw login + bwu). Only the public recipient lives here.
@@ -34,7 +42,8 @@ encryption = "age"
     steamdeck = {{ eq $osid "steamos" }}
     headless = {{ or (eq $osid "debian") $wsl }}
     gui = {{ and (eq $osid "fedora") (not $wsl) }}
-{{ if $windows }}
+{{ if $windows }}    wsl_fedora = {{ $wslFedora }}
+
 [interpreters.ps1]
     command = "powershell.exe"
     args = ["-NoLogo", "-NoProfile", "-ExecutionPolicy", "Bypass", "-File"]

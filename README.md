@@ -45,9 +45,14 @@ AutoHotkey hotkeys in the Startup folder (and launches them), and writes the
 Windows Terminal config (Ctrl+\ quake mode). Shared dotfiles (`.vimrc`,
 `.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME files are
 skipped automatically. On the gamedev profile the Godot editor settings apply
-as well — see [Godot](#godot) below. WSL on the same machine is set up
-separately with the Linux one-liner above (it gets the shell setup and
-`~/winhome`).
+as well — see [Godot](#godot) below.
+
+`chezmoi init` also asks whether to install WSL with the latest Fedora
+(preseed with `--promptBool "Install WSL with the latest Fedora=true"`); if
+yes, apply installs the distro whenever it's missing. Start it once
+(`wsl -d FedoraLinux-<N>`) to create your Linux user, then run the Linux
+one-liner above inside it — the WSL side is set up separately and gets the
+shell setup and `~/winhome`.
 
 ## Profiles
 

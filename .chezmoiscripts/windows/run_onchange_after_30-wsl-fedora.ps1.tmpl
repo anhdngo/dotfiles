@@ -1,0 +1,49 @@
+{{ if default false (get . "wsl_fedora") -}}
+# Installs WSL with the latest Fedora distro when none is registered yet.
+# Only rendered when the wsl_fedora prompt from `chezmoi init` was answered
+# yes (asked on native Windows only — never headless machines or inside WSL,
+# where chezmoi runs as linux). Empty otherwise, so chezmoi skips it.
+$ErrorActionPreference = 'Stop'
+$env:WSL_UTF8 = '1' # wsl.exe prints UTF-16 by default (ignored by old WSL)
+
+if (-not (Get-Command wsl.exe -ErrorAction SilentlyContinue)) {
+    Write-Warning 'wsl.exe not found - skipping WSL Fedora install.'
+    exit 0
+}
+
+# Capture wsl.exe stdout, tolerating non-zero exits (e.g. no distros yet)
+# and stripping the NULs that pre-WSL_UTF8 versions emit.
+function Get-WslOutput {
+    param([string[]]$WslArgs)
+    $eap = $ErrorActionPreference
+    $ErrorActionPreference = 'Continue'
+    $out = & wsl.exe @WslArgs 2>$null
+    $ErrorActionPreference = $eap
+    if ($LASTEXITCODE -ne 0) { return @() }
+    @($out) | ForEach-Object { ("$_" -replace "`0", '').Trim() } | Where-Object { $_ }
+}
+
+$existing = @(Get-WslOutput @('--list', '--quiet') | Where-Object { $_ -match '^FedoraLinux-\d+$' })
+if ($existing.Count -gt 0) {
+    Write-Host "WSL Fedora already installed ($($existing -join ', ')) - nothing to do."
+    exit 0
+}
+
+# Newest FedoraLinux-<N> in the online catalog (queryable before WSL is enabled)
+$latest = Get-WslOutput @('--list', '--online') |
+    ForEach-Object { if ($_ -match '^(FedoraLinux-(\d+))\b') { [pscustomobject]@{ Name = $Matches[1]; Ver = [int]$Matches[2] } } } |
+    Sort-Object Ver | Select-Object -Last 1
+if (-not $latest) {
+    Write-Warning "No FedoraLinux distro in 'wsl --list --online' - skipping WSL install."
+    exit 0
+}
+
+Write-Host "==> Installing WSL Fedora ($($latest.Name))"
+# --no-launch skips the interactive first-run username setup during apply.
+# On a machine without the WSL platform this also installs it and may ask
+# for a reboot before the distro finishes installing.
+wsl.exe --install --no-launch -d $latest.Name
+if ($LASTEXITCODE -ne 0) { throw "wsl --install exited with $LASTEXITCODE" }
+Write-Host "Done. Start it once with 'wsl -d $($latest.Name)' to create your user,"
+Write-Host 'then run the Linux install one-liner from the README inside it.'
+{{ end -}}
