@@ -6,5 +6,7 @@
 set -eu
 
 echo "==> Loading GNOME settings from dconf.ini"
-dconf load / < "{{ .chezmoi.sourceDir }}/dconf.ini"
+# -f: skip non-writable (policy-locked) keys instead of aborting — a full
+# `dconf dump /` always contains a few of them
+dconf load -f / < "{{ .chezmoi.sourceDir }}/dconf.ini"
 {{ end -}}
