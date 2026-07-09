@@ -23,12 +23,18 @@ extract() {
 }
 
 echo "==> Checking latest stable Godot release"
-tag=$(curl -fsSL "https://api.github.com/repos/godotengine/godot-builds/releases/latest" \
-    | grep -m1 '"tag_name"' | sed -E 's/.*: *"([^"]*)".*/\1/')
-if [ -z "$tag" ]; then
-    echo "error: could not determine the latest Godot release" >&2
+# The /releases/latest redirect ends in the tag name; this avoids parsing the
+# GitHub API (rate-limited, and early-exit pipes trip pipefail with curl).
+tag=$(curl -fsSLI -o /dev/null -w '%{url_effective}' \
+    "https://github.com/godotengine/godot-builds/releases/latest")
+tag="${tag##*/}"
+case "$tag" in
+*-stable) ;;
+*)
+    echo "error: could not determine the latest Godot release (got '$tag')" >&2
     exit 1
-fi
+    ;;
+esac
 
 current=""
 [ -f "$LIB_DIR/VERSION" ] && current=$(cat "$LIB_DIR/VERSION")
