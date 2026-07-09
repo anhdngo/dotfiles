@@ -1,0 +1,6 @@
+{{ if eq (default "gamedev" (get . "profile")) "gamedev" -}}
+# Installs Godot on first apply (gamedev profile only). Run `godot-update`
+# any time to update.
+$ErrorActionPreference = 'Stop'
+& (Join-Path $env:LOCALAPPDATA 'Programs\Godot\bin\godot-update.ps1')
+{{ end -}}

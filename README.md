@@ -61,10 +61,13 @@ comes from Chocolatey.
 Apply installs the choco packages (the script self-elevates), puts the
 AutoHotkey hotkeys in the Startup folder (and launches them), and writes the
 Windows Terminal config (Ctrl+\ quake mode, CaskaydiaCove Nerd Font so
-oh-my-bash themes render correctly in WSL). Shared dotfiles (`.vimrc`,
+oh-my-bash themes render correctly in WSL), and makes Windows Terminal the
+default terminal application so the cmd/powershell hotkeys open in it instead
+of the legacy conhost window. Shared dotfiles (`.vimrc`,
 `.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME files are
-skipped automatically. On the gamedev profile the Godot editor settings apply
-as well — see [Godot](#godot) below.
+skipped automatically. On the gamedev profile the art/media choco packages
+install too, plus the latest Godot + Godot .NET and the editor settings —
+see [Godot](#godot) below.
 
 `chezmoi init` also asks whether to install WSL with the latest Fedora
 (preseed with `--promptBool "Install WSL with the latest Fedora=true"`); if
@@ -105,7 +108,7 @@ profiles: add a choice in `.chezmoi.toml.tmpl` and gate lists/files on it.
 | Fedora on WSL | kernel contains `microsoft` | terminal setup, dnf packages, `~/winhome` (headless — no Godot) |
 | Steam Deck | `ID=steamos` | terminal setup, user-scope flatpaks (never pacman — SteamOS updates wipe it), Godot |
 | Debian server | `ID=debian` | terminal setup, apt packages (no GUI, no Godot) |
-| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, shared dotfiles (vim, git), Godot editor settings (symlinked) |
+| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, shared dotfiles (vim, git), Godot + editor settings (symlinked) |
 
 (Godot and art/media apps additionally require the `gamedev` profile.)
 
@@ -116,6 +119,13 @@ from the official builds into `~/.local/lib/godot`, keeping only the current
 version. `godot` and `godotnet` are on PATH, and `$GODOT_PATH` /
 `$GODOT_NET_PATH` point at stable symlinks that survive updates. It runs
 automatically on first install; run it manually to update.
+
+Windows has its own `godot-update` (`godot-update.ps1`, managed by chezmoi in
+`%LOCALAPPDATA%\Programs\Godot\bin`) that mirrors the Linux script: latest
+stable + .NET from the official builds, only the current version kept.
+Instead of symlinks it rewrites stable entry points on each update: `godot` /
+`godotnet` shims (the bin dir is added to the user PATH), Start Menu entries,
+and `GODOT_PATH` / `GODOT_NET_PATH` user environment variables.
 
 The editor settings (`editor_settings-*.tres`, `editor_layouts.cfg`) live in
 `.config/godot/` in this repo — one copy for every OS. On Linux that's the
@@ -162,7 +172,7 @@ for the design of the chezmoi migration.
 .chezmoidata/packages.yaml   all package lists (dnf/apt/flatpak/choco/extensions)
 .chezmoidata/dconf.yaml  which dconf paths are saved/loaded
 .chezmoiscripts/linux/   Linux install scripts, run by `chezmoi apply` in order
-.chezmoiscripts/windows/ Windows install scripts (Chocolatey, hotkey relaunch)
+.chezmoiscripts/windows/ Windows install scripts (Chocolatey, hotkey relaunch, default terminal)
 dot_*                    the dotfiles themselves (dot_bashrc -> ~/.bashrc, ...)
 dot_local/bin/           godot-update, czsave-dconf + optional install-* helpers
 AppData/                 Windows-native dotfiles: Terminal settings, Startup hotkeys.ahk

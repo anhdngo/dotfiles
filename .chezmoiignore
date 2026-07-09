@@ -39,4 +39,5 @@ AppData
 .config/godot
 .local/bin/godot-update
 AppData/Roaming/Godot
+AppData/Local/Programs/Godot
 {{ end }}

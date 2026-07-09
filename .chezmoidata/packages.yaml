@@ -78,9 +78,19 @@ packages:
       - git
       - 7zip
       - firefox
+      - obsidian
+      - vscode
       # - files # "Files" community file manager - uncomment if wanted
-    # Windows, gamedev profile only
-    gamedev: []
+    # Windows, gamedev profile only (art/media/entertainment — mirrors
+    # flatpak.gui_gamedev; Foliate/VideoDownloader/NetworkDisplays are
+    # Linux-only, and Godot comes from godot-update.ps1, not choco)
+    gamedev:
+      - gimp
+      - pinta
+      - vlc
+      - stremio
+      - obs-studio
+      - audacity
   gnome_extensions:
     - ddterm@amezin.github.com # https://extensions.gnome.org/extension/3780/ddterm/
     - hotedge@jonathan.jdoda.ca # https://extensions.gnome.org/extension/4222/hot-edge/
