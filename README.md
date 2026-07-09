@@ -13,8 +13,13 @@ sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo
 ```
 
 That's it. This installs chezmoi to `~/.local/bin`, clones this repo to
-`~/.local/share/chezmoi`, detects the machine type, writes all dotfiles, and runs
-the install scripts. Re-running it (or `chezmoi update`) is always safe.
+`~/.local/share/chezmoi`, detects the machine type, asks for the profile,
+writes all dotfiles, and runs the install scripts. Re-running it (or
+`chezmoi update`) is always safe.
+
+Then **open a new shell** (or `exec bash -l`) — `~/.local/bin` lands on PATH
+via the just-applied dotfiles, so the shell that ran the one-liner won't see
+`chezmoi` yet.
 
 > **Note (first run on a machine with existing dotfiles):** review what would
 > change with `chezmoi diff` first if you care about local edits — `apply`
