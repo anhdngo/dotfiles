@@ -10,13 +10,13 @@ firefox-policies.json
 
 {{ if eq .chezmoi.os "windows" }}
 # Linux-only files (shared dotfiles like .vimrc, .gitconfig and .config/git
-# still apply on Windows)
+# still apply on Windows; .config/godot too — %APPDATA%\Godot is a symlink
+# into it, so both OSes share one copy of the editor settings)
 .chezmoiscripts/linux/**
 .bash_profile
 .bashrc
 .aliases
 .config/nvim
-.config/godot
 .config/systemd
 .local
 {{ else }}
@@ -38,4 +38,5 @@ AppData
 # Godot only on gamedev-profile desktop machines
 .config/godot
 .local/bin/godot-update
+AppData/Roaming/Godot
 {{ end }}
