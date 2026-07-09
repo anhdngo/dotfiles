@@ -1,11 +1,11 @@
 ﻿#Requires AutoHotkey v2.0
 
-; Open Edge profile 1 with Ctrl + Alt + B
+; Open Firefox with Ctrl + Alt + B
 ^!b:: {
     Run('firefox.exe')
 }
 
-; Open Edge profile 2 with Ctrl + Alt + Shift + B
+; Open a Firefox private window with Ctrl + Alt + Shift + B
 ^+!b::
 {
     Run('firefox.exe --private-window')

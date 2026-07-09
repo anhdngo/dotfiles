@@ -60,7 +60,8 @@ comes from Chocolatey.
 
 Apply installs the choco packages (the script self-elevates), puts the
 AutoHotkey hotkeys in the Startup folder (and launches them), and writes the
-Windows Terminal config (Ctrl+\ quake mode). Shared dotfiles (`.vimrc`,
+Windows Terminal config (Ctrl+\ quake mode, CaskaydiaCove Nerd Font so
+oh-my-bash themes render correctly in WSL). Shared dotfiles (`.vimrc`,
 `.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME files are
 skipped automatically. On the gamedev profile the Godot editor settings apply
 as well — see [Godot](#godot) below.
@@ -68,9 +69,19 @@ as well — see [Godot](#godot) below.
 `chezmoi init` also asks whether to install WSL with the latest Fedora
 (preseed with `--promptBool "Install WSL with the latest Fedora=true"`); if
 yes, apply installs the distro whenever it's missing. Start it once
-(`wsl -d FedoraLinux-<N>`) to create your Linux user, then run the Linux
-one-liner above inside it — the WSL side is set up separately and gets the
-shell setup and `~/winhome`.
+(`wsl -d FedoraLinux-<N>`) to create your Linux user, then paste this inside
+it — the WSL side is set up separately and gets the shell setup and
+`~/winhome`:
+
+```sh
+sudo dnf install -y gawk tar git && cd ~ && sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo
+```
+
+This differs from the plain Linux one-liner because Fedora's WSL image is
+minimal — it ships without `awk` (and friends), which chezmoi's install
+script needs — and because WSL starts in the Windows directory you launched
+it from, not `~`. It asks for the [profile](#profiles) interactively; append
+a `--promptChoice` flag as above to preseed it.
 
 ## Profiles
 

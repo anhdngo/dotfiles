@@ -73,6 +73,7 @@ packages:
     # All Windows machines
     common:
       - chezmoi # permanent install; the README one-liner only fetches a throwaway copy
+      - nerd-fonts-cascadiacode # powerline/nerd glyphs for oh-my-bash in WSL; Terminal config uses it
       - autohotkey
       - git
       - 7zip

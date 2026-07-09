@@ -10,5 +10,13 @@
     "actions": [
         // Quake-style dropdown terminal (ddterm equivalent on GNOME)
         { "command": { "action": "quakeMode" }, "keys": "ctrl+\\" }
-    ]
+    ],
+    "profiles": {
+        "defaults": {
+            // Nerd Font build of Cascadia (choco: nerd-fonts-cascadiacode) —
+            // the stock Cascadia Mono lacks the powerline glyphs oh-my-bash
+            // themes use in WSL
+            "font": { "face": "CaskaydiaCove Nerd Font" }
+        }
+    }
 }
