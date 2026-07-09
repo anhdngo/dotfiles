@@ -1,0 +1,29 @@
+{{ if .wsl -}}
+#!/bin/bash
+# Links the Windows home directory to ~/winhome.
+set -eu
+
+if [ -e "$HOME/winhome" ]; then
+    exit 0
+fi
+
+winhome=""
+if command -v cmd.exe >/dev/null 2>&1; then
+    # cmd.exe must run from a Windows-accessible cwd to avoid UNC warnings
+    winprofile=$(cd /mnt/c 2>/dev/null && cmd.exe /c 'echo %USERPROFILE%' 2>/dev/null | tr -d '\r' || true)
+    if [ -n "$winprofile" ]; then
+        winhome=$(wslpath "$winprofile" 2>/dev/null || true)
+    fi
+fi
+if [ -z "$winhome" ] || [ ! -d "$winhome" ]; then
+    winhome=$(find /mnt/c/Users -mindepth 1 -maxdepth 1 -type d \
+        ! -iname public ! -iname 'default*' ! -iname 'all users' 2>/dev/null | head -n 1)
+fi
+
+if [ -n "$winhome" ] && [ -d "$winhome" ]; then
+    ln -s "$winhome" "$HOME/winhome"
+    echo "Linked ~/winhome -> $winhome"
+else
+    echo "warning: could not locate the Windows home directory; link ~/winhome manually" >&2
+fi
+{{ end -}}

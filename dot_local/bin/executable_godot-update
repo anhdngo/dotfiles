@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+# Installs or updates the latest stable Godot (standard + .NET) into
+# ~/.local/lib/godot and points ~/.local/bin/{godot,godotnet} at the binaries.
+# The previous version is deleted after a successful update.
+#
+# Usage: godot-update [--force]
+#   --force  reinstall even if the latest version is already installed
+set -euo pipefail
+
+LIB_DIR="$HOME/.local/lib/godot"
+BIN_DIR="$HOME/.local/bin"
+FORCE=0
+[ "${1:-}" = "--force" ] && FORCE=1
+
+mkdir -p "$LIB_DIR" "$BIN_DIR"
+
+extract() {
+    if command -v unzip >/dev/null 2>&1; then
+        unzip -q "$1" -d "$2"
+    else
+        bsdtar -xf "$1" -C "$2"
+    fi
+}
+
+echo "==> Checking latest stable Godot release"
+tag=$(curl -fsSL "https://api.github.com/repos/godotengine/godot-builds/releases/latest" \
+    | grep -m1 '"tag_name"' | sed -E 's/.*: *"([^"]*)".*/\1/')
+if [ -z "$tag" ]; then
+    echo "error: could not determine the latest Godot release" >&2
+    exit 1
+fi
+
+current=""
+[ -f "$LIB_DIR/VERSION" ] && current=$(cat "$LIB_DIR/VERSION")
+if [ "$tag" = "$current" ] && [ "$FORCE" -eq 0 ] && [ -x "$BIN_DIR/godot" ]; then
+    echo "Godot $tag is already installed."
+    exit 0
+fi
+
+echo "==> Installing Godot $tag"
+tmp=$(mktemp -d)
+trap 'rm -rf "$tmp"' EXIT
+
+base="https://github.com/godotengine/godot-builds/releases/download/$tag"
+std_zip="Godot_v${tag}_linux.x86_64.zip"
+net_zip="Godot_v${tag}_mono_linux_x86_64.zip"
+
+curl -fL --progress-bar -o "$tmp/$std_zip" "$base/$std_zip"
+curl -fL --progress-bar -o "$tmp/$net_zip" "$base/$net_zip"
+
+dest="$LIB_DIR/$tag"
+rm -rf "$dest"
+mkdir -p "$dest"
+extract "$tmp/$std_zip" "$dest"
+extract "$tmp/$net_zip" "$dest"
+
+std_bin="$dest/Godot_v${tag}_linux.x86_64"
+net_bin="$dest/Godot_v${tag}_mono_linux_x86_64/Godot_v${tag}_mono_linux.x86_64"
+if [ ! -f "$std_bin" ] || [ ! -f "$net_bin" ]; then
+    echo "error: expected binaries not found after extraction" >&2
+    exit 1
+fi
+chmod +x "$std_bin" "$net_bin"
+
+# Stable paths ($GODOT_PATH / $GODOT_NET_PATH point here)
+ln -sfn "$std_bin" "$LIB_DIR/godot"
+ln -sfn "$net_bin" "$LIB_DIR/godotnet"
+# On PATH
+ln -sfn "$LIB_DIR/godot" "$BIN_DIR/godot"
+ln -sfn "$LIB_DIR/godotnet" "$BIN_DIR/godotnet"
+
+# Remove previous versions — only the current one is kept
+for d in "$LIB_DIR"/*/; do
+    d="${d%/}"
+    [ "$d" = "$dest" ] || rm -rf "$d"
+done
+echo "$tag" > "$LIB_DIR/VERSION"
+
+echo "Godot $tag installed. Run with: godot / godotnet"

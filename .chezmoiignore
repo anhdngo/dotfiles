@@ -1,0 +1,20 @@
+# Repo files that are never applied to the home directory
+README.md
+docs
+windows
+dconf.ini
+firefox-policies.json
+
+{{ if not .gui }}
+# Desktop/GNOME-only files
+.config/input-remapper-2
+.config/gtk-3.0
+.local/share/applications
+.local/share/icons
+{{ end }}
+
+{{ if .headless }}
+# No Godot on the headless server
+.config/godot
+.local/bin/godot-update
+{{ end }}

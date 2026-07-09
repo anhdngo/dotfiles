@@ -1,0 +1,74 @@
+# Environment Variables
+export EDITOR=nvim
+export WS=$HOME/Workspace
+export GWS=$HOME/GodotProjects
+export AS=$HOME/Assets
+export CONFIG=$HOME/.config
+{{- if not .headless }}
+
+# Godot — installed/updated by `godot-update`; these symlink paths stay
+# stable across versions
+export GODOT_PATH="$HOME/.local/lib/godot/godot"
+export GODOT_NET_PATH="$HOME/.local/lib/godot/godotnet"
+{{- end }}
+
+mkdir -p "$WS" "$AS" "$GWS"
+
+# Ease of Use
+alias sl="ls"
+alias l="ls"
+alias ll="ls -lahF"
+alias rl="exec $SHELL"
+alias :q=exit
+alias c=clear
+alias vo=nvim
+alias vi=nvim
+alias vim=nvim
+alias g=git
+alias dk=docker
+alias ack=ag
+alias pthon=python
+alias py=python
+alias neofetch="fastfetch"
+{{- if .steamdeck }}
+alias nvim="flatpak run io.neovim.nvim"
+{{- end }}
+{{- if .gui }}
+alias e="nautilus . & disown"
+alias f="nautilus . & disown"
+{{- end }}
+
+alias encrypt="7z a -p -mx=9 -mhe -t7z"
+alias serve="python -m http.server"
+
+# chezmoi
+alias cz=chezmoi
+alias czd="chezmoi cd"
+{{- if .gui }}
+alias czsave-dconf='dconf dump / > "$(chezmoi source-path)/dconf.ini" && echo "dconf.ini updated - remember to commit"'
+{{- end }}
+{{- if .wsl }}
+alias windows-setup='powershell.exe -ExecutionPolicy Bypass -File "$(wslpath -w "$(chezmoi source-path)/windows/setup.ps1")"'
+{{- end }}
+
+# Directory Shortcuts
+alias dt='cd ~/Desktop'
+alias dl='cd ~/Downloads'
+alias doc='cd ~/Documents'
+alias cf='cd $CONFIG'
+alias ws='cd $WS'
+alias as='cd $AS'
+alias gws='cd $GWS'
+{{- if .wsl }}
+alias wh='cd ~/winhome'
+{{- end }}
+{{- if .gui }}
+
+alias pc='cd ~/pCloudDrive'
+alias fln='cd ~/Filen'
+alias cm='cd ~/.local/share/Cryptomator/mnt/'
+alias vaults='cd ~/.local/share/Cryptomator/mnt/'
+
+alias steam='cd ~/.var/app/com.valvesoftware.Steam/.local/share/Steam/steamapps/common'
+alias gdata='cd ~/.local/share/godot/app_userdata'
+{{- end }}

@@ -1,0 +1,62 @@
+# Enable the subsequent settings only in interactive sessions
+case $- in
+  *i*) ;;
+    *) return;;
+esac
+
+# Make sure ~/.local/bin is on PATH even in non-login shells
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Path to your oh-my-bash installation.
+export OSH="$HOME/.oh-my-bash"
+
+# Set name of the theme to load.
+OSH_THEME="agnoster"
+
+# To disable the uses of "sudo" by oh-my-bash, set "false" to this variable.
+OMB_USE_SUDO=true
+
+# Which completions would you like to load? (completions can be found in ~/.oh-my-bash/completions/*)
+completions=(
+  git
+  composer
+  ssh
+)
+
+# Which aliases would you like to load? (aliases can be found in ~/.oh-my-bash/aliases/*)
+aliases=(
+  general
+)
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-bash/plugins/*)
+plugins=(
+  git
+  bashmarks
+)
+
+if [ -d "$OSH" ]; then
+  source "$OSH"/oh-my-bash.sh
+fi
+
+# Personal aliases and environment variables
+source ~/.aliases
+
+# If there are multiple matches for completion, Tab should cycle through them
+bind 'TAB:menu-complete'
+
+# Display a list of the matching files
+bind "set show-all-if-ambiguous on"
+
+# Perform partial (common) completion on the first Tab press, only start
+# cycling full results on the second Tab press (from bash version 5)
+bind "set menu-complete-display-prefix on"
+
+# Cycle through history based on characters already typed on the line (ssh<Up>)
+bind '"\e[A":history-search-backward'
+bind '"\e[B":history-search-forward'
+
+# Keep Ctrl-Left and Ctrl-Right working when the above are used
+bind '"\e[1;5C":forward-word'
+bind '"\e[1;5D":backward-word'

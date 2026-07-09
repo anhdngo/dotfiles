@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+# Optional: install NVIDIA drivers on Fedora (never run automatically —
+# installing kernel modules on a machine without the GPU causes problems).
+set -euo pipefail
+
+if ! lspci | grep -qi nvidia; then
+    echo "No NVIDIA GPU detected; aborting." >&2
+    exit 1
+fi
+
+sudo dnf install -y akmod-nvidia
+sudo dnf install -y xorg-x11-drv-nvidia-cuda
+echo "Done. Wait for the akmod to build (a few minutes), then reboot."

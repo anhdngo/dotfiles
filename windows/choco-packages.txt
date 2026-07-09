@@ -1,0 +1,6 @@
+# Chocolatey packages installed by setup.ps1, one per line. '#' comments.
+autohotkey
+git
+7zip
+firefox
+# files        # "Files" community file manager - uncomment if wanted

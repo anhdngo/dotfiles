@@ -1,0 +1,10 @@
+{{ if .gui -}}
+#!/bin/bash
+# Loads GNOME settings. Re-runs whenever dconf.ini changes.
+# Resave current settings with the `czsave-dconf` alias.
+# dconf.ini hash: {{ include "dconf.ini" | sha256sum }}
+set -eu
+
+echo "==> Loading GNOME settings from dconf.ini"
+dconf load / < "{{ .chezmoi.sourceDir }}/dconf.ini"
+{{ end -}}

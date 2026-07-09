@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Optional: install zerotier (never run automatically).
+# After installing, join a network with: sudo zerotier-cli join <network-id>
+set -euo pipefail
+curl -s https://install.zerotier.com | sudo bash

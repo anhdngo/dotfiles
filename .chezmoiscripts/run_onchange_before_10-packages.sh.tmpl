@@ -1,0 +1,35 @@
+{{ if eq (.chezmoi.osRelease.id | default "") "fedora" -}}
+#!/bin/bash
+# Installs packages from .chezmoidata/packages.yaml (Fedora).
+# run_onchange: re-runs whenever the rendered package lists change.
+set -eu
+
+echo "==> Installing dnf packages"
+sudo dnf install -y --skip-unavailable {{ .packages.dnf.common | join " " }}{{ if .gui }} {{ .packages.dnf.gui | join " " }}{{ end }}
+{{ if .gui }}
+echo "==> Installing flatpaks"
+sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+sudo flatpak install -y --noninteractive flathub {{ .packages.flatpak.gui | join " " }}
+{{ end }}
+{{- else if eq (.chezmoi.osRelease.id | default "") "debian" -}}
+#!/bin/bash
+# Installs packages from .chezmoidata/packages.yaml (Debian headless).
+set -eu
+
+echo "==> Installing apt packages"
+sudo apt-get update
+# Install one at a time so a package missing from this Debian release
+# (e.g. fastfetch on older stables) doesn't abort the rest.
+for pkg in {{ .packages.apt | join " " }}; do
+    sudo apt-get install -y "$pkg" || echo "warning: could not install $pkg" >&2
+done
+{{- else if .steamdeck -}}
+#!/bin/bash
+# Installs packages from .chezmoidata/packages.yaml (Steam Deck).
+# Flatpak user-scope only: pacman changes are wiped by SteamOS updates.
+set -eu
+
+echo "==> Installing flatpaks (user scope)"
+flatpak --user remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
+flatpak --user install -y --noninteractive flathub {{ .packages.flatpak.deck | join " " }}
+{{- end }}

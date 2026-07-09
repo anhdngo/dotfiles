@@ -1,0 +1,20 @@
+{{ if .gui -}}
+#!/bin/bash
+# One-time GNOME desktop extras: shell extensions, firefox policies,
+# input-remapper service.
+set -eu
+
+echo "==> Installing GNOME shell extensions"
+if ! command -v gext >/dev/null 2>&1; then
+    pipx install gnome-extensions-cli
+fi
+for ext in {{ .packages.gnome_extensions | join " " }}; do
+    "$HOME/.local/bin/gext" install "$ext" || echo "warning: could not install extension $ext" >&2
+done
+
+echo "==> Installing Firefox policies"
+sudo install -D -m 644 "{{ .chezmoi.sourceDir }}/firefox-policies.json" /etc/firefox/policies/policies.json
+
+echo "==> Enabling input-remapper service"
+sudo systemctl enable input-remapper.service || true
+{{ end -}}

@@ -1,0 +1,13 @@
+{{/* Machine detection — computed once at `chezmoi init`, available to all
+     templates and scripts as .wsl, .steamdeck, .headless, .gui */}}
+{{- $osid := .chezmoi.osRelease.id | default "" -}}
+{{- $wsl := false -}}
+{{- if hasKey .chezmoi.kernel "osrelease" -}}
+{{-   $wsl = .chezmoi.kernel.osrelease | lower | contains "microsoft" -}}
+{{- end -}}
+
+[data]
+    wsl = {{ $wsl }}
+    steamdeck = {{ eq $osid "steamos" }}
+    headless = {{ eq $osid "debian" }}
+    gui = {{ and (eq $osid "fedora") (not $wsl) }}

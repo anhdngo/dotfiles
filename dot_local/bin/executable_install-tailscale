@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+# Optional: install tailscale (never run automatically).
+# After installing, log in with: sudo tailscale up
+set -euo pipefail
+curl -fsSL https://tailscale.com/install.sh | sh
