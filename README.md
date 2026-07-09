@@ -7,13 +7,17 @@ GNOME settings and GUI apps.
 ## Install
 
 On a fresh OS (git recommended; chezmoi falls back to its builtin git if
-missing), paste the line for the machine's [profile](#profiles):
+missing), paste the line for the machine's [profile](#profiles).
+
+**coding** — programming tools only (work computer):
 
 ```sh
-# coding — programming tools only (work computer)
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo --promptChoice "Machine profile=coding"
+```
 
-# gamedev — everything: coding + Godot + art/media
+**gamedev** — everything: coding + Godot + art/media:
+
+```sh
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo --promptChoice "Machine profile=gamedev"
 ```
 
@@ -32,12 +36,23 @@ via the just-applied dotfiles, so the shell that ran the one-liner won't see
 
 ### Windows
 
-chezmoi runs natively on Windows — same repo, no WSL required. In PowerShell:
+chezmoi runs natively on Windows — same repo, no WSL required. Paste the block
+for the machine's profile into PowerShell (each one installs chezmoi first; if
+`chezmoi` isn't found right after the winget line, open a new PowerShell window
+and rerun the second line).
+
+**coding** — work computer:
 
 ```powershell
 winget install twpayne.chezmoi
-chezmoi init --apply anhdngo --promptChoice "Machine profile=coding"   # work computer
-chezmoi init --apply anhdngo --promptChoice "Machine profile=gamedev"  # gamedev machine
+chezmoi init --apply anhdngo --promptChoice "Machine profile=coding"
+```
+
+**gamedev** — gamedev machine:
+
+```powershell
+winget install twpayne.chezmoi
+chezmoi init --apply anhdngo --promptChoice "Machine profile=gamedev"
 ```
 
 This installs Chocolatey + packages (the script self-elevates), puts the
