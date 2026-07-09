@@ -36,26 +36,29 @@ via the just-applied dotfiles, so the shell that ran the one-liner won't see
 
 ### Windows
 
-chezmoi runs natively on Windows — same repo, no WSL required. Paste the block
-for the machine's profile into PowerShell (each one installs chezmoi first; if
-`chezmoi` isn't found right after the winget line, open a new PowerShell window
-and rerun the second line).
+chezmoi runs natively on Windows — same repo, no WSL required. Like the Linux
+one-liners, these work on a completely fresh install (nothing but PowerShell +
+internet needed): chezmoi's install script fetches a throwaway `chezmoi.exe`
+into `.\bin` and runs it; apply then installs Chocolatey and a permanent
+`chezmoi` package, so day-2 commands work from any new shell. Paste the line
+for the machine's profile:
 
 **coding** — work computer:
 
 ```powershell
-winget install twpayne.chezmoi
-chezmoi init --apply anhdngo --promptChoice "Machine profile=coding"
+iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply anhdngo --promptChoice 'Machine profile=coding'"
 ```
 
 **gamedev** — gamedev machine:
 
 ```powershell
-winget install twpayne.chezmoi
-chezmoi init --apply anhdngo --promptChoice "Machine profile=gamedev"
+iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply anhdngo --promptChoice 'Machine profile=gamedev'"
 ```
 
-This installs Chocolatey + packages (the script self-elevates), puts the
+Afterwards you can delete the leftover `.\bin\chezmoi.exe` — the one on PATH
+comes from Chocolatey.
+
+Apply installs the choco packages (the script self-elevates), puts the
 AutoHotkey hotkeys in the Startup folder (and launches them), and writes the
 Windows Terminal config (Ctrl+\ quake mode). Shared dotfiles (`.vimrc`,
 `.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME files are

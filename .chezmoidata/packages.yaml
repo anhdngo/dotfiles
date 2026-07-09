@@ -72,6 +72,7 @@ packages:
   choco:
     # All Windows machines
     common:
+      - chezmoi # permanent install; the README one-liner only fetches a throwaway copy
       - autohotkey
       - git
       - 7zip
