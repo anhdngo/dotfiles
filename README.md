@@ -37,7 +37,7 @@ or `windows/hotkeys.ahk`.
 | Machine | Detected by | Gets |
 |---|---|---|
 | Fedora + GNOME | `ID=fedora`, not WSL | everything: dnf + flatpak apps, GNOME settings (dconf), shell extensions, input-remapper, Firefox policies, Godot, desktop entries |
-| Fedora on WSL | kernel contains `microsoft` | terminal setup, dnf packages, Godot, `~/winhome` |
+| Fedora on WSL | kernel contains `microsoft` | terminal setup, dnf packages, `~/winhome` (headless — no Godot) |
 | Steam Deck | `ID=steamos` | terminal setup, user-scope flatpaks (never pacman — SteamOS updates wipe it), Godot |
 | Debian server | `ID=debian` | terminal setup, apt packages (no GUI, no Godot) |
 

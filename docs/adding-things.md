@@ -18,7 +18,8 @@ Wrap machine-specific entries in a template conditional:
 {{ if .gui }}alias e="nautilus . & disown"{{ end }}
 ```
 
-Available flags: `.gui` (Fedora GNOME), `.wsl`, `.steamdeck`, `.headless`.
+Available flags: `.gui` (Fedora GNOME), `.wsl`, `.steamdeck`, `.headless`
+(Debian server or WSL — no Godot, linger for the update timer).
 
 ## Add a package
 

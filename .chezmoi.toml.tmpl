@@ -19,5 +19,5 @@ encryption = "age"
 [data]
     wsl = {{ $wsl }}
     steamdeck = {{ eq $osid "steamos" }}
-    headless = {{ eq $osid "debian" }}
+    headless = {{ or (eq $osid "debian") $wsl }}
     gui = {{ and (eq $osid "fedora") (not $wsl) }}
