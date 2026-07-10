@@ -1,0 +1,8 @@
+#!/bin/bash
+# Points the chezmoi source repo's origin at the SSH remote so pushes work
+# without HTTPS credentials. Run once per machine after the initial install
+# (chezmoi's install script clones over HTTPS).
+set -eu
+
+git -C "$(chezmoi source-path)" remote set-url origin git@github.com:anhdngo/dotfiles.git
+echo "origin -> git@github.com:anhdngo/dotfiles.git"
