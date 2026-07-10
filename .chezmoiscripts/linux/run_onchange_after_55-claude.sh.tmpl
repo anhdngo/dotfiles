@@ -1,0 +1,25 @@
+{{- $osid := .chezmoi.osRelease.id | default "" -}}
+{{ if and (ne (default "gamedev" (get . "profile")) "coding-noai") (or (eq $osid "fedora") (eq $osid "debian")) -}}
+#!/bin/bash
+# Installs Claude Code and registers the MCP servers from
+# .chezmoidata/claude.yaml at user scope (every profile except coding-noai).
+# run_onchange: re-runs whenever the rendered MCP list changes. Servers are
+# only added, never removed; already-configured names are left untouched, so
+# extras added by hand (or by mollusk-projects' setup_mcp.sh) survive.
+set -eu
+
+export PATH="$HOME/.local/bin:$PATH"
+
+if ! command -v claude >/dev/null 2>&1; then
+    echo "==> Installing Claude Code"
+    curl -fsSL https://claude.ai/install.sh | bash
+fi
+
+echo "==> Registering Claude Code MCP servers (user scope)"
+{{ range $name, $cmd := .claude.mcps.stdio -}}
+claude mcp get {{ $name }} >/dev/null 2>&1 || claude mcp add -s user {{ $name }} -- {{ $cmd }}
+{{ end -}}
+{{ range $name, $srv := .claude.mcps.remote -}}
+claude mcp get {{ $name }} >/dev/null 2>&1 || claude mcp add -s user --transport {{ $srv.transport }} {{ $name }} {{ $srv.url }}
+{{ end -}}
+{{ end -}}

@@ -9,13 +9,19 @@ GNOME settings and GUI apps.
 On a fresh OS (git recommended; chezmoi falls back to its builtin git if
 missing), paste the line for the machine's [profile](#profiles).
 
-**coding** — programming tools only (work computer):
+**coding** — programming tools incl. Claude Code (work computer):
 
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo --promptChoice "Machine profile=coding"
 ```
 
-**gamedev** — everything: coding + Godot + art/media:
+**coding-noai** — same, without Claude Code / AI tooling:
+
+```sh
+sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo --promptChoice "Machine profile=coding-noai"
+```
+
+**gamedev** — everything: coding + AI + Godot + art/media:
 
 ```sh
 sh -c "$(curl -fsLS get.chezmoi.io/lb)" -- init --apply anhdngo --promptChoice "Machine profile=gamedev"
@@ -43,7 +49,7 @@ into `.\bin` and runs it; apply then installs Chocolatey and a permanent
 `chezmoi` package, so day-2 commands work from any new shell. Paste the line
 for the machine's profile:
 
-**coding** — work computer:
+**coding** — work computer (use `profile=coding-noai` for one without AI tooling):
 
 ```powershell
 iex "&{$(irm 'https://get.chezmoi.io/ps1')} -- init --apply anhdngo --promptChoice 'Machine profile=coding'"
@@ -93,8 +99,13 @@ Besides OS detection, every machine picks a **profile** at `chezmoi init`
 
 | Profile | Gets |
 |---|---|
-| `coding` | programming tools only — safe for a work computer |
-| `gamedev` | everything: coding + Godot + art/media apps (GIMP, OBS, VLC, …) |
+| `coding` | programming tools + Claude Code with MCP servers — safe for a work computer |
+| `coding-noai` | programming tools only, no Claude Code / AI tooling |
+| `gamedev` | everything: coding + AI + Godot + art/media apps (GIMP, OBS, VLC, …) |
+
+Every profile installs the GitHub (`gh`) and GitLab (`glab`) CLIs. On the AI
+profiles a script installs Claude Code (native installer) and registers the
+MCP servers listed in `.chezmoidata/claude.yaml` at user scope.
 
 The prompt only fires once; to change an existing machine, edit `profile` under
 `[data]` in `~/.config/chezmoi/chezmoi.toml`, then `chezmoi apply`. New

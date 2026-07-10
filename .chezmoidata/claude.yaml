@@ -1,0 +1,24 @@
+# Claude Code MCP servers, registered at user scope by the claude scripts in
+# .chezmoiscripts (every profile except coding-noai). Editing this file makes
+# the script re-run on the next `chezmoi apply`; servers are only ever added,
+# never removed — drop one manually with `claude mcp remove -s user <name>`.
+#
+# Mirrors the unconditional servers from
+# ~/Workspace/mollusk-projects/scripts/setup_mcp.sh. The conditional ones
+# (github — needs a PAT and the gh CLI covers it; godot — needs GODOT_PATH and
+# a local clone/build; postgres — needs DATABASE_URI) stay in that script,
+# which is still the way to add them on machines that want them.
+claude:
+  mcps:
+    # name -> command line, run via `claude mcp add -s user <name> -- <cmd>`
+    stdio:
+      context7: npx -y @upstash/context7-mcp # version-accurate library docs
+      playwright: npx -y @playwright/mcp@latest # real browser automation
+    # name -> remote endpoint; authenticate in-session via /mcp
+    remote:
+      cloudflare-docs:
+        transport: sse
+        url: https://docs.mcp.cloudflare.com/sse
+      cloudflare-bindings:
+        transport: sse
+        url: https://bindings.mcp.cloudflare.com/sse

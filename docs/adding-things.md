@@ -20,18 +20,38 @@ Wrap machine-specific entries in a template conditional:
 
 Available flags: `.gui` (Fedora GNOME), `.wsl`, `.steamdeck`, `.headless`
 (Debian server or WSL — no Godot, linger for the update timer), `.windows`,
-and `.profile` (`"coding"` or `"gamedev"` — in templates read it defensively
-as `default "gamedev" (get . "profile")` so machines with a pre-profile config
-still render).
+and `.profile` (`"coding"`, `"coding-noai"`, or `"gamedev"` — in templates
+read it defensively as `default "gamedev" (get . "profile")` so machines with
+a pre-profile config still render).
 
 ## Add a package
 
 Edit `.chezmoidata/packages.yaml` — pick the right list (`dnf.common`,
-`dnf.gui`, `apt`, `flatpak.gui`, `flatpak.deck`, `choco.common`). Lists with a
-`gamedev` suffix only install on gamedev-profile machines — put Godot/art/media
-things there, work-computer-safe things in the plain lists. The package script
-re-runs automatically on the next `chezmoi apply` because its rendered content
-changed. (On Windows the choco script self-elevates.)
+`dnf.gui`, `apt.common`, `flatpak.gui`, `flatpak.deck`, `choco.common`). Lists
+with a `gamedev` suffix only install on gamedev-profile machines — put
+Godot/art/media things there, work-computer-safe things in the plain lists.
+Lists named `ai` install on every profile except `coding-noai` (Claude Code
+support packages). The package script re-runs automatically on the next
+`chezmoi apply` because its rendered content changed. (On Windows the choco
+script self-elevates.)
+
+## Add an MCP server for Claude Code
+
+Add it to `.chezmoidata/claude.yaml` (`stdio` for local commands, `remote`
+for SSE/HTTP endpoints) — the claude script re-runs on the next
+`chezmoi apply` and registers it at user scope on every non-`coding-noai`
+machine. Servers are only ever added: removing one from the yaml doesn't
+unregister it (use `claude mcp remove -s user <name>`), and machine-specific
+servers added by hand or by mollusk-projects' `setup_mcp.sh` are untouched.
+
+## Add or move an Obsidian vault launcher
+
+Vault launchers (the pinnable per-vault desktop icons on GNOME) are defined in
+`.chezmoidata/obsidian.yaml`. To move a vault, edit its `path` and apply. To
+add one, add an entry there plus the two one-line stub templates (copy an
+existing pair): `dot_local/share/applications/obsidian-<key>.desktop.tmpl` and
+`dot_local/share/icons/obsidian-<key>.svg.tmpl`. The icon is the Obsidian logo
+tinted with the entry's `color`.
 
 ## Edit Windows hotkeys
 
@@ -48,7 +68,7 @@ or tweak in the Terminal UI and run `chezmoi re-add` on Windows to pull the
 result back into the repo (Terminal rewrites the file, so `chezmoi diff` will
 show drift until you do).
 
-## Change a machine's profile (coding ↔ gamedev)
+## Change a machine's profile (coding ↔ coding-noai ↔ gamedev)
 
 The `chezmoi init` prompt only fires once per machine. To switch later, edit
 `profile` under `[data]` in `~/.config/chezmoi/chezmoi.toml`, then

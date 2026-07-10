@@ -1,0 +1,11 @@
+{{- /* Pinnable launcher for one Obsidian vault. Expects .vaultKey (a key of
+       obsidian.vaults in .chezmoidata/obsidian.yaml) merged into the dot. */ -}}
+{{- $v := index .obsidian.vaults .vaultKey -}}
+[Desktop Entry]
+Type=Application
+Name={{ $v.name }}
+Comment=Open the {{ $v.path }} vault in Obsidian
+Exec=flatpak run md.obsidian.Obsidian "obsidian://open?path={{ .chezmoi.homeDir }}/{{ $v.path }}"
+Icon=obsidian-{{ .vaultKey }}
+Terminal=false
+Categories=Office;

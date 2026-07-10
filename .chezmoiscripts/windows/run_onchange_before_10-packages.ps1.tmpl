@@ -1,4 +1,6 @@
-{{- $gamedev := eq (default "gamedev" (get . "profile")) "gamedev" -}}
+{{- $profile := default "gamedev" (get . "profile") -}}
+{{- $gamedev := eq $profile "gamedev" -}}
+{{- $ai := ne $profile "coding-noai" -}}
 # Installs Chocolatey + packages from .chezmoidata/packages.yaml (Windows).
 # run_onchange: re-runs whenever the rendered package list changes.
 $ErrorActionPreference = 'Stop'
@@ -6,6 +8,11 @@ $ErrorActionPreference = 'Stop'
 $packages = @(
 {{- range .packages.choco.common }}
     '{{ . }}'
+{{- end }}
+{{- if $ai }}
+{{- range .packages.choco.ai }}
+    '{{ . }}'
+{{- end }}
 {{- end }}
 {{- if $gamedev }}
 {{- range .packages.choco.gamedev }}

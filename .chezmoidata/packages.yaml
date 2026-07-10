@@ -2,8 +2,10 @@
 # Editing this file makes the package script re-run on the next `chezmoi apply`.
 #
 # Profile split: `gamedev`-suffixed lists only install on gamedev-profile
-# machines (Godot, art, media). Everything else installs on every profile,
-# so keep work-computer-safe (programming/utility) packages there.
+# machines (Godot, art, media). `ai`-suffixed lists install on every profile
+# EXCEPT coding-noai (Claude Code and its MCP-server runtimes). Everything
+# else installs on every profile, so keep work-computer-safe
+# (programming/utility) packages there.
 packages:
   dnf:
     # All Fedora machines (desktop + WSL)
@@ -11,6 +13,8 @@ packages:
       - gcc
       - make
       - git
+      - gh # GitHub CLI
+      - glab # GitLab CLI
       - ripgrep
       - fd-find
       - unzip
@@ -19,6 +23,10 @@ packages:
       - fastfetch
       - p7zip
       - mercurial # for oh-my-bash
+    # All Fedora machines, every profile except coding-noai
+    ai:
+      - nodejs # runs the npx-based MCP servers in claude.yaml
+      - npm
     # Fedora GNOME desktop only
     gui:
       - gparted
@@ -34,17 +42,24 @@ packages:
       - dotnet-sdk-8.0 # for Godot .NET builds
   # Debian headless server (names differ from Fedora on purpose)
   apt:
-    - build-essential
-    - git
-    - curl
-    - ripgrep
-    - fd-find
-    - unzip
-    - neovim
-    - fonts-powerline
-    - fastfetch
-    - p7zip-full
-    - mercurial
+    common:
+      - build-essential
+      - git
+      - gh # GitHub CLI
+      - glab # GitLab CLI
+      - curl
+      - ripgrep
+      - fd-find
+      - unzip
+      - neovim
+      - fonts-powerline
+      - fastfetch
+      - p7zip-full
+      - mercurial
+    # Every profile except coding-noai
+    ai:
+      - nodejs # runs the npx-based MCP servers in claude.yaml
+      - npm
   flatpak:
     # Fedora GNOME desktop, every profile (system-wide)
     gui:
@@ -76,11 +91,16 @@ packages:
       - nerd-fonts-cascadiacode # powerline/nerd glyphs for oh-my-bash in WSL; Terminal config uses it
       - autohotkey
       - git
+      - gh # GitHub CLI
+      - glab # GitLab CLI
       - 7zip
       - firefox
       - obsidian
       - vscode
       # - files # "Files" community file manager - uncomment if wanted
+    # Windows, every profile except coding-noai
+    ai:
+      - nodejs-lts # runs the npx-based MCP servers in claude.yaml
     # Windows, gamedev profile only (art/media/entertainment — mirrors
     # flatpak.gui_gamedev; Foliate/VideoDownloader/NetworkDisplays are
     # Linux-only, and Godot comes from godot-update.ps1, not choco)

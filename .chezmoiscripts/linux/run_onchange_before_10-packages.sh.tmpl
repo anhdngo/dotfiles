@@ -1,4 +1,6 @@
-{{- $gamedev := eq (default "gamedev" (get . "profile")) "gamedev" -}}
+{{- $profile := default "gamedev" (get . "profile") -}}
+{{- $gamedev := eq $profile "gamedev" -}}
+{{- $ai := ne $profile "coding-noai" -}}
 {{ if eq (.chezmoi.osRelease.id | default "") "fedora" -}}
 #!/bin/bash
 # Installs packages from .chezmoidata/packages.yaml (Fedora).
@@ -6,7 +8,7 @@
 set -eu
 
 echo "==> Installing dnf packages"
-sudo dnf install -y --skip-unavailable {{ .packages.dnf.common | join " " }}{{ if .gui }} {{ .packages.dnf.gui | join " " }}{{ if $gamedev }} {{ .packages.dnf.gui_gamedev | join " " }}{{ end }}{{ end }}
+sudo dnf install -y --skip-unavailable {{ .packages.dnf.common | join " " }}{{ if $ai }} {{ .packages.dnf.ai | join " " }}{{ end }}{{ if .gui }} {{ .packages.dnf.gui | join " " }}{{ if $gamedev }} {{ .packages.dnf.gui_gamedev | join " " }}{{ end }}{{ end }}
 {{ if .gui }}
 echo "==> Installing flatpaks"
 sudo flatpak remote-add --if-not-exists flathub https://flathub.org/repo/flathub.flatpakrepo
@@ -21,7 +23,7 @@ echo "==> Installing apt packages"
 sudo apt-get update
 # Install one at a time so a package missing from this Debian release
 # (e.g. fastfetch on older stables) doesn't abort the rest.
-for pkg in {{ .packages.apt | join " " }}; do
+for pkg in {{ .packages.apt.common | join " " }}{{ if $ai }} {{ .packages.apt.ai | join " " }}{{ end }}; do
     sudo apt-get install -y "$pkg" || echo "warning: could not install $pkg" >&2
 done
 {{- else if .steamdeck -}}

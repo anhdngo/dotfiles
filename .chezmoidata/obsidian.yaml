@@ -1,0 +1,22 @@
+# Obsidian vault launchers — one pinnable desktop icon per vault (GNOME
+# desktops only). Each key gets a .desktop entry + a color-tinted Obsidian
+# icon, generated from the shared templates in .chezmoitemplates/.
+#
+# To move a vault, edit its `path` (relative to $HOME) and `chezmoi apply`.
+# To add one: add an entry here, then create the two one-line stubs
+# dot_local/share/applications/obsidian-<key>.desktop.tmpl and
+# dot_local/share/icons/obsidian-<key>.svg.tmpl (copy an existing pair).
+obsidian:
+  vaults:
+    work:
+      name: Work Notes
+      path: Documents/work-notes
+      color: "#3584e4" # blue
+    personal:
+      name: Personal Notes
+      path: Documents/personal-notes
+      color: "#e01b24" # red
+    magestory:
+      name: Magestory Notes
+      path: Documents/magestory-notes
+      color: "#f6d32d" # yellow

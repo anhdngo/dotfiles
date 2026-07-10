@@ -1,0 +1,25 @@
+{{ if ne (default "gamedev" (get . "profile")) "coding-noai" -}}
+# Installs Claude Code and registers the MCP servers from
+# .chezmoidata/claude.yaml at user scope (every profile except coding-noai).
+# run_onchange: re-runs whenever the rendered MCP list changes. Servers are
+# only added, never removed; already-configured names are left untouched.
+$ErrorActionPreference = 'Stop'
+
+$env:PATH = "$env:USERPROFILE\.local\bin;$env:PATH"
+
+if (-not (Get-Command claude -ErrorAction SilentlyContinue)) {
+    Write-Host '==> Installing Claude Code'
+    Invoke-RestMethod https://claude.ai/install.ps1 | Invoke-Expression
+}
+
+Write-Host '==> Registering Claude Code MCP servers (user scope)'
+{{ range $name, $cmd := .claude.mcps.stdio -}}
+claude mcp get {{ $name }} *> $null
+if ($LASTEXITCODE -ne 0) { claude mcp add -s user {{ $name }} -- {{ $cmd }} }
+{{ end -}}
+{{ range $name, $srv := .claude.mcps.remote -}}
+claude mcp get {{ $name }} *> $null
+if ($LASTEXITCODE -ne 0) { claude mcp add -s user --transport {{ $srv.transport }} {{ $name }} {{ $srv.url }} }
+{{ end -}}
+exit 0
+{{ end -}}
