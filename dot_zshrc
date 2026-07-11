@@ -27,4 +27,10 @@ source ~/.aliases
 # SDKMAN, on machines that have it (its installer insists this stays at the
 # end of the file)
 export SDKMAN_DIR="$HOME/.sdkman"
-[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"
+if [[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]]; then
+  source "$SDKMAN_DIR/bin/sdkman-init.sh"
+fi
+
+# Leave a clean exit status behind: agnoster prints a ✘ segment when the last
+# command failed, and a skipped SDKMAN would otherwise mark every fresh prompt.
+true
