@@ -1,0 +1,30 @@
+{{ if not .steamdeck -}}
+#!/bin/bash
+# Installs oh-my-zsh and makes zsh the login shell. Stays a bash script: a
+# fresh install starts in bash and this is what switches it over. Runs BEFORE
+# dotfiles are written because the installer creates a stock ~/.zshrc —
+# chezmoi overwrites it with ours right after. zsh itself comes from the
+# packages script (before_10), which runs first.
+# (Skipped on the Steam Deck: pacman packages don't survive SteamOS updates,
+# so it keeps bash + oh-my-bash — see before_20.)
+set -eu
+
+if ! command -v zsh >/dev/null; then
+    echo "error: zsh not installed (packages script should have installed it)" >&2
+    exit 1
+fi
+
+if [ ! -d "$HOME/.oh-my-zsh" ]; then
+    echo "==> Installing oh-my-zsh"
+    sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+fi
+
+zsh_path="$(command -v zsh)"
+current_shell="$(getent passwd "$USER" | cut -d: -f7)"
+if [ "$current_shell" != "$zsh_path" ]; then
+    echo "==> Setting login shell to zsh"
+    # usermod instead of chsh: chsh prompts for a password, usermod rides the
+    # sudo credentials already cached by the packages script
+    sudo usermod --shell "$zsh_path" "$USER"
+fi
+{{ end -}}

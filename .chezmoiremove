@@ -2,3 +2,8 @@
 # ~/.profile is replaced by the managed ~/.bash_profile (bash ignores
 # .profile when .bash_profile exists).
 .profile
+{{ if not .steamdeck -}}
+# oh-my-bash is replaced by oh-my-zsh (run_once_before_25-oh-my-zsh.sh)
+# everywhere except the Steam Deck, which stays on bash
+.oh-my-bash
+{{ end -}}

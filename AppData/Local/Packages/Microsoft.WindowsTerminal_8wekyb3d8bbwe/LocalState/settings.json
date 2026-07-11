@@ -14,7 +14,7 @@
     "profiles": {
         "defaults": {
             // Nerd Font build of Cascadia (choco: nerd-fonts-cascadiacode) —
-            // the stock Cascadia Mono lacks the powerline glyphs oh-my-bash
+            // the stock Cascadia Mono lacks the powerline glyphs oh-my-zsh
             // themes use in WSL
             "font": { "face": "CaskaydiaCove Nerd Font" }
         }

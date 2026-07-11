@@ -15,6 +15,7 @@ packages:
       - git
       - gh # GitHub CLI
       - glab # GitLab CLI
+      - just # command runner (justfiles)
       - ripgrep
       - fd-find
       - unzip
@@ -22,7 +23,7 @@ packages:
       - powerline-fonts
       - fastfetch
       - p7zip
-      - mercurial # for oh-my-bash
+      - zsh # default interactive shell (oh-my-zsh)
     # All Fedora machines, every profile except coding-noai
     ai:
       - nodejs # runs the npx-based MCP servers in claude.yaml
@@ -47,6 +48,7 @@ packages:
       - git
       - gh # GitHub CLI
       - glab # GitLab CLI
+      - just # command runner (justfiles)
       - curl
       - ripgrep
       - fd-find
@@ -55,7 +57,7 @@ packages:
       - fonts-powerline
       - fastfetch
       - p7zip-full
-      - mercurial
+      - zsh # default interactive shell (oh-my-zsh)
     # Every profile except coding-noai
     ai:
       - nodejs # runs the npx-based MCP servers in claude.yaml
@@ -88,11 +90,12 @@ packages:
     # All Windows machines
     common:
       - chezmoi # permanent install; the README one-liner only fetches a throwaway copy
-      - nerd-fonts-cascadiacode # powerline/nerd glyphs for oh-my-bash in WSL; Terminal config uses it
+      - nerd-fonts-cascadiacode # powerline/nerd glyphs for oh-my-zsh in WSL; Terminal config uses it
       - autohotkey
       - git
       - gh # GitHub CLI
       - glab # GitLab CLI
+      - just # command runner (justfiles)
       - 7zip
       - firefox
       - obsidian

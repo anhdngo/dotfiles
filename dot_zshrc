@@ -1,0 +1,30 @@
+# Make sure ~/.local/bin is on PATH even in non-login shells
+if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
+  PATH="$HOME/.local/bin:$PATH"
+fi
+
+# Path to your oh-my-zsh installation.
+export ZSH="$HOME/.oh-my-zsh"
+
+# Set name of the theme to load.
+ZSH_THEME="agnoster"
+
+# Which plugins would you like to load? (plugins can be found in ~/.oh-my-zsh/plugins/*)
+plugins=(
+  git
+)
+
+if [ -d "$ZSH" ]; then
+  source "$ZSH"/oh-my-zsh.sh
+fi
+
+# Personal aliases and environment variables
+source ~/.aliases
+
+# No custom keybindings: oh-my-zsh already ships the ones .bashrc had to set
+# by hand (prefix history search on Up/Down, Ctrl-arrow word movement)
+
+# SDKMAN, on machines that have it (its installer insists this stays at the
+# end of the file)
+export SDKMAN_DIR="$HOME/.sdkman"
+[[ -s "$SDKMAN_DIR/bin/sdkman-init.sh" ]] && source "$SDKMAN_DIR/bin/sdkman-init.sh"

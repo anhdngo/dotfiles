@@ -67,7 +67,7 @@ comes from Chocolatey.
 Apply installs the choco packages (the script self-elevates), puts the
 AutoHotkey hotkeys in the Startup folder (and launches them), and writes the
 Windows Terminal config (Ctrl+\ quake mode, CaskaydiaCove Nerd Font so
-oh-my-bash themes render correctly in WSL), and makes Windows Terminal the
+oh-my-zsh themes render correctly in WSL), and makes Windows Terminal the
 default terminal application so the cmd/powershell hotkeys open in it instead
 of the legacy conhost window. Shared dotfiles (`.vimrc`,
 `.gitconfig`, `.config/git`) apply on Windows too; bash/GNOME files are

@@ -1,0 +1,13 @@
+{{ if .steamdeck -}}
+#!/bin/bash
+# Steam Deck only: it stays on bash + oh-my-bash (pacman zsh wouldn't survive
+# SteamOS updates), while every other machine gets zsh via before_25.
+# Runs BEFORE dotfiles are written because the installer overwrites
+# ~/.bashrc — chezmoi restores ours right after.
+set -eu
+
+if [ ! -d "$HOME/.oh-my-bash" ]; then
+    echo "==> Installing oh-my-bash"
+    bash -c "$(curl -fsSL https://raw.githubusercontent.com/ohmybash/oh-my-bash/master/tools/install.sh)" --unattended
+fi
+{{ end -}}

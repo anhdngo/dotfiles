@@ -1,3 +1,7 @@
+# zsh is the login shell everywhere except the Steam Deck (see dot_zshrc),
+# but bash is still what a fresh install starts in, so this stays functional.
+# The Deck keeps the full bash + oh-my-bash setup.
+
 # Enable the subsequent settings only in interactive sessions
 case $- in
   *i*) ;;
@@ -9,6 +13,7 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
 
+{{- if .steamdeck }}
 # Path to your oh-my-bash installation.
 export OSH="$HOME/.oh-my-bash"
 
@@ -39,6 +44,7 @@ plugins=(
 if [ -d "$OSH" ]; then
   source "$OSH"/oh-my-bash.sh
 fi
+{{- end }}
 
 # Personal aliases and environment variables
 source ~/.aliases
