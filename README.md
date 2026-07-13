@@ -136,11 +136,13 @@ so two ddterm tabs are two independent sessions rather than two views of one, an
 quitting tmux closes the terminal. The guards in `.zshrc` keep tmux out of
 scripts, editor-embedded terminals, and bare TTYs.
 
-The status bar deliberately matches the agnoster prompt: the same powerline
-chevrons, and the same role → colour mapping (blue = where you are, green =
-who you are, yellow = something wants you, grey = ambient chrome). Colours are
-ANSI *names*, not hex, so tmux resolves them through the same terminal palette
-agnoster's prompt does — the bar and the prompt can't drift apart.
+The status bar takes the agnoster prompt's role → colour mapping (blue = where
+you are, green = who you are, yellow = something wants you, grey = ambient
+chrome), but its badges are **flat** — no powerline chevrons, just colour blocks
+that abut, with a plain `│` dividing items inside a badge. The prompt keeps its
+chevrons; only the bar is flat. Colours are ANSI *names*, not hex, so tmux
+resolves them through the same terminal palette agnoster's prompt does — the bar
+and the prompt can't drift apart.
 
 Mouse mode is on (oh-my-tmux ships it off): without it the wheel never reaches
 tmux and the terminal turns it into Up/Down arrows, which walks the shell's
@@ -170,7 +172,9 @@ a running one.
 > **Editing the status bar:** oh-my-tmux only treats ` , ` and ` | ` as
 > separators at brace depth 0 — its `awk` deliberately protects commas inside
 > `#{...}`. So a divider *inside* a `#{?...}` conditional (like the one between
-> the battery and the clock) has to be a literal chevron, not a ` , `.
+> the battery and the clock) has to be a literal `│`, not a ` , ` — which is why
+> that one divider is hardcoded in the string instead of coming from
+> `tmux_conf_theme_right_separator_sub` like the others.
 >
 > Segments built from `#(...)` shell commands — battery status, username,
 > hostname — only run when a **client is attached** and the bar actually

@@ -59,25 +59,31 @@ tmux_conf_theme_colour_16="#303030"   # ...on grey
 tmux_conf_theme_colour_14="black"     # user@host: black...
 tmux_conf_theme_colour_17="green"     # ...on green (agnoster's clean-git segment)
 
-# --- chevrons ----------------------------------------------------------------
-# The same powerline chevrons agnoster puts between its prompt segments:
-# U+E0B0 and U+E0B2 solid, U+E0B1 and U+E0B3 thin. These are literal glyphs, so
-# keep this file UTF-8. They render via powerline-fonts (Fedora) /
-# fonts-powerline (Debian), and in WSL via the Cascadia Code Nerd Font that
-# Windows Terminal is set to.
-tmux_conf_theme_left_separator_main=''      # solid chevron, points right
-tmux_conf_theme_left_separator_sub=''       # thin chevron
-tmux_conf_theme_right_separator_main=''     # solid chevron, points left
-tmux_conf_theme_right_separator_sub=''      # thin chevron
+# --- separators --------------------------------------------------------------
+# No powerline chevrons anywhere in the bar: the badges are flat colour blocks
+# that simply abut. Blanking the four *_main separators is what does it (the same
+# variables wrap the window tabs, the session badge and the right-hand badges).
+#
+# The *sub* separator still has a job - it divides items *inside* one badge, e.g.
+# battery from clock. A blank one would run them together, so it's a plain
+# vertical bar (U+2502) rather than a thin chevron: flat, and in every mono font.
+# Literal glyph, so keep this file UTF-8.
+#
+# The prompt still uses chevrons; only the bar is flat. If you ever want them
+# back, the powerline glyphs are U+E0B0/E0B1 (left) and U+E0B2/E0B3 (right).
+tmux_conf_theme_left_separator_main=''
+tmux_conf_theme_left_separator_sub='│'
+tmux_conf_theme_right_separator_main=''
+tmux_conf_theme_right_separator_sub='│'
 
 # --- status line -------------------------------------------------------------
 # Left: the session, as one badge.
 # Right: three badges - flags, then battery+clock+date, then user@host on green.
-# In these strings " | " separates badges (solid chevron) and " , " separates
-# items inside one badge (thin chevron) - that's oh-my-tmux's convention, not a
-# typo. The commas *inside* #{?...} conditionals are part of tmux's own syntax,
-# which is why they have no spaces around them: that's what keeps oh-my-tmux
-# from mistaking them for separators.
+# In these strings " | " separates badges and " , " separates items inside one
+# badge - that's oh-my-tmux's convention, not a typo. Badges now abut flatly;
+# the items inside one get the vertical bar above. The commas *inside* #{?...}
+# conditionals are tmux's own syntax, which is why they have no spaces around
+# them: that's what keeps oh-my-tmux from mistaking them for separators.
 #
 # The battery lives in the clock badge rather than getting its own, so that a
 # desktop with no battery just shows the clock instead of an empty badge with
@@ -87,7 +93,7 @@ tmux_conf_theme_right_separator_sub=''      # thin chevron
 # would be lit forever and tell us nothing. #{prefix} and #{synchronized} stay -
 # those only appear when they're actually true.
 tmux_conf_theme_status_left=' ❐ #S '
-tmux_conf_theme_status_right=' #{prefix}#{synchronized} | #{?battery_percentage,#{battery_status} #{battery_percentage}  ,}%I:%M %p , %d %b | #{username}#{root} , #{hostname} '
+tmux_conf_theme_status_right=' #{prefix}#{synchronized} | #{?battery_percentage,#{battery_status} #{battery_percentage} │ ,}%I:%M %p , %d %b | #{username}#{root} , #{hostname} '
 
 tmux_conf_theme_status_left_attr="bold,none,none"
 tmux_conf_theme_status_right_attr="none,none,bold"
