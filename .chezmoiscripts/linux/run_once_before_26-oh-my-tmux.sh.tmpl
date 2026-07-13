@@ -1,0 +1,21 @@
+{{ if not .steamdeck -}}
+#!/bin/bash
+# Clones oh-my-tmux (gpakosz/.tmux) into ~/.tmux. Runs BEFORE the dotfiles are
+# written, like the oh-my-zsh script: chezmoi then lays ~/.tmux.conf down as a
+# symlink into this clone and writes our theme to ~/.tmux.conf.local.
+# tmux itself comes from the packages script (before_10), which runs first.
+# (Skipped on the Steam Deck: no pacman packages survive SteamOS updates, so
+# there's no tmux to configure there — see before_20/before_25.)
+set -eu
+
+if ! command -v tmux >/dev/null; then
+    echo "error: tmux not installed (packages script should have installed it)" >&2
+    exit 1
+fi
+
+if [ ! -e "$HOME/.tmux/.tmux.conf" ]; then
+    echo "==> Installing oh-my-tmux"
+    rm -rf "$HOME/.tmux"
+    git clone --depth 1 https://github.com/gpakosz/.tmux.git "$HOME/.tmux"
+fi
+{{ end -}}

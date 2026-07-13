@@ -119,9 +119,52 @@ profiles: add a choice in `.chezmoi.toml.tmpl` and gate lists/files on it.
 | Fedora on WSL | kernel contains `microsoft` | terminal setup, dnf packages, `~/winhome` (headless — no Godot) |
 | Steam Deck | `ID=steamos` | terminal setup, user-scope flatpaks (never pacman — SteamOS updates wipe it), Godot |
 | Debian server | `ID=debian` | terminal setup, apt packages (no GUI, no Godot) |
-| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, shared dotfiles (vim, git), Godot + editor settings (symlinked) |
+| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, psmux, shared dotfiles (vim, git), Godot + editor settings (symlinked) |
 
 (Godot and art/media apps additionally require the `gamedev` profile.)
+
+## Shell and terminal
+
+zsh + oh-my-zsh with the **agnoster** theme, except on the Steam Deck, which
+keeps bash + oh-my-bash (pacman packages don't survive SteamOS updates).
+
+Every interactive terminal `exec`s straight into **tmux**, themed with
+[oh-my-tmux](https://github.com/gpakosz/.tmux) (cloned into `~/.tmux` by
+`run_once_before_26`; `~/.tmux.conf` is a symlink into that clone, and our
+overrides live in `dot_tmux.conf.local`). Each terminal starts its *own* session,
+so two ddterm tabs are two independent sessions rather than two views of one, and
+quitting tmux closes the terminal. The guards in `.zshrc` keep tmux out of
+scripts, editor-embedded terminals, and bare TTYs.
+
+The status bar deliberately matches the agnoster prompt: the same powerline
+chevrons, and the same role → colour mapping (blue = where you are, green =
+who you are, yellow = something wants you, grey = ambient chrome). Colours are
+ANSI *names*, not hex, so tmux resolves them through the same terminal palette
+agnoster's prompt does.
+
+Mouse mode is on (oh-my-tmux ships it off): without it the wheel never reaches
+tmux and the terminal turns it into Up/Down arrows, which walks the shell's
+history instead of scrolling. **Alt + h/j/k/l** moves between panes with no
+prefix key. Editing `.tmux.conf.local` only takes effect when the tmux *server*
+restarts — press **prefix + r** to reload it into a running one.
+
+> **Editing the status bar:** oh-my-tmux only treats ` , ` and ` | ` as
+> separators at brace depth 0 — its `awk` deliberately protects commas inside
+> `#{...}`. So a divider *inside* a `#{?...}` conditional (like the one between
+> the battery and the clock) has to be a literal chevron, not a ` , `.
+>
+> Segments built from `#(...)` shell commands — battery status, username,
+> hostname — only run when a **client is attached** and the bar actually
+> redraws. In a detached session they render empty, which looks exactly like a
+> broken config but isn't.
+
+Native Windows has no tmux, so Chocolatey installs
+[psmux](https://github.com/psmux/psmux) — a Rust tmux clone that speaks tmux
+config and reads `~/.psmux.conf`. oh-my-tmux itself can't run there (it builds
+its status bar by piping its own config back through `sh`/`sed`/`awk`/`perl`),
+so `dot_psmux.conf` reproduces the same look by hand in plain tmux syntax. It's
+a second copy of the theme on purpose — **keep the two in sync by eye**. Windows
+machines running WSL Fedora get the real tmux + oh-my-tmux inside WSL.
 
 ## Godot
 

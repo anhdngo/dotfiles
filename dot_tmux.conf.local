@@ -1,0 +1,134 @@
+# oh-my-tmux customizations — sourced by ~/.tmux.conf (a symlink into the
+# ~/.tmux clone made by run_once_before_26-oh-my-tmux.sh).
+#
+# Only the overrides live here; oh-my-tmux falls back to its own defaults for
+# every tmux_conf_* variable we don't set, so this stays short.
+#
+# Theme: matches the oh-my-zsh **agnoster** prompt, so the status bar and the
+# prompt read as one thing. Same powerline chevrons, and the same role → colour
+# mapping agnoster uses:
+#
+#   blue    where you are      (agnoster's path segment: black on blue)
+#   green   who/where you are  (agnoster's clean-git segment: black on green)
+#   yellow  something wants you (agnoster's dirty-git / ⚡: black on yellow)
+#   grey    ambient chrome     (agnoster's user@host context: white on black)
+#
+# Colours are ANSI *names*, not hex, on purpose: that way tmux resolves them
+# through the same terminal palette agnoster's prompt does (the ddterm palette
+# in dconf/ddterm.ini), so the greens and blues line up exactly instead of
+# merely being close.
+
+# --- palette -----------------------------------------------------------------
+tmux_conf_theme_colour_1="black"      # status bar background
+tmux_conf_theme_colour_2="#303030"    # grey: pane border, ambient segment bg
+tmux_conf_theme_colour_3="#8a8a8a"    # light grey: status text, inactive windows
+tmux_conf_theme_colour_4="blue"       # accent: current window, active pane border
+tmux_conf_theme_colour_5="yellow"     # alert: messages, copy mode
+
+# status-left segments (fg then bg, one per segment)
+tmux_conf_theme_colour_6="#e4e4e4"    # session name: white...
+tmux_conf_theme_colour_9="#303030"    # ...on grey  (agnoster's context segment)
+tmux_conf_theme_colour_7="black"
+tmux_conf_theme_colour_10="green"
+tmux_conf_theme_colour_8="black"
+tmux_conf_theme_colour_11="yellow"
+
+# status-right segments (fg then bg, left to right)
+tmux_conf_theme_colour_12="#8a8a8a"   # flags: grey...
+tmux_conf_theme_colour_15="black"     # ...on the bar itself (no badge)
+tmux_conf_theme_colour_13="#e4e4e4"   # clock: white...
+tmux_conf_theme_colour_16="#303030"   # ...on grey
+tmux_conf_theme_colour_14="black"     # user@host: black...
+tmux_conf_theme_colour_17="green"     # ...on green (agnoster's clean-git segment)
+
+# --- chevrons ----------------------------------------------------------------
+# The same powerline chevrons agnoster puts between its prompt segments:
+# U+E0B0 and U+E0B2 solid, U+E0B1 and U+E0B3 thin. These are literal glyphs, so
+# keep this file UTF-8. They render via powerline-fonts (Fedora) /
+# fonts-powerline (Debian), and in WSL via the Cascadia Code Nerd Font that
+# Windows Terminal is set to.
+tmux_conf_theme_left_separator_main=''      # solid chevron, points right
+tmux_conf_theme_left_separator_sub=''       # thin chevron
+tmux_conf_theme_right_separator_main=''     # solid chevron, points left
+tmux_conf_theme_right_separator_sub=''      # thin chevron
+
+# --- status line -------------------------------------------------------------
+# Left: the session, as one badge.
+# Right: three badges - flags, then battery+clock+date, then user@host on green.
+# In these strings " | " separates badges (solid chevron) and " , " separates
+# items inside one badge (thin chevron) - that's oh-my-tmux's convention, not a
+# typo. The commas *inside* #{?...} conditionals are part of tmux's own syntax,
+# which is why they have no spaces around them: that's what keeps oh-my-tmux
+# from mistaking them for separators.
+#
+# The battery lives in the clock badge rather than getting its own, so that a
+# desktop with no battery just shows the clock instead of an empty badge with
+# chevrons hanging off it.
+#
+# No #{mouse} indicator: mouse is now permanently on (see below), so the arrow
+# would be lit forever and tell us nothing. #{prefix} and #{synchronized} stay -
+# those only appear when they're actually true.
+tmux_conf_theme_status_left=' ❐ #S '
+tmux_conf_theme_status_right=' #{prefix}#{synchronized} | #{?battery_percentage,#{battery_status} #{battery_percentage}  ,}%I:%M %p , %d %b | #{username}#{root} , #{hostname} '
+
+tmux_conf_theme_status_left_attr="bold,none,none"
+tmux_conf_theme_status_right_attr="none,none,bold"
+
+# 12-hour clock, in the status bar (%I:%M %p above) and in tmux's own clock mode
+tmux_conf_theme_clock_style="12"
+
+# Battery: a real battery icon, plus a bolt while charging, then the percentage.
+# U+F0E7 is the charging bolt, U+F240 the battery. Written as \uXXXX escapes,
+# which oh-my-tmux decodes itself: literal glyphs work too, but the escape form
+# keeps this file plain ASCII so no editor or transfer can mangle the codepoints.
+# The terminal font
+# (Adwaita Mono) doesn't have them, but fontconfig falls back to the JetBrains
+# Mono Nerd Font in ~/.local/share/fonts, and Windows Terminal has Cascadia Code
+# Nerd Font. On a box with neither they'd be tofu - but a box without a Nerd Font
+# is a headless server, which has no battery, so the segment is hidden anyway.
+tmux_conf_battery_status_charging="\uf0e7"
+tmux_conf_battery_status_discharging="\uf240"
+
+# Terminal/tab title: the directory and the running command. oh-my-tmux's
+# default is "#h \u2750 #S \u25cf #I #W" - hostname and session name, which tell us
+# nothing we can't already see in the status bar.
+tmux_conf_theme_terminal_title='#{b:pane_current_path} \u00b7 #{pane_current_command}'
+
+# Current window is the blue segment — the same "you are here" cue agnoster
+# gives the current directory.
+tmux_conf_theme_window_status_current_attr="bold"
+
+# --- behaviour ---------------------------------------------------------------
+# Plain tmux commands are allowed here too; oh-my-tmux sources this file as a
+# tmux config before it applies the theme.
+
+# Mouse on, so the wheel scrolls tmux's own scrollback. Without it the wheel
+# never reaches tmux, and the terminal helpfully translates it into Up/Down
+# arrows - which walks the shell's command history instead of scrolling.
+# oh-my-tmux ships with mouse off, hence this line.
+set -g mouse on
+
+# The scrollback the wheel now scrolls through (oh-my-tmux default is 5000)
+set -g history-limit 50000
+
+# Alt + h/j/k/l moves focus between panes, vim-style, with no prefix key.
+# (Only moves between *tmux* panes - if you want the same keys to also step in
+# and out of vim's own splits, that needs the vim-tmux-navigator plugin on both
+# sides.)
+bind -n M-h select-pane -L
+bind -n M-j select-pane -D
+bind -n M-k select-pane -U
+bind -n M-l select-pane -R
+
+# Add ctrl and the same h/l move between windows (the "tabs") instead of panes;
+# ctrl+alt+n opens a new one. (Not ctrl+shift+n: ddterm binds that to its own
+# new-tab, so tmux would never see the key.)
+bind -n C-M-h previous-window
+bind -n C-M-l next-window
+bind -n C-M-n new-window
+
+# Alt+- and alt+_ split the pane, same meaning as oh-my-tmux's prefix + - / _
+# (- splits below, _ splits to the right). The -c keeps the new pane in the
+# current directory, which is what oh-my-tmux's prefixed versions do.
+bind -n M-- split-window -v -c "#{pane_current_path}"
+bind -n M-_ split-window -h -c "#{pane_current_path}"

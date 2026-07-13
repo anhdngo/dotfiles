@@ -24,6 +24,7 @@ packages:
       - fastfetch
       - p7zip
       - zsh # default interactive shell (oh-my-zsh)
+      - tmux # multiplexer (oh-my-tmux); zsh launches into it on login
     # All Fedora machines, every profile except coding-noai
     ai:
       - nodejs # runs the npx-based MCP servers in claude.yaml
@@ -58,6 +59,7 @@ packages:
       - fastfetch
       - p7zip-full
       - zsh # default interactive shell (oh-my-zsh)
+      - tmux # multiplexer (oh-my-tmux); zsh launches into it on login
     # Every profile except coding-noai
     ai:
       - nodejs # runs the npx-based MCP servers in claude.yaml
@@ -91,6 +93,7 @@ packages:
     common:
       - chezmoi # permanent install; the README one-liner only fetches a throwaway copy
       - nerd-fonts-cascadiacode # powerline/nerd glyphs for oh-my-zsh in WSL; Terminal config uses it
+      - psmux # native-Windows tmux (reads ~/.psmux.conf); WSL gets real tmux
       - autohotkey
       - git
       - gh # GitHub CLI

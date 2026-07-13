@@ -18,6 +18,8 @@ firefox-policies.json
 .zprofile
 .zshrc
 .aliases
+.tmux.conf
+.tmux.conf.local
 .config/nvim
 .config/systemd
 .local
@@ -25,6 +27,14 @@ firefox-policies.json
 # Windows-only files
 .chezmoiscripts/windows/**
 AppData
+.psmux.conf
+{{ end }}
+
+{{ if .steamdeck }}
+# No tmux on the Deck: it keeps bash + oh-my-bash, and pacman packages don't
+# survive SteamOS updates, so .tmux.conf would only dangle (see before_26)
+.tmux.conf
+.tmux.conf.local
 {{ end }}
 
 {{ if not .gui }}

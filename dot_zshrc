@@ -3,6 +3,23 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
 
+# Launch straight into tmux, one fresh session per terminal (so two ddterm tabs
+# are two independent sessions, not two views of the same one). `exec` hands the
+# terminal to tmux, so quitting tmux closes the terminal like a normal shell exit.
+# This sits above oh-my-zsh on purpose: tmux starts its own zsh, which reads this
+# file again with $TMUX set and falls through, so oh-my-zsh only loads once.
+# Guards, in order: interactive shells only (not scripts, `zsh -c`, or the shells
+# Claude Code spawns); not already inside tmux; not a terminal embedded in an
+# editor that drives its own UI; not a bare TTY or dumb terminal (no powerline
+# glyphs there); and only where tmux actually exists (the Steam Deck has none).
+if [[ -o interactive ]] && [[ -z "$TMUX" ]] \
+    && [[ -z "$VSCODE_INJECTION" && -z "$INSIDE_EMACS" && -z "$NVIM" \
+          && "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]] \
+    && [[ "$TERM" != "dumb" && "$TERM" != "linux" ]] \
+    && command -v tmux >/dev/null; then
+    exec tmux new-session
+fi
+
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
