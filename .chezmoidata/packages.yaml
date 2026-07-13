@@ -31,6 +31,7 @@ packages:
       - npm
     # Fedora GNOME desktop only
     gui:
+      - firefox
       - gparted
       - gnome-tweaks
       - input-remapper
@@ -67,7 +68,7 @@ packages:
   flatpak:
     # Fedora GNOME desktop, every profile (system-wide)
     gui:
-      - org.mozilla.firefox
+      # - org.mozilla.firefox # using dnf firefox
       - it.mijorus.gearlever
       - io.github.flattool.Warehouse
       - io.github.peazip.PeaZip
