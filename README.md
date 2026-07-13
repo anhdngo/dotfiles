@@ -140,13 +140,32 @@ The status bar deliberately matches the agnoster prompt: the same powerline
 chevrons, and the same role → colour mapping (blue = where you are, green =
 who you are, yellow = something wants you, grey = ambient chrome). Colours are
 ANSI *names*, not hex, so tmux resolves them through the same terminal palette
-agnoster's prompt does.
+agnoster's prompt does — the bar and the prompt can't drift apart.
 
 Mouse mode is on (oh-my-tmux ships it off): without it the wheel never reaches
 tmux and the terminal turns it into Up/Down arrows, which walks the shell's
-history instead of scrolling. **Alt + h/j/k/l** moves between panes with no
-prefix key. Editing `.tmux.conf.local` only takes effect when the tmux *server*
-restarts — press **prefix + r** to reload it into a running one.
+history instead of scrolling. A mouse drag copies straight to the system
+clipboard; **Shift + drag** bypasses tmux for the terminal's own selection.
+Prefix-free keys: **Alt + h/j/k/l** between panes, **Alt + -** / **Alt + _** to
+split, **Ctrl+Alt + h/l/n** for windows. Editing `.tmux.conf.local` only takes
+effect when the tmux *server* restarts — press **prefix + r** to reload it into
+a running one.
+
+> **The terminals have to agree on two things**, or the bar renders differently
+> on each machine — both are configured here, but they're easy to break:
+>
+> - **The same palette.** ANSI names resolve through each terminal's palette.
+>   ptyxis's GNOME palette has separate light/dark variants and picks dark
+>   automatically (blue = `#1e78e4`); ddterm has one static palette, and it
+>   shipped the *light* values (`#12488b`), so the same ANSI slot was a different
+>   colour in each. `dconf/ddterm.ini` now carries the GNOME **Dark** values.
+> - **Bold must not be brightened.** oh-my-tmux emits the current window's
+>   trailing chevron with no attribute reset, so it inherits the segment's bold.
+>   A terminal that promotes bold ANSI 0–7 *foregrounds* to their bright variants
+>   (backgrounds are never promoted) draws that chevron bright against a
+>   normal-blue badge. ptyxis defaults this off; `dconf/ddterm.ini` sets
+>   `bold-is-bright=false`; Windows Terminal's `settings.json` sets
+>   `intenseTextStyle=bold`, because its default is `bright`.
 
 > **Editing the status bar:** oh-my-tmux only treats ` , ` and ` | ` as
 > separators at brace depth 0 — its `awk` deliberately protects commas inside

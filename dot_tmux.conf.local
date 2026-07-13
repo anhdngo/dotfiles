@@ -14,14 +14,32 @@
 #   grey    ambient chrome     (agnoster's user@host context: white on black)
 #
 # Colours are ANSI *names*, not hex, on purpose: that way tmux resolves them
-# through the same terminal palette agnoster's prompt does (the ddterm palette
-# in dconf/ddterm.ini), so the greens and blues line up exactly instead of
-# merely being close.
+# through the same terminal palette agnoster's prompt does (dconf/ddterm.ini on
+# GNOME), so the greens and blues line up exactly instead of merely being close.
+# The greys are hex because there's no ANSI slot for them.
 
 # --- palette -----------------------------------------------------------------
 tmux_conf_theme_colour_1="black"      # status bar background
 tmux_conf_theme_colour_2="#303030"    # grey: pane border, ambient segment bg
 tmux_conf_theme_colour_3="#8a8a8a"    # light grey: status text, inactive windows
+# Plain ANSI "blue" - the palette preset, deliberately not a hand-picked hex, so
+# the bar tracks whatever the terminal's palette says and stays in step with the
+# agnoster prompt (which uses the same ANSI name, stock).
+#
+# For this to hold, both terminals have to agree on two things, and dconf/ddterm.ini
+# is set up so they do:
+#   - the same palette. ddterm carries the GNOME *Dark* values (blue = #1e78e4);
+#     it used to carry the light ones (#12488b), while ptyxis picks dark
+#     automatically - same ANSI slot, different colour, so the bar looked
+#     different in each terminal.
+#   - bold text must not be brightened. oh-my-tmux emits the current window's
+#     trailing chevron as "#[fg=<accent>,bg=<bar>]" with no attribute reset, so
+#     it inherits the segment's bold. A terminal that promotes bold ANSI 0-7
+#     *foregrounds* to their bright variants (backgrounds are never promoted)
+#     renders that chevron bright (#51a1ff) against a normal-blue badge, and the
+#     two no longer match. ptyxis defaults this off; dconf/ddterm.ini sets
+#     bold-is-bright=false; Windows Terminal's settings.json sets
+#     intenseTextStyle=bold, since its default is "bright".
 tmux_conf_theme_colour_4="blue"       # accent: current window, active pane border
 tmux_conf_theme_colour_5="yellow"     # alert: messages, copy mode
 
@@ -81,11 +99,11 @@ tmux_conf_theme_clock_style="12"
 # U+F0E7 is the charging bolt, U+F240 the battery. Written as \uXXXX escapes,
 # which oh-my-tmux decodes itself: literal glyphs work too, but the escape form
 # keeps this file plain ASCII so no editor or transfer can mangle the codepoints.
-# The terminal font
-# (Adwaita Mono) doesn't have them, but fontconfig falls back to the JetBrains
-# Mono Nerd Font in ~/.local/share/fonts, and Windows Terminal has Cascadia Code
-# Nerd Font. On a box with neither they'd be tofu - but a box without a Nerd Font
-# is a headless server, which has no battery, so the segment is hidden anyway.
+# The terminal font (Adwaita Mono) doesn't have them, but fontconfig falls back to
+# the JetBrains Mono Nerd Font in ~/.local/share/fonts, and Windows Terminal uses
+# Cascadia Code Nerd Font. On a box with neither they'd be tofu - but a box
+# without a Nerd Font is a headless server, which has no battery, so the segment
+# is hidden anyway.
 tmux_conf_battery_status_charging="\uf0e7"
 tmux_conf_battery_status_discharging="\uf240"
 
@@ -110,6 +128,15 @@ set -g mouse on
 
 # The scrollback the wheel now scrolls through (oh-my-tmux default is 5000)
 set -g history-limit 50000
+
+# With mouse on, tmux grabs the drag, so selecting text no longer hands it to the
+# terminal's own clipboard. This makes tmux's selection copy straight to the OS
+# clipboard instead (wl-copy on Wayland, xsel/xclip on X11, clip.exe under WSL),
+# so drag-to-select-and-copy works like it did before.
+# Shift+drag still bypasses tmux entirely and gives you ddterm's native
+# selection, which is what you want for copying a rectangle or a URL out of a
+# full-screen app.
+tmux_conf_copy_to_os_clipboard=true
 
 # Alt + h/j/k/l moves focus between panes, vim-style, with no prefix key.
 # (Only moves between *tmux* panes - if you want the same keys to also step in

@@ -16,7 +16,18 @@
             // Nerd Font build of Cascadia (choco: nerd-fonts-cascadiacode) —
             // the stock Cascadia Mono lacks the powerline glyphs oh-my-zsh
             // themes use in WSL
-            "font": { "face": "CaskaydiaCove Nerd Font" }
+            "font": { "face": "CaskaydiaCove Nerd Font" },
+
+            // Render bold text as bold, without swapping it to the bright
+            // palette. Terminal's default here is "bright", which promotes a
+            // bold ANSI 0-7 *foreground* to its bright variant while leaving
+            // backgrounds alone — that splits the tmux status bar in two, since
+            // oh-my-tmux lets the current window's trailing chevron inherit the
+            // segment's bold: the chevron renders bright blue against a
+            // normal-blue badge. GNOME's terminals don't brighten bold (ptyxis
+            // defaults off, and dconf/ddterm.ini sets bold-is-bright=false), so
+            // this keeps WSL looking like the Linux machines.
+            "intenseTextStyle": "bold"
         }
     }
 }
