@@ -64,6 +64,15 @@ source ~/.aliases
 # No custom keybindings: oh-my-zsh already ships the ones .bashrc had to set
 # by hand (prefix history search on Up/Down, Ctrl-arrow word movement)
 
+# Greet the session with the snail. This has to sit below the tmux block above,
+# not with it: `exec tmux` replaces this shell and clears the screen, so a
+# greeting printed up there would never be seen. Tmux's own zsh re-reads this
+# file with $TMUX set, falls through that block, and prints the snail here.
+# Guarded on cowsay existing because the Steam Deck installs no dnf/apt packages.
+if [[ -o interactive ]] && command -v cowsay >/dev/null; then
+  cowsay -f "$HOME/.local/share/cows/snail.cow" "mornin dink"
+fi
+
 # SDKMAN, on machines that have it (its installer insists this stays at the
 # end of the file)
 export SDKMAN_DIR="$HOME/.sdkman"

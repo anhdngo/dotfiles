@@ -66,3 +66,10 @@ bind '"\e[B":history-search-forward'
 # Keep Ctrl-Left and Ctrl-Right working when the above are used
 bind '"\e[1;5C":forward-word'
 bind '"\e[1;5D":backward-word'
+
+# Greet the session with the snail. Interactive-only comes free here: this file
+# returns early for non-interactive shells. Guarded on cowsay existing because
+# the Steam Deck (the one machine still on bash) installs no dnf/apt packages.
+if command -v cowsay >/dev/null; then
+    cowsay -f "$HOME/.local/share/cows/snail.cow" "mornin dink"
+fi

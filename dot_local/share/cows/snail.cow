@@ -1,0 +1,15 @@
+##
+## A snail. Greets every new interactive shell (see ~/.zshrc, ~/.bashrc).
+##
+## Cowfiles are Perl: backslashes double up, and a literal @ has to be escaped
+## so Perl doesn't read the eyestalks as an array.
+##
+$the_cow = <<"EOC";
+  $thoughts
+   $thoughts
+        .----.   \@   \@
+       / .-"-.`.  \\v/
+       | | '\\ \\ \\_/ )
+     ,-\\ `-.' /.'  /
+    '---`----'----'
+EOC

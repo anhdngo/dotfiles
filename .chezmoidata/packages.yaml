@@ -25,6 +25,7 @@ packages:
       - p7zip
       - zsh # default interactive shell (oh-my-zsh)
       - tmux # multiplexer (oh-my-tmux); zsh launches into it on login
+      - cowsay # the snail that greets each shell (~/.local/share/cows/snail.cow)
     # All Fedora machines, every profile except coding-noai
     ai:
       - nodejs # runs the npx-based MCP servers in claude.yaml
@@ -61,6 +62,7 @@ packages:
       - p7zip-full
       - zsh # default interactive shell (oh-my-zsh)
       - tmux # multiplexer (oh-my-tmux); zsh launches into it on login
+      - cowsay # the snail that greets each shell (~/.local/share/cows/snail.cow)
     # Every profile except coding-noai
     ai:
       - nodejs # runs the npx-based MCP servers in claude.yaml
