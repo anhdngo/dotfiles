@@ -1,44 +1,34 @@
-# oh-my-tmux customizations — sourced by ~/.tmux.conf (a symlink into the
-# ~/.tmux clone made by run_once_before_26-oh-my-tmux.sh).
+# oh-my-tmux customizations — sourced by ~/.tmux.conf (a symlink into the ~/.tmux
+# clone made by run_once_before_26-oh-my-tmux.sh). Only the overrides live here;
+# oh-my-tmux's own defaults cover every tmux_conf_* we don't set.
 #
-# Only the overrides live here; oh-my-tmux falls back to its own defaults for
-# every tmux_conf_* variable we don't set, so this stays short.
+# The theme matches the oh-my-zsh **agnoster** prompt, so bar and prompt read as
+# one thing: same powerline chevrons, same role → colour mapping:
 #
-# Theme: matches the oh-my-zsh **agnoster** prompt, so the status bar and the
-# prompt read as one thing. Same powerline chevrons, and the same role → colour
-# mapping agnoster uses:
+#   blue    where you are       (agnoster's path segment: black on blue)
+#   green   who/where you are   (clean-git segment: black on green)
+#   yellow  something wants you (dirty-git / ⚡: black on yellow)
+#   grey    ambient chrome      (user@host context: white on black)
 #
-#   blue    where you are      (agnoster's path segment: black on blue)
-#   green   who/where you are  (agnoster's clean-git segment: black on green)
-#   yellow  something wants you (agnoster's dirty-git / ⚡: black on yellow)
-#   grey    ambient chrome     (agnoster's user@host context: white on black)
-#
-# Colours are ANSI *names*, not hex, on purpose: that way tmux resolves them
-# through the same terminal palette agnoster's prompt does (dconf/ddterm.ini on
-# GNOME), so the greens and blues line up exactly instead of merely being close.
-# The greys are hex because there's no ANSI slot for them.
+# Colours are ANSI *names*, not hex, so tmux resolves them through the same
+# terminal palette agnoster does (dconf/ddterm.ini on GNOME) and the greens and
+# blues line up exactly. The greys are hex: ANSI has no slot for them.
 
 # --- palette -----------------------------------------------------------------
-# "black" is only ever a *foreground* here: the text on the coloured badges. The
-# bar itself has no background - see "default" below.
+# "black" is only ever a *foreground* here - the text on the coloured badges. The
+# bar itself has no background, see below.
 tmux_conf_theme_colour_1="black"
 tmux_conf_theme_colour_2="#303030"    # grey: pane border, ambient segment bg
 tmux_conf_theme_colour_3="#8a8a8a"    # light grey: status text, inactive windows
-# Plain ANSI "blue" - the palette preset, deliberately not a hand-picked hex, so
-# the bar tracks whatever the terminal's palette says and stays in step with the
-# agnoster prompt (which uses the same ANSI name, stock).
-#
-# For this to hold, both terminals have to agree on two things, and dconf/ddterm.ini
-# is set up so they do:
-#   - the same palette. ddterm carries the GNOME *Dark* values (blue = #1e78e4);
-#     it used to carry the light ones (#12488b), while ptyxis picks dark
-#     automatically - same ANSI slot, different colour, so the bar looked
-#     different in each terminal.
-#   - bold text must not be brightened. The current window's label is bold black
-#     on blue, and a terminal that promotes bold ANSI 0-7 *foregrounds* to their
-#     bright variants would wash it out to grey. ptyxis defaults this off;
-#     dconf/ddterm.ini sets bold-is-bright=false; Windows Terminal's settings.json
-#     sets intenseTextStyle=bold, since its default is "bright".
+# For plain ANSI "blue" to land on the same colour as the prompt, both terminals
+# have to agree on two things, and dconf/ddterm.ini is set up so they do:
+#   - same palette. ddterm carries the GNOME *Dark* values (blue = #1e78e4); with
+#     the light ones (#12488b) the bar looked different in ptyxis, which picks
+#     dark automatically - same ANSI slot, different colour.
+#   - bold must not brighten. The current window's label is bold black on blue,
+#     and a terminal that promotes bold ANSI 0-7 *foregrounds* to their bright
+#     variants washes it out to grey. ptyxis defaults this off; ddterm sets
+#     bold-is-bright=false; Windows Terminal sets intenseTextStyle=bold.
 tmux_conf_theme_colour_4="blue"       # accent: current window, active pane border
 tmux_conf_theme_colour_5="yellow"     # alert: messages, copy mode
 
@@ -59,41 +49,39 @@ tmux_conf_theme_colour_14="black"     # user@host: black...
 tmux_conf_theme_colour_17="green"     # ...on green (agnoster's clean-git segment)
 
 # --- the bar has no background -----------------------------------------------
-# "default" tells tmux to paint nothing and let the terminal show through.
-# Painting the bar "black" instead gave a purple stripe - GNOME's ANSI black is
-# #241f31 - and no opaque colour can match ddterm's 95%-opacity background anyway.
-# Set on these three rather than on colour_1, which stays "black" for the badge
-# *text* oh-my-tmux also derives from it.
+# "default" tells tmux to paint nothing and let the terminal show through. An
+# opaque "black" gave a purple stripe - GNOME's ANSI black is #241f31 - and no
+# opaque colour can match ddterm's 95% opacity anyway. Set here rather than on
+# colour_1, which stays "black" for the badge *text* oh-my-tmux derives from it.
 tmux_conf_theme_status_bg="default"
 tmux_conf_theme_window_status_bg="default"
 tmux_conf_theme_message_command_bg="default"
 
 # --- separators --------------------------------------------------------------
-# Blank, and they stay blank: a separator sits *between* two badges and can only
-# be one colour, so it can never draw two free-standing ends. The badges are
-# pills, so their round caps go inside the status strings instead (see below).
+# The main separators stay blank: a separator sits *between* two badges and can
+# only be one colour, so it can never draw two free-standing pill caps. The caps
+# go in the status strings instead (see below).
 #
-# The *sub* separator divides items *inside* one pill, e.g. battery from clock: a
-# plain vertical bar (U+2502). Literal glyph, so keep this file UTF-8.
+# The *sub* separator divides items inside one pill, e.g. battery from clock:
+# U+2502, a literal glyph, so keep this file UTF-8.
 tmux_conf_theme_left_separator_main=''
 tmux_conf_theme_left_separator_sub='│'
 tmux_conf_theme_right_separator_main=''
 tmux_conf_theme_right_separator_sub='│'
 
 # --- status line -------------------------------------------------------------
-# Left: the session. Right: flags, then battery+clock+date, then user@host.
-# "|" separates badges and " , " separates items inside one - oh-my-tmux's
-# convention, not a typo. Commas inside #[...] and #{?...} are safe: its splitter
-# counts brackets and braces and leaves anything inside a pair alone.
+# Left: the session. Right: flags, battery+clock+date, user@host. oh-my-tmux's
+# convention: "|" separates badges, " , " separates items inside one. Commas
+# inside #[...] and #{?...} are safe - its splitter skips bracketed pairs.
 #
-# Each badge is a pill: cap + body + cap, the caps (U+E0B6, U+E0B4) drawn in the
+# Each badge is a pill: cap + body + cap (U+E0B6, U+E0B4), the caps drawn in the
 # body's background colour against the bar's nothing. Two rules when editing:
 #   - "none" on a cap clears the bold the body sets, so a terminal that brightens
-#     bold text can't draw the cap a lighter shade than the pill it caps.
+#     bold text can't draw the cap lighter than the pill it caps.
 #   - no space after the "|" that opens a badge: oh-my-tmux paints the badge
-#     background from the first character, and a leading space would put a square
-#     block of colour in front of the round cap. The gaps between pills are the
-#     trailing spaces of the badge before, which fall after a cap.
+#     background from the first character, so a leading space puts a square block
+#     of colour in front of the round cap. The gaps between pills are the trailing
+#     spaces of the badge before, which fall after a cap.
 #
 # The battery shares the clock pill, so a desktop without one just shows the
 # clock. #{prefix} and #{synchronized} are the one badge with no pill (colour_15
@@ -102,39 +90,50 @@ tmux_conf_theme_right_separator_sub='│'
 tmux_conf_theme_status_left='#[fg=#303030,bg=default,none]\ue0b6#[fg=#e4e4e4,bg=#303030,bold] ❐ #S #[fg=#303030,bg=default,none]\ue0b4'
 tmux_conf_theme_status_right=' #{prefix}#{synchronized} |#[fg=#303030,bg=default,none]\ue0b6#[fg=#e4e4e4,bg=#303030,none] #{?battery_percentage,#{battery_status} #{battery_percentage} │ ,}%I:%M %p , %d %b #[fg=#303030,bg=default,none]\ue0b4 |#[fg=green,bg=default,none]\ue0b6#[fg=black,bg=green,bold] #{username}#{root} , #{hostname} #[fg=green,bg=default,none]\ue0b4 '
 
-# The pill bodies above spell out their own bold/none, since the cap in front of
-# them clears it. These still style the │ oh-my-tmux inserts at each " , ".
+# The pill bodies spell out their own bold/none, since the cap in front clears it.
+# These only style the │ oh-my-tmux inserts at each " , ".
 tmux_conf_theme_status_left_attr="bold,none,none"
 tmux_conf_theme_status_right_attr="none,none,bold"
+
+# --- a blank line above the bar ----------------------------------------------
+# An empty row between the pills and the shell output, so the bar floats under
+# the text instead of reading as the next line of it. tmux has no padding, but it
+# will draw a status bar more than one line tall - at the cost of a pane row.
+#
+# status-format[0] is always the *top* line, even with the bar at the bottom, so
+# the blank goes in slot 0 and the real bar moves down to slot 1. That bar is
+# tmux's stock format (oh-my-tmux only fills in status-left, status-right and the
+# window list, which the format renders); rather than paste a copy here and pin
+# ourselves to today's tmux, read the default back out of slot 0 and move it.
+#
+# The -n guard keeps this idempotent: on a re-source slot 0 is already empty, and
+# copying that over slot 1 would leave no bar at all. The trailing ":" keeps a
+# skipped copy from being reported as a failed command.
+run 'f=$(tmux show -gv "status-format[0]"); [ -n "$f" ] && tmux set -g "status-format[1]" "$f" \; set -g "status-format[0]" "" \; set -g status 2; :'
 
 # 12-hour clock, in the status bar (%I:%M %p above) and in tmux's own clock mode
 tmux_conf_theme_clock_style="12"
 
-# Battery: a real battery icon, plus a bolt while charging, then the percentage.
-# U+F0E7 is the charging bolt, U+F240 the battery. Written as \uXXXX escapes,
-# which oh-my-tmux decodes itself: literal glyphs work too, but the escape form
-# keeps this file plain ASCII so no editor or transfer can mangle the codepoints.
-# The terminal font (Adwaita Mono) doesn't have them, but fontconfig falls back to
-# the JetBrains Mono Nerd Font in ~/.local/share/fonts, and Windows Terminal uses
-# Cascadia Code Nerd Font. On a box with neither they'd be tofu - but a box
-# without a Nerd Font is a headless server, which has no battery, so the segment
-# is hidden anyway.
+# Battery: a bolt while charging (U+F0E7), a battery icon (U+F240), percentage.
+# The \uXXXX escapes are decoded by oh-my-tmux and keep this file plain ASCII, so
+# no editor or transfer can mangle the codepoints. The glyphs come from a Nerd
+# Font via fontconfig fallback (JetBrains Mono here, Cascadia Code on Windows
+# Terminal); a box with neither is a headless server, which has no battery, so
+# the segment is hidden anyway.
 tmux_conf_battery_status_charging="\uf0e7"
 tmux_conf_battery_status_discharging="\uf240"
 
-# Terminal/tab title: the directory and the running command. oh-my-tmux's
-# default is "#h \u2750 #S \u25cf #I #W" - hostname and session name, which tell us
-# nothing we can't already see in the status bar.
+# Terminal/tab title: directory and running command. oh-my-tmux's default is the
+# hostname and session name, which the status bar already shows.
 tmux_conf_theme_terminal_title='#{b:pane_current_path} \u00b7 #{pane_current_command}'
 
-# Current window is the blue pill — the same "you are here" cue agnoster gives the
-# current directory. The others get no pill: plain grey text, so the eye has one
-# thing to land on.
+# Current window is the blue pill — agnoster's "you are here" cue. The others get
+# no pill, just grey text, so the eye has one thing to land on.
 #
-# The background has to be "default" even though the pill is blue: oh-my-tmux pads
-# the current window with a space either side, outside this format string and in
-# the badge's background colour, and in blue those would be square blocks bracing
-# the round caps. Transparent, they become the gaps between tabs instead.
+# The background stays "default" even though the pill is blue: oh-my-tmux pads the
+# current window with a space either side, outside this format string and in the
+# badge's background colour - in blue those would be square blocks bracing the
+# round caps. Transparent, they become the gaps between tabs instead.
 #
 # The bell/zoom flags are oh-my-tmux's default format, kept verbatim.
 tmux_conf_theme_window_status_current_bg="default"
@@ -142,45 +141,41 @@ tmux_conf_theme_window_status_current_format='#[fg=blue,bg=default,none]\ue0b6#[
 tmux_conf_theme_window_status_current_attr="bold"
 
 # --- behaviour ---------------------------------------------------------------
-# Plain tmux commands are allowed here too; oh-my-tmux sources this file as a
-# tmux config before it applies the theme.
+# Plain tmux commands work here too; oh-my-tmux sources this file as a tmux config
+# before it applies the theme.
 
-# Mouse on, so the wheel scrolls tmux's own scrollback. Without it the wheel
-# never reaches tmux, and the terminal helpfully translates it into Up/Down
-# arrows - which walks the shell's command history instead of scrolling.
-# oh-my-tmux ships with mouse off, hence this line.
+# Mouse on, so the wheel scrolls tmux's own scrollback. Without it the wheel never
+# reaches tmux and the terminal turns it into Up/Down arrows, which walks the
+# shell's history instead. oh-my-tmux ships with mouse off.
 set -g mouse on
 
 # The scrollback the wheel now scrolls through (oh-my-tmux default is 5000)
 set -g history-limit 50000
 
-# With mouse on, tmux grabs the drag, so selecting text no longer hands it to the
-# terminal's own clipboard. This makes tmux's selection copy straight to the OS
-# clipboard instead (wl-copy on Wayland, xsel/xclip on X11, clip.exe under WSL),
-# so drag-to-select-and-copy works like it did before.
-# Shift+drag still bypasses tmux entirely and gives you ddterm's native
-# selection, which is what you want for copying a rectangle or a URL out of a
-# full-screen app.
+# With mouse on, tmux grabs the drag, so a selection no longer reaches the
+# terminal's clipboard. This copies tmux's own selection to the OS clipboard
+# instead (wl-copy on Wayland, xsel/xclip on X11, clip.exe under WSL).
+# Shift+drag still bypasses tmux for ddterm's native selection, which is what you
+# want for a rectangle or a URL out of a full-screen app.
 tmux_conf_copy_to_os_clipboard=true
 
-# Alt + h/j/k/l moves focus between panes, vim-style, with no prefix key.
-# (Only moves between *tmux* panes - if you want the same keys to also step in
-# and out of vim's own splits, that needs the vim-tmux-navigator plugin on both
-# sides.)
+# Alt + h/j/k/l moves focus between panes, vim-style, no prefix. (tmux panes only;
+# stepping in and out of vim's own splits needs the vim-tmux-navigator plugin on
+# both sides.)
 bind -n M-h select-pane -L
 bind -n M-j select-pane -D
 bind -n M-k select-pane -U
 bind -n M-l select-pane -R
 
-# Add ctrl and the same h/l move between windows (the "tabs") instead of panes;
-# ctrl+alt+n opens a new one. (Not ctrl+shift+n: ddterm binds that to its own
-# new-tab, so tmux would never see the key.)
+# Add ctrl and h/l moves between windows (the "tabs") instead of panes; ctrl+alt+n
+# opens a new one. (Not ctrl+shift+n: ddterm binds that to its own new-tab, so
+# tmux would never see the key.)
 bind -n C-M-h previous-window
 bind -n C-M-l next-window
 bind -n C-M-n new-window
 
 # Alt+- and alt+_ split the pane, same meaning as oh-my-tmux's prefix + - / _
-# (- splits below, _ splits to the right). The -c keeps the new pane in the
-# current directory, which is what oh-my-tmux's prefixed versions do.
+# (- splits below, _ splits to the right). The -c keeps the new pane in the current
+# directory, as the prefixed versions do.
 bind -n M-- split-window -v -c "#{pane_current_path}"
 bind -n M-_ split-window -h -c "#{pane_current_path}"
