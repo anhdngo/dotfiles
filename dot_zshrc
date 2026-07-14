@@ -31,9 +31,32 @@ plugins=(
   git
 )
 
+# Prompt, matched to the tmux status bar (~/.tmux.conf.local): agnoster's
+# user@host segment is black by default, which GNOME's palette renders purple -
+# give it the same grey the bar's pills use. These have to be set before the theme
+# loads, because it fills them in with `: ${VAR:=black}`.
+AGNOSTER_CONTEXT_BG='#303030'
+AGNOSTER_CONTEXT_FG='#e4e4e4'
+
 if [ -d "$ZSH" ]; then
   source "$ZSH"/oh-my-zsh.sh
 fi
+
+# The rest of the look, which agnoster exposes no variables for: segments abut
+# flat instead of being joined by a chevron, and the prompt ends in the same round
+# cap the bar's pills do (U+E0B4, not agnoster's U+E0B0). This is agnoster's own
+# prompt_end with the glyph swapped; %b drops bold first, so a terminal that
+# brightens bold text can't draw the cap a lighter shade than the segment it caps.
+SEGMENT_SEPARATOR=''
+prompt_end() {
+  if [[ -n $CURRENT_BG ]]; then
+    echo -n " %{%b%k%F{$CURRENT_BG}%}"$'\ue0b4'
+  else
+    echo -n "%{%k%}"
+  fi
+  echo -n "%{%f%}"
+  CURRENT_BG=''
+}
 
 # Personal aliases and environment variables
 source ~/.aliases

@@ -19,7 +19,9 @@
 # The greys are hex because there's no ANSI slot for them.
 
 # --- palette -----------------------------------------------------------------
-tmux_conf_theme_colour_1="black"      # status bar background
+# "black" is only ever a *foreground* here: the text on the coloured badges. The
+# bar itself has no background - see "default" below.
+tmux_conf_theme_colour_1="black"
 tmux_conf_theme_colour_2="#303030"    # grey: pane border, ambient segment bg
 tmux_conf_theme_colour_3="#8a8a8a"    # light grey: status text, inactive windows
 # Plain ANSI "blue" - the palette preset, deliberately not a hand-picked hex, so
@@ -32,14 +34,11 @@ tmux_conf_theme_colour_3="#8a8a8a"    # light grey: status text, inactive window
 #     it used to carry the light ones (#12488b), while ptyxis picks dark
 #     automatically - same ANSI slot, different colour, so the bar looked
 #     different in each terminal.
-#   - bold text must not be brightened. oh-my-tmux emits the current window's
-#     trailing chevron as "#[fg=<accent>,bg=<bar>]" with no attribute reset, so
-#     it inherits the segment's bold. A terminal that promotes bold ANSI 0-7
-#     *foregrounds* to their bright variants (backgrounds are never promoted)
-#     renders that chevron bright (#51a1ff) against a normal-blue badge, and the
-#     two no longer match. ptyxis defaults this off; dconf/ddterm.ini sets
-#     bold-is-bright=false; Windows Terminal's settings.json sets
-#     intenseTextStyle=bold, since its default is "bright".
+#   - bold text must not be brightened. The current window's label is bold black
+#     on blue, and a terminal that promotes bold ANSI 0-7 *foregrounds* to their
+#     bright variants would wash it out to grey. ptyxis defaults this off;
+#     dconf/ddterm.ini sets bold-is-bright=false; Windows Terminal's settings.json
+#     sets intenseTextStyle=bold, since its default is "bright".
 tmux_conf_theme_colour_4="blue"       # accent: current window, active pane border
 tmux_conf_theme_colour_5="yellow"     # alert: messages, copy mode
 
@@ -53,48 +52,58 @@ tmux_conf_theme_colour_11="yellow"
 
 # status-right segments (fg then bg, left to right)
 tmux_conf_theme_colour_12="#8a8a8a"   # flags: grey...
-tmux_conf_theme_colour_15="black"     # ...on the bar itself (no badge)
+tmux_conf_theme_colour_15="default"   # ...on the bar itself (no badge)
 tmux_conf_theme_colour_13="#e4e4e4"   # clock: white...
 tmux_conf_theme_colour_16="#303030"   # ...on grey
 tmux_conf_theme_colour_14="black"     # user@host: black...
 tmux_conf_theme_colour_17="green"     # ...on green (agnoster's clean-git segment)
 
+# --- the bar has no background -----------------------------------------------
+# "default" tells tmux to paint nothing and let the terminal show through.
+# Painting the bar "black" instead gave a purple stripe - GNOME's ANSI black is
+# #241f31 - and no opaque colour can match ddterm's 95%-opacity background anyway.
+# Set on these three rather than on colour_1, which stays "black" for the badge
+# *text* oh-my-tmux also derives from it.
+tmux_conf_theme_status_bg="default"
+tmux_conf_theme_window_status_bg="default"
+tmux_conf_theme_message_command_bg="default"
+
 # --- separators --------------------------------------------------------------
-# No powerline chevrons anywhere in the bar: the badges are flat colour blocks
-# that simply abut. Blanking the four *_main separators is what does it (the same
-# variables wrap the window tabs, the session badge and the right-hand badges).
+# Blank, and they stay blank: a separator sits *between* two badges and can only
+# be one colour, so it can never draw two free-standing ends. The badges are
+# pills, so their round caps go inside the status strings instead (see below).
 #
-# The *sub* separator still has a job - it divides items *inside* one badge, e.g.
-# battery from clock. A blank one would run them together, so it's a plain
-# vertical bar (U+2502) rather than a thin chevron: flat, and in every mono font.
-# Literal glyph, so keep this file UTF-8.
-#
-# The prompt still uses chevrons; only the bar is flat. If you ever want them
-# back, the powerline glyphs are U+E0B0/E0B1 (left) and U+E0B2/E0B3 (right).
+# The *sub* separator divides items *inside* one pill, e.g. battery from clock: a
+# plain vertical bar (U+2502). Literal glyph, so keep this file UTF-8.
 tmux_conf_theme_left_separator_main=''
 tmux_conf_theme_left_separator_sub='│'
 tmux_conf_theme_right_separator_main=''
 tmux_conf_theme_right_separator_sub='│'
 
 # --- status line -------------------------------------------------------------
-# Left: the session, as one badge.
-# Right: three badges - flags, then battery+clock+date, then user@host on green.
-# In these strings " | " separates badges and " , " separates items inside one
-# badge - that's oh-my-tmux's convention, not a typo. Badges now abut flatly;
-# the items inside one get the vertical bar above. The commas *inside* #{?...}
-# conditionals are tmux's own syntax, which is why they have no spaces around
-# them: that's what keeps oh-my-tmux from mistaking them for separators.
+# Left: the session. Right: flags, then battery+clock+date, then user@host.
+# "|" separates badges and " , " separates items inside one - oh-my-tmux's
+# convention, not a typo. Commas inside #[...] and #{?...} are safe: its splitter
+# counts brackets and braces and leaves anything inside a pair alone.
 #
-# The battery lives in the clock badge rather than getting its own, so that a
-# desktop with no battery just shows the clock instead of an empty badge with
-# chevrons hanging off it.
+# Each badge is a pill: cap + body + cap, the caps (U+E0B6, U+E0B4) drawn in the
+# body's background colour against the bar's nothing. Two rules when editing:
+#   - "none" on a cap clears the bold the body sets, so a terminal that brightens
+#     bold text can't draw the cap a lighter shade than the pill it caps.
+#   - no space after the "|" that opens a badge: oh-my-tmux paints the badge
+#     background from the first character, and a leading space would put a square
+#     block of colour in front of the round cap. The gaps between pills are the
+#     trailing spaces of the badge before, which fall after a cap.
 #
-# No #{mouse} indicator: mouse is now permanently on (see below), so the arrow
-# would be lit forever and tell us nothing. #{prefix} and #{synchronized} stay -
-# those only appear when they're actually true.
-tmux_conf_theme_status_left=' ❐ #S '
-tmux_conf_theme_status_right=' #{prefix}#{synchronized} | #{?battery_percentage,#{battery_status} #{battery_percentage} │ ,}%I:%M %p , %d %b | #{username}#{root} , #{hostname} '
+# The battery shares the clock pill, so a desktop without one just shows the
+# clock. #{prefix} and #{synchronized} are the one badge with no pill (colour_15
+# gives them no background) and appear only when true; no #{mouse}, which is
+# always on and would tell us nothing.
+tmux_conf_theme_status_left='#[fg=#303030,bg=default,none]\ue0b6#[fg=#e4e4e4,bg=#303030,bold] ❐ #S #[fg=#303030,bg=default,none]\ue0b4'
+tmux_conf_theme_status_right=' #{prefix}#{synchronized} |#[fg=#303030,bg=default,none]\ue0b6#[fg=#e4e4e4,bg=#303030,none] #{?battery_percentage,#{battery_status} #{battery_percentage} │ ,}%I:%M %p , %d %b #[fg=#303030,bg=default,none]\ue0b4 |#[fg=green,bg=default,none]\ue0b6#[fg=black,bg=green,bold] #{username}#{root} , #{hostname} #[fg=green,bg=default,none]\ue0b4 '
 
+# The pill bodies above spell out their own bold/none, since the cap in front of
+# them clears it. These still style the │ oh-my-tmux inserts at each " , ".
 tmux_conf_theme_status_left_attr="bold,none,none"
 tmux_conf_theme_status_right_attr="none,none,bold"
 
@@ -118,8 +127,18 @@ tmux_conf_battery_status_discharging="\uf240"
 # nothing we can't already see in the status bar.
 tmux_conf_theme_terminal_title='#{b:pane_current_path} \u00b7 #{pane_current_command}'
 
-# Current window is the blue segment — the same "you are here" cue agnoster
-# gives the current directory.
+# Current window is the blue pill — the same "you are here" cue agnoster gives the
+# current directory. The others get no pill: plain grey text, so the eye has one
+# thing to land on.
+#
+# The background has to be "default" even though the pill is blue: oh-my-tmux pads
+# the current window with a space either side, outside this format string and in
+# the badge's background colour, and in blue those would be square blocks bracing
+# the round caps. Transparent, they become the gaps between tabs instead.
+#
+# The bell/zoom flags are oh-my-tmux's default format, kept verbatim.
+tmux_conf_theme_window_status_current_bg="default"
+tmux_conf_theme_window_status_current_format='#[fg=blue,bg=default,none]\ue0b6#[fg=black,bg=blue,bold] #I #W#{?#{||:#{window_bell_flag},#{window_zoomed_flag}}, ,}#{?window_bell_flag,!,}#{?window_zoomed_flag,Z,} #[fg=blue,bg=default,none]\ue0b4'
 tmux_conf_theme_window_status_current_attr="bold"
 
 # --- behaviour ---------------------------------------------------------------
