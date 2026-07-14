@@ -88,7 +88,7 @@ tmux_conf_theme_right_separator_sub='│'
 # gives them no background) and appear only when true; no #{mouse}, which is
 # always on and would tell us nothing.
 tmux_conf_theme_status_left='#[fg=#303030,bg=default,none]\ue0b6#[fg=#e4e4e4,bg=#303030,bold] ❐ #S #[fg=#303030,bg=default,none]\ue0b4'
-tmux_conf_theme_status_right=' #{prefix}#{synchronized} |#[fg=#303030,bg=default,none]\ue0b6#[fg=#e4e4e4,bg=#303030,none] #{?battery_percentage,#{battery_status} #{battery_percentage} │ ,}%I:%M %p , %d %b #[fg=#303030,bg=default,none]\ue0b4 |#[fg=green,bg=default,none]\ue0b6#[fg=black,bg=green,bold] #{username}#{root} , #{hostname} #[fg=green,bg=default,none]\ue0b4 '
+tmux_conf_theme_status_right=' #{prefix}#{synchronized} |#[fg=#303030,bg=default,none]\ue0b6#[fg=#e4e4e4,bg=#303030,none] #{?battery_percentage,#{?#{==:#{battery_status},\uf240},#{?#{>=:#{@battery_charge},0.8},\uf240,#{?#{>=:#{@battery_charge},0.6},\uf241,#{?#{>=:#{@battery_charge},0.4},\uf242,#{?#{>=:#{@battery_charge},0.2},\uf243,\uf244}}}},#{battery_status}} #{battery_percentage} │ ,}%I:%M %p , %b %d #[fg=#303030,bg=default,none]\ue0b4 |#[fg=green,bg=default,none]\ue0b6#[fg=black,bg=green,bold] #{username}#{root} , #{hostname} #[fg=green,bg=default,none]\ue0b4 '
 
 # The pill bodies spell out their own bold/none, since the cap in front clears it.
 # These only style the │ oh-my-tmux inserts at each " , ".
@@ -114,7 +114,13 @@ run 'f=$(tmux show -gv "status-format[0]"); [ -n "$f" ] && tmux set -g "status-f
 # 12-hour clock, in the status bar (%I:%M %p above) and in tmux's own clock mode
 tmux_conf_theme_clock_style="12"
 
-# Battery: a bolt while charging (U+F0E7), a battery icon (U+F240), percentage.
+# Battery: a bolt while charging (U+F0E7), otherwise a battery that drains with the
+# charge - full to empty, U+F240 .. U+F244. #{battery_status} only knows charging from
+# discharging, so the level comes from the ladder above, which walks @battery_charge
+# (0..1, re-read every 60s) down in #{?#{>=:...}} steps and takes \uf240 as its
+# "discharging" flag. Those steps are string compares - tmux has no numeric one - and
+# hold only because awk always prints the charge as a leading-zero decimal.
+#
 # The \uXXXX escapes are decoded by oh-my-tmux and keep this file plain ASCII, so
 # no editor or transfer can mangle the codepoints. The glyphs come from a Nerd
 # Font via fontconfig fallback (JetBrains Mono here, Cascadia Code on Windows
