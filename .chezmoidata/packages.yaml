@@ -20,7 +20,7 @@ packages:
       - fd-find
       - unzip
       - neovim
-      - powerline-fonts
+      - powerline-fonts # separators only; the tmux battery/bolt glyphs need a Nerd Font, installed by run_once_before_15-nerd-font.sh on GUI machines
       - fastfetch
       - p7zip
       - zsh # default interactive shell (oh-my-zsh)
@@ -57,7 +57,7 @@ packages:
       - fd-find
       - unzip
       - neovim
-      - fonts-powerline
+      - fonts-powerline # separators only; Nerd Font glyphs come from run_once_before_15-nerd-font.sh (GUI machines; WSL/headless don't need it)
       - fastfetch
       - p7zip-full
       - zsh # default interactive shell (oh-my-zsh)
