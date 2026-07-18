@@ -69,9 +69,9 @@ source ~/.aliases
 # greeting printed up there would never be seen. Tmux's own zsh re-reads this
 # file with $TMUX set, falls through that block, and prints the snail here.
 # Guarded on cowsay existing because the Steam Deck installs no dnf/apt packages.
-if [[ -o interactive ]] && command -v cowsay >/dev/null; then
-  cowsay -f "$HOME/.local/share/cows/snail.cow" "mornin dink"
-fi
+#if [[ -o interactive ]] && command -v cowsay >/dev/null; then
+#  cowsay -f "$HOME/.local/share/cows/snail.cow" "mornin dink"
+#fi
 
 # SDKMAN, on machines that have it (its installer insists this stays at the
 # end of the file)
