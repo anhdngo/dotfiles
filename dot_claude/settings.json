@@ -1,0 +1,12 @@
+{
+  "env": {
+    "GODOT_PATH": "/opt/Godot_v4.7-stable_linux.x86_64"
+  },
+  "model": "claude-fable-5[1m]",
+  "effortLevel": "high",
+  "theme": "dark",
+  "attribution": {
+    "commit": "",
+    "pr": ""
+  }
+}
