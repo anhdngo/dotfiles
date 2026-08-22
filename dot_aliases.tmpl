@@ -1,6 +1,12 @@
 {{- $gamedev := eq (default "gamedev" (get . "profile")) "gamedev" -}}
 # Environment Variables
 export EDITOR=nvim
+# sudoedit copies the file out, opens it as *you*, and writes it back as root.
+# That keeps the editor on your own Wayland session, so yanking still reaches the
+# clipboard - editing as root instead gets you root's XDG_RUNTIME_DIR and no
+# clipboard at all. It also means nvim, not the clipboard-less /usr/bin/vi that
+# `sudo vi` lands on: sudo doesn't expand the aliases below.
+export SUDO_EDITOR=nvim
 export WS=$HOME/Workspace
 export AS=$HOME/Assets
 export CONFIG=$HOME/.config

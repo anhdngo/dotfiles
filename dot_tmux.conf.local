@@ -165,6 +165,28 @@ set -g history-limit 50000
 # want for a rectangle or a URL out of a full-screen app.
 tmux_conf_copy_to_os_clipboard=true
 
+# wl-copy needs WAYLAND_DISPLAY and XDG_RUNTIME_DIR to find the compositor, and
+# the tmux *server* outlives the login session that started it - it can easily be
+# running for days. update-environment refreshes a session's copy of these on
+# each attach, but ships without XDG_RUNTIME_DIR, so add it. When either goes
+# stale wl-copy just exits non-zero, and copy-pipe discards that: yanking and
+# drag-selecting both stop reaching the clipboard with nothing said about it.
+#
+# This only fixes panes opened *after* the re-attach; ones already running keep
+# the environment they were born with, so a pane that has gone quiet needs to be
+# reopened rather than debugged.
+set -ga update-environment XDG_RUNTIME_DIR
+
+# Let a program inside a pane set the clipboard with the OSC 52 escape. tmux
+# defaults this to "external", which drops those sequences entirely - the reason
+# a remote nvim over ssh can't copy, since it has no wl-copy to fall back on.
+#
+# This does nothing locally: ddterm is VTE, which ignores OSC 52 writes, so the
+# terminal end of that path is closed no matter what tmux does. Copying here
+# goes through wl-copy (above) and always has. It's set for the day this config
+# is attached from a terminal that does honour OSC 52.
+set -s set-clipboard on
+
 # Alt + h/j/k/l moves focus between panes, vim-style, no prefix. (tmux panes only;
 # stepping in and out of vim's own splits needs the vim-tmux-navigator plugin on
 # both sides.)

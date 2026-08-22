@@ -64,7 +64,15 @@ set writebackup
 " }}}
 
 " CUSTOM FUNCTIONS {{{
-set clipboard=unnamedplus
+" Only nvim ever honours this. This file is ~/.vimrc, which nvim doesn't read -
+" it reads .config/nvim/init.lua, which sets 'clipboard' itself. What actually
+" loads this is /usr/bin/vi, i.e. Fedora's vim-minimal, built -clipboard: it
+" takes the option without complaint but the + register goes nowhere. The guard
+" says so out loud. vim skips :if..:endif wholesale when built -eval, as
+" vim-minimal is, so the block is simply never read there.
+if has('clipboard')
+  set clipboard=unnamedplus
+endif
 set modeline
 set modelines=1
 
