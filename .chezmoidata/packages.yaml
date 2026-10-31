@@ -130,6 +130,7 @@ packages:
       - ripgrep
       - fd
       - neovim
+      - tree-sitter-cli # nvim-treesitter (main branch) builds parsers with it
       - fastfetch
       - p7zip # `7z`, for the encrypt alias
       - cowsay # the snail that greets each shell (~/.local/share/cows/snail.cow)
