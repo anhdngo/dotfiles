@@ -27,19 +27,3 @@ Roughly in priority order.
   run fail until the next manual `chezmoi apply`. Could split package installs
   out of the timer path or use a passwordless-sudo allowlist for dnf/apt.
 
-## Done
-
-- ~~Scope the dconf dump~~ — per-area files in `dconf/` (paths defined in
-  `.chezmoidata/dconf.yaml`), saved with `czsave-dconf`.
-- ~~Auto-update~~ — daily `chezmoi-update.timer` (systemd user unit, enabled by
-  script 70; also upgrades the chezmoi binary; linger enabled on the server).
-- ~~Godot editor settings version drift~~ — `godot-update` links each new
-  version's `editor_settings-X.Y.tres` to the newest existing settings file.
-- ~~Unified Godot editor settings across OSes~~ — one copy in `.config/godot`;
-  on Windows `%APPDATA%\Godot` is a chezmoi-managed symlink to it
-  (`AppData/Roaming/symlink_Godot.tmpl`), gated on the gamedev profile.
-- ~~Native chezmoi on Windows~~ — Windows is a first-class chezmoi target:
-  choco packages in `packages.yaml`, PowerShell run-scripts in
-  `.chezmoiscripts/windows/`, hotkeys.ahk + Windows Terminal settings managed
-  as real dotfiles under `AppData/`. Machine **profiles** (`coding`/`gamedev`)
-  added at the same time gate Godot/art/media software per machine.

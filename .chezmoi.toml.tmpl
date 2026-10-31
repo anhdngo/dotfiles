@@ -10,12 +10,8 @@
 {{-   end -}}
 {{- end -}}
 
-{{/* Profile — what this machine is for. Asked once at `chezmoi init` and
-     stored in the local config (never committed); re-run `chezmoi init` to
-     change it, then `chezmoi apply`.
-       coding       — programming tools incl. Claude Code (safe for a work computer)
-       coding-noai  — same, but no Claude Code / AI tooling
-       gamedev      — everything: coding + AI + Godot + art/media apps */}}
+{{/* Profile, asked once and stored in ~/.config/chezmoi/chezmoi.toml. To
+     change it, edit it there; `chezmoi init` won't ask again. */}}
 {{- $profile := promptChoiceOnce . "profile" "Machine profile" (list "coding" "coding-noai" "gamedev") "gamedev" -}}
 
 {{/* WSL install — asked once on native Windows only (never on headless

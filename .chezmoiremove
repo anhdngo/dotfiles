@@ -13,3 +13,8 @@
 .tmux.conf
 .tmux.conf.local
 .psmux.conf
+{{ if eq .chezmoi.os "darwin" -}}
+# Old LaunchAgents: Hammerspoon remaps Caps Lock now, and updates are manual
+Library/LaunchAgents/me.anhngo.capslock.plist
+Library/LaunchAgents/me.anhngo.chezmoi-update.plist
+{{ end -}}

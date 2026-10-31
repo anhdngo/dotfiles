@@ -1,19 +1,19 @@
 {{- /* chezmoi:modify-template */ -}}
 {{- /*
-  Merged into ~/.claude/settings.json rather than replacing it: Claude Code and
-  iTerm2's Claude Code integration both write their own keys (hooks, status
-  line, ...) into this file, and a plain managed file wiped those on every
-  `chezmoi update`. Only the keys set below are enforced; everything else in
-  the live file is left alone.
+  Merged into ~/.claude/settings.json, which Claude Code and iTerm2 also write
+  to. Keys below are defaults for a new machine, set only when missing, so
+  changes made in Claude Code stick.
 */ -}}
 {{- $s := dict -}}
 {{- if .chezmoi.stdin | trim -}}
 {{-   $s = fromJson .chezmoi.stdin -}}
 {{- end -}}
-{{- $s = setValueAtPath "env.GODOT_PATH" "/opt/Godot_v4.7-stable_linux.x86_64" $s -}}
-{{- /* No pinned model: Claude Code picks its own default */ -}}
-{{- $s = unset $s "model" -}}
-{{- $s = setValueAtPath "effortLevel" "high" $s -}}
-{{- $s = setValueAtPath "theme" "dark" $s -}}
-{{- $s = setValueAtPath "attribution" (dict "commit" "" "pr" "") $s -}}
+{{- range $k, $v := dict "effortLevel" "high" "theme" "dark" "attribution" (dict "commit" "" "pr" "") -}}
+{{-   if not (hasKey $s $k) }}{{ $_ := set $s $k $v }}{{ end -}}
+{{- end -}}
+{{- /* A stale Linux path this file used to set; the shell exports the right one */ -}}
+{{- if hasKey $s "env" -}}
+{{-   $_ := unset $s.env "GODOT_PATH" -}}
+{{-   if not $s.env }}{{ $_ := unset $s "env" }}{{ end -}}
+{{- end -}}
 {{- toPrettyJson $s -}}
