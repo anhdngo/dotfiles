@@ -86,7 +86,8 @@ so on are in [docs/adding-things.md](docs/adding-things.md).
   (`~/Library/Application Support/Godot`, `%APPDATA%\Godot`) aside first. On
   Windows the symlink needs Developer Mode.
 - **iTerm2** profiles can't be changed in its UI; edit the JSON.
-- **macOS Caps Lock** stops opening Mission Control if Caps Lock is set to
-  anything in System Settings → Keyboard → Modifier Keys.
+- **macOS key remaps** (Caps Lock as a hyper key, Globe/fn ↔ Control) live
+  in `dot_hammerspoon/init.lua`. Don't use System Settings → Keyboard →
+  Modifier Keys: it and Hammerspoon overwrite each other.
 - **The Linux daily update** can't use sudo, so after a package list change
   it fails until you run `chezmoi apply` yourself.
