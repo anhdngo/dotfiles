@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!--
+  Daily dotfiles update - the macOS twin of chezmoi-update.timer on Linux.
+  Upgrades the chezmoi binary itself first (tolerating failure, e.g. offline),
+  then pulls and applies. launchd runs a calendar job missed while the Mac
+  slept as soon as it wakes, like the timer's Persistent=true.
+  Output lands in ~/Library/Logs/chezmoi-update.log.
+-->
+<plist version="1.0">
+<dict>
+    <key>Label</key>
+    <string>me.anhngo.chezmoi-update</string>
+    <key>ProgramArguments</key>
+    <array>
+        <string>/bin/sh</string>
+        <string>-c</string>
+        <string>"$HOME/.local/bin/chezmoi" upgrade; exec "$HOME/.local/bin/chezmoi" update --no-tty</string>
+    </array>
+    <key>EnvironmentVariables</key>
+    <dict>
+        <!-- launchd's own PATH has no Homebrew, which the run-scripts need -->
+        <key>PATH</key>
+        <string>/opt/homebrew/bin:/opt/homebrew/sbin:/usr/bin:/bin:/usr/sbin:/sbin</string>
+    </dict>
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key>
+        <integer>12</integer>
+        <key>Minute</key>
+        <integer>0</integer>
+    </dict>
+    <key>StandardOutPath</key>
+    <string>{{ .chezmoi.homeDir }}/Library/Logs/chezmoi-update.log</string>
+    <key>StandardErrorPath</key>
+    <string>{{ .chezmoi.homeDir }}/Library/Logs/chezmoi-update.log</string>
+</dict>
+</plist>

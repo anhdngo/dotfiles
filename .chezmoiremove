@@ -7,3 +7,9 @@
 # everywhere except the Steam Deck, which stays on bash
 .oh-my-bash
 {{ end -}}
+# tmux is gone (iTerm2 / ddterm / Windows Terminal tabs instead): clear out
+# the oh-my-tmux clone, its config, and psmux's config on Windows
+.tmux
+.tmux.conf
+.tmux.conf.local
+.psmux.conf

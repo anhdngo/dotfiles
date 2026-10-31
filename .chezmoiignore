@@ -18,8 +18,6 @@ firefox-policies.json
 .zprofile
 .zshrc
 .aliases
-.tmux.conf
-.tmux.conf.local
 .config/nvim
 .config/systemd
 .local
@@ -27,14 +25,23 @@ firefox-policies.json
 # Windows-only files
 .chezmoiscripts/windows/**
 AppData
-.psmux.conf
 {{ end }}
 
-{{ if .steamdeck }}
-# No tmux on the Deck: it keeps bash + oh-my-bash, and pacman packages don't
-# survive SteamOS updates, so .tmux.conf would only dangle (see before_26)
-.tmux.conf
-.tmux.conf.local
+{{ if eq .chezmoi.os "darwin" }}
+# Linux-only files (macOS shares the zsh, nvim, vim and git setup).
+# godot-update fetches Linux builds; on macOS Godot comes from Homebrew.
+.chezmoiscripts/linux/**
+.config/systemd
+.local/bin/godot-update
+.local/bin/install-nvidia
+.local/bin/install-tailscale
+.local/bin/install-zerotier
+.local/share/backgrounds
+{{ else }}
+# macOS-only files
+.chezmoiscripts/darwin/**
+.hammerspoon
+Library
 {{ end }}
 
 {{ if not .gui }}
@@ -52,4 +59,5 @@ AppData
 .local/bin/godot-update
 AppData/Roaming/Godot
 AppData/Local/Programs/Godot
+Library/Application Support/Godot
 {{ end }}

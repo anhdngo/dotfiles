@@ -1,4 +1,5 @@
 {{- $gamedev := eq (default "gamedev" (get . "profile")) "gamedev" -}}
+{{- $macos := eq .chezmoi.os "darwin" -}}
 # Environment Variables
 export EDITOR=nvim
 # sudoedit copies the file out, opens it as *you*, and writes it back as root.
@@ -13,7 +14,12 @@ export CONFIG=$HOME/.config
 {{- if $gamedev }}
 export GWS=$HOME/GodotProjects
 {{- end }}
-{{- if and (not .headless) $gamedev }}
+{{- if and $macos $gamedev }}
+
+# Godot — the godot / godot-mono Homebrew casks (`brew upgrade` updates them)
+export GODOT_PATH="/Applications/Godot.app/Contents/MacOS/Godot"
+export GODOT_NET_PATH="/Applications/Godot_mono.app/Contents/MacOS/Godot"
+{{- else if and (not .headless) $gamedev }}
 
 # Godot — installed/updated by `godot-update`; these symlink paths stay
 # stable across versions
@@ -46,6 +52,16 @@ alias nvim="flatpak run io.neovim.nvim"
 alias e="nautilus . & disown"
 alias f="nautilus . & disown"
 {{- end }}
+{{- if $macos }}
+alias e="open ."
+alias f="open ."
+# macOS ships python3 but no `python`; this carries py, pthon and serve along
+alias python=python3
+{{- if $gamedev }}
+# The godot cask puts `godot` on PATH; the .NET one doesn't
+alias godotnet='"$GODOT_NET_PATH"'
+{{- end }}
+{{- end }}
 
 alias encrypt="7z a -p -mx=9 -mhe -t7z"
 alias serve="python -m http.server"
@@ -70,6 +86,15 @@ alias gws='cd $GWS'
 {{- end }}
 {{- if .wsl }}
 alias wh='cd ~/winhome'
+{{- end }}
+{{- if $macos }}
+
+alias icloud='cd ~/Library/Mobile\ Documents/com~apple~CloudDocs'
+alias pc='cd ~/pCloud\ Drive'
+alias steam='cd ~/Library/Application\ Support/Steam/steamapps/common'
+{{- if $gamedev }}
+alias gdata='cd ~/Library/Application\ Support/Godot/app_userdata'
+{{- end }}
 {{- end }}
 {{- if .gui }}
 

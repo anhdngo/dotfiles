@@ -1,0 +1,45 @@
+{{- $profile := default "gamedev" (get . "profile") -}}
+{{- $gamedev := eq $profile "gamedev" -}}
+{{- $ai := ne $profile "coding-noai" -}}
+#!/bin/bash
+# Installs Homebrew + packages from .chezmoidata/packages.yaml (macOS).
+# run_onchange: re-runs whenever the rendered package lists change.
+set -eu
+
+if [ ! -x /opt/homebrew/bin/brew ]; then
+    echo "==> Installing Homebrew"
+    # NONINTERACTIVE skips the "press RETURN" prompt but then refuses to ask
+    # for a password itself, so cache the sudo credentials first
+    sudo -v
+    NONINTERACTIVE=1 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+fi
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+echo "==> Installing Homebrew packages"
+brewfile=$(mktemp)
+trap 'rm -f "$brewfile"' EXIT
+cat > "$brewfile" <<'EOF'
+# Apps installed by hand before this ran (Firefox, iTerm, Godot, ...) are taken
+# over by Homebrew instead of failing with "already an App at ..."
+cask_args adopt: true
+{{ range .packages.brew.common -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ if $ai -}}
+{{ range .packages.brew.ai -}}
+brew {{ . | quote }}
+{{ end -}}
+{{ end -}}
+{{ range .packages.brew.casks.common -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ if $gamedev -}}
+{{ range .packages.brew.casks.gamedev -}}
+cask {{ . | quote }}
+{{ end -}}
+{{ end -}}
+EOF
+# One bad entry (a renamed cask, an adopt that hits a version mismatch) must
+# not stop the dotfiles from being written. Fixing the entry in packages.yaml
+# changes this script, so the next apply runs it again.
+brew bundle --file="$brewfile" || echo "warning: some Homebrew packages failed to install - see above" >&2

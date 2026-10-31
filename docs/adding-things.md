@@ -60,6 +60,15 @@ Edit the managed file (in the repo:
 on the Windows side — a run_onchange script relaunches AutoHotkey with the
 new hotkeys.
 
+## Edit macOS hotkeys
+
+Edit `dot_hammerspoon/init.lua`, then `chezmoi apply` — Hammerspoon watches
+its config folder and reloads itself. The iTerm2 drop-down key lives in the
+`dotfiles hotkey` profile in
+`Library/Application Support/iTerm2/DynamicProfiles/dotfiles.json`
+(`HotKey Modifier Flags`: 1048576 = Cmd, 262144 = Ctrl); iTerm2 reloads
+dynamic profiles on its own.
+
 ## Change Windows Terminal settings
 
 Either edit the managed `settings.json` under

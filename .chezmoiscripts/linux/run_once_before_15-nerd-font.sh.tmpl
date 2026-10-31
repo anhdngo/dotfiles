@@ -1,14 +1,14 @@
 {{ if .gui -}}
 #!/bin/bash
-# Installs the JetBrainsMono Nerd Font into ~/.local/share/fonts so the tmux
-# status bar's battery/bolt glyphs (PUA codepoints , .. — see
-# dot_tmux.conf.local) actually render. Fedora/Debian ship only the un-patched
-# jetbrains-mono-fonts, and powerline-fonts covers separators but not those PUA
-# icons, so we pull the Nerd-patched build straight from the ryanoasis release.
+# Installs the JetBrainsMono Nerd Font into ~/.local/share/fonts so the round
+# cap that ends the zsh prompt (U+E0B4, see prompt_end in dot_zshrc) actually
+# renders. Fedora/Debian ship only the un-patched jetbrains-mono-fonts, and
+# powerline-fonts covers agnoster's separators but not that glyph, so we pull
+# the Nerd-patched build straight from the ryanoasis release.
 #
-# GUI-only on purpose: WSL renders tmux through Windows Terminal, which already
-# has CaskaydiaCove Nerd Font (choco, see packages.yaml), and a headless server
-# has no display and hides the battery segment anyway.
+# GUI-only on purpose: WSL renders through Windows Terminal, which already has
+# CaskaydiaCove Nerd Font (choco, see packages.yaml), and a headless server is
+# reached from a terminal elsewhere, whose font is what counts.
 set -eu
 
 if fc-list 2>/dev/null | grep -qi "JetBrainsMono Nerd Font"; then

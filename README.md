@@ -92,6 +92,51 @@ script needs — and because WSL starts in the Windows directory you launched
 it from, not `~`. It asks for the [profile](#profiles) interactively; append
 a `--promptChoice` flag as above to preseed it.
 
+### macOS
+
+The plain Linux one-liners work as-is on a Mac (Apple Silicon): paste the line
+for the machine's profile into Terminal. It asks for your password once, to
+install Homebrew (which also installs the Xcode Command Line Tools if needed).
+
+Apply installs the Homebrew formulae and casks from `packages.yaml` (apps
+already in `/Applications` are adopted, not reinstalled), oh-my-zsh, and
+then the same zsh/nvim/git setup Linux gets. On top of that come the Mac-only
+pieces:
+
+- **iTerm2 profiles** (`Library/Application Support/iTerm2/DynamicProfiles/dotfiles.json`):
+  `dotfiles` for normal windows (made the default) and `dotfiles hotkey`, a
+  quake-style drop-down on **Cmd+\\** (ddterm's Ctrl+\\ on Linux). Both carry the
+  GNOME dark palette, JetBrainsMono Nerd Font, bold-not-bright, and
+  **Option as Esc+** — without that, Alt-chords (shell word movement, nvim)
+  type `˙∆˚¬` instead. They also carry iTerm2's **Claude Code
+  integration** triggers (open the Claude Code workgroup while `claude`
+  runs) and hide the shell-integration prompt marks. Dynamic profiles are
+  read-only to iTerm2: settings changed in its UI, or "installed" by iTerm2
+  onto them, vanish on the next reload, so make lasting changes in the JSON.
+  Delete any older hotkey-window profile you made by hand (Settings →
+  Profiles), or the two fight over the key.
+- **Global hotkeys** (`~/.hammerspoon/init.lua`, the `hotkeys.ahk` twin):
+  Ctrl+Option+B / +Shift+B browser / private, Ctrl+Option+T terminal,
+  Ctrl+Option+E Finder, Ctrl+Shift+Esc Activity Monitor, Ctrl+Option+Delete
+  close window, **Caps Lock → Mission Control**, mouse back/forward → previous
+  / next desktop. Caps Lock is remapped to F18 by a LaunchAgent so Hammerspoon
+  can bind it.
+- **System settings** (`run_onchange_after_40-defaults.sh`, the dconf
+  counterpart): dark mode, key repeat instead of the accent popup, fixed
+  desktop order, Finder opening in `~` with folders first and extensions shown.
+- **Daily `chezmoi update`** via a LaunchAgent instead of the systemd timer
+  (log: `~/Library/Logs/chezmoi-update.log`).
+- On the gamedev profile, Godot + Godot .NET come from Homebrew casks
+  (`brew upgrade` instead of `godot-update`), and
+  `~/Library/Application Support/Godot` becomes a symlink into
+  `~/.config/godot` like `%APPDATA%\Godot` on Windows. An existing real folder
+  is moved to `Godot.bak` first, keeping everything chezmoi doesn't manage.
+
+**One-time manual steps afterwards:** grant Hammerspoon *Accessibility*
+access when it asks (System Settings → Privacy & Security), then restart
+iTerm2 so it picks up the default profile. Dark mode and desktops spanning
+all displays take effect after logging out and back in.
+
 ## Profiles
 
 Besides OS detection, every machine picks a **profile** at `chezmoi init`
@@ -119,7 +164,8 @@ profiles: add a choice in `.chezmoi.toml.tmpl` and gate lists/files on it.
 | Fedora on WSL | kernel contains `microsoft` | terminal setup, dnf packages, `~/winhome` (headless — no Godot) |
 | Steam Deck | `ID=steamos` | terminal setup, user-scope flatpaks (never pacman — SteamOS updates wipe it), Godot |
 | Debian server | `ID=debian` | terminal setup, apt packages (no GUI, no Godot) |
-| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, psmux, shared dotfiles (vim, git), Godot + editor settings (symlinked) |
+| Windows | `.chezmoi.os == "windows"` | Chocolatey + packages, AutoHotkey hotkeys, Windows Terminal config, shared dotfiles (vim, git), Godot + editor settings (symlinked) |
+| macOS | `.chezmoi.os == "darwin"` | terminal setup, Homebrew formulae + casks, iTerm2 profiles, Hammerspoon hotkeys, macOS defaults, Godot casks + editor settings (symlinked) |
 
 (Godot and art/media apps additionally require the `gamedev` profile.)
 
@@ -128,66 +174,18 @@ profiles: add a choice in `.chezmoi.toml.tmpl` and gate lists/files on it.
 zsh + oh-my-zsh with the **agnoster** theme, except on the Steam Deck, which
 keeps bash + oh-my-bash (pacman packages don't survive SteamOS updates).
 
-Every interactive terminal `exec`s straight into **tmux**, themed with
-[oh-my-tmux](https://github.com/gpakosz/.tmux) (cloned into `~/.tmux` by
-`run_once_before_26`; `~/.tmux.conf` is a symlink into that clone, and our
-overrides live in `dot_tmux.conf.local`). Each terminal starts its *own* session,
-so two ddterm tabs are two independent sessions rather than two views of one, and
-quitting tmux closes the terminal. The guards in `.zshrc` keep tmux out of
-scripts, editor-embedded terminals, and bare TTYs.
+The prompt ends in a round cap (U+E0B4), a Nerd Font glyph: GUI Linux gets
+JetBrainsMono Nerd Font (`run_once_before_15`), macOS the same font as a cask,
+and Windows Terminal CaskaydiaCove Nerd Font. No terminal multiplexer: use the
+terminal's own tabs and splits (ddterm, iTerm2, Windows Terminal).
 
-The status bar takes the agnoster prompt's role → colour mapping (blue = where
-you are, green = who you are, yellow = something wants you, grey = ambient
-chrome), but its badges are **flat** — no powerline chevrons, just colour blocks
-that abut, with a plain `│` dividing items inside a badge. The prompt keeps its
-chevrons; only the bar is flat. Colours are ANSI *names*, not hex, so tmux
-resolves them through the same terminal palette agnoster's prompt does — the bar
-and the prompt can't drift apart.
-
-Mouse mode is on (oh-my-tmux ships it off): without it the wheel never reaches
-tmux and the terminal turns it into Up/Down arrows, which walks the shell's
-history instead of scrolling. A mouse drag copies straight to the system
-clipboard; **Shift + drag** bypasses tmux for the terminal's own selection.
-Prefix-free keys: **Alt + h/j/k/l** between panes, **Alt + -** / **Alt + _** to
-split, **Ctrl+Alt + h/l/n** for windows. Editing `.tmux.conf.local` only takes
-effect when the tmux *server* restarts — press **prefix + r** to reload it into
-a running one.
-
-> **The terminals have to agree on two things**, or the bar renders differently
-> on each machine — both are configured here, but they're easy to break:
->
-> - **The same palette.** ANSI names resolve through each terminal's palette.
->   ptyxis's GNOME palette has separate light/dark variants and picks dark
->   automatically (blue = `#1e78e4`); ddterm has one static palette, and it
->   shipped the *light* values (`#12488b`), so the same ANSI slot was a different
->   colour in each. `dconf/ddterm.ini` now carries the GNOME **Dark** values.
-> - **Bold must not be brightened.** oh-my-tmux emits the current window's
->   trailing chevron with no attribute reset, so it inherits the segment's bold.
->   A terminal that promotes bold ANSI 0–7 *foregrounds* to their bright variants
->   (backgrounds are never promoted) draws that chevron bright against a
->   normal-blue badge. ptyxis defaults this off; `dconf/ddterm.ini` sets
->   `bold-is-bright=false`; Windows Terminal's `settings.json` sets
->   `intenseTextStyle=bold`, because its default is `bright`.
-
-> **Editing the status bar:** oh-my-tmux only treats ` , ` and ` | ` as
-> separators at brace depth 0 — its `awk` deliberately protects commas inside
-> `#{...}`. So a divider *inside* a `#{?...}` conditional (like the one between
-> the battery and the clock) has to be a literal `│`, not a ` , ` — which is why
-> that one divider is hardcoded in the string instead of coming from
-> `tmux_conf_theme_right_separator_sub` like the others.
->
-> Segments built from `#(...)` shell commands — battery status, username,
-> hostname — only run when a **client is attached** and the bar actually
-> redraws. In a detached session they render empty, which looks exactly like a
-> broken config but isn't.
-
-Native Windows has no tmux, so Chocolatey installs
-[psmux](https://github.com/psmux/psmux) — a Rust tmux clone that speaks tmux
-config and reads `~/.psmux.conf`. oh-my-tmux itself can't run there (it builds
-its status bar by piping its own config back through `sh`/`sed`/`awk`/`perl`),
-so `dot_psmux.conf` reproduces the same look by hand in plain tmux syntax. It's
-a second copy of the theme on purpose — **keep the two in sync by eye**. Windows
-machines running WSL Fedora get the real tmux + oh-my-tmux inside WSL.
+> **Bold must not be brightened.** A terminal that promotes bold ANSI 0–7
+> *foregrounds* to their bright variants (backgrounds are never promoted) draws
+> bold powerline glyphs a lighter shade than their segment. ptyxis defaults
+> this off; `dconf/ddterm.ini` sets `bold-is-bright=false`; Windows Terminal's
+> `settings.json` sets `intenseTextStyle=bold`; the iTerm2 profiles turn off
+> "Use Bright Bold". ddterm also carries the GNOME **Dark** palette values, so
+> ANSI colours match ptyxis.
 
 ## Godot
 
@@ -222,7 +220,7 @@ changes identically on both OSes.
 
 | Task | Command |
 |---|---|
-| pull latest dotfiles + apply | `chezmoi update` (also runs daily via `chezmoi-update.timer`) |
+| pull latest dotfiles + apply | `chezmoi update` (also runs daily via `chezmoi-update.timer`, or a LaunchAgent on macOS) |
 | apply local changes | `chezmoi apply` |
 | cd into this repo | `czd` (alias for `chezmoi cd`) |
 | see what would change | `chezmoi diff` |
@@ -246,13 +244,16 @@ for the design of the chezmoi migration.
 
 ```
 .chezmoi.toml.tmpl       machine detection (windows / gui / wsl / steamdeck / headless) + profile prompt
-.chezmoidata/packages.yaml   all package lists (dnf/apt/flatpak/choco/extensions)
+.chezmoidata/packages.yaml   all package lists (dnf/apt/flatpak/choco/brew/extensions)
 .chezmoidata/dconf.yaml  which dconf paths are saved/loaded
 .chezmoiscripts/linux/   Linux install scripts, run by `chezmoi apply` in order
 .chezmoiscripts/windows/ Windows install scripts (Chocolatey, hotkey relaunch, default terminal)
+.chezmoiscripts/darwin/  macOS install scripts (Homebrew, defaults, LaunchAgents, Firefox policies)
 dot_*                    the dotfiles themselves (dot_bashrc -> ~/.bashrc, ...)
 dot_local/bin/           godot-update, czsave-dconf + optional install-* helpers
 AppData/                 Windows-native dotfiles: Terminal settings, Startup hotkeys.ahk
+Library/                 macOS-native dotfiles: iTerm2 profiles, LaunchAgents, Godot symlink
+dot_hammerspoon/         macOS global hotkeys (~/.hammerspoon/init.lua)
 docs/                    recipes, roadmap, recovered notes, backups
 dconf/                   scoped GNOME settings dumps (loaded on desktop, saved via czsave-dconf)
 ```

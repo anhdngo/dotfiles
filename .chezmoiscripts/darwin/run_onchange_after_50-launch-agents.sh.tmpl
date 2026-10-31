@@ -1,0 +1,22 @@
+#!/bin/bash
+# Loads the LaunchAgents in ~/Library/LaunchAgents (Caps Lock remap, daily
+# chezmoi update) now rather than at the next login, and starts Hammerspoon,
+# which then keeps itself running across logins (hs.autoLaunch in init.lua).
+# run_onchange: re-runs whenever an agent changes.
+#
+# File hashes (trigger re-run on change):
+# capslock: {{ include "Library/LaunchAgents/me.anhngo.capslock.plist" | sha256sum }}
+# chezmoi-update: {{ include "Library/LaunchAgents/me.anhngo.chezmoi-update.plist.tmpl" | sha256sum }}
+set -eu
+
+echo "==> Loading LaunchAgents"
+for label in me.anhngo.capslock me.anhngo.chezmoi-update; do
+    # bootstrap refuses an agent that's already loaded, so drop the old copy
+    launchctl bootout "gui/$(id -u)/$label" 2>/dev/null || true
+    launchctl bootstrap "gui/$(id -u)" "$HOME/Library/LaunchAgents/$label.plist"
+done
+
+if [ -d /Applications/Hammerspoon.app ]; then
+    echo "==> Starting Hammerspoon (grant it Accessibility access when asked)"
+    open -g -a Hammerspoon
+fi

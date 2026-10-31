@@ -3,23 +3,6 @@ if [[ ":$PATH:" != *":$HOME/.local/bin:"* ]]; then
   PATH="$HOME/.local/bin:$PATH"
 fi
 
-# Launch straight into tmux, one fresh session per terminal (so two ddterm tabs
-# are two independent sessions, not two views of the same one). `exec` hands the
-# terminal to tmux, so quitting tmux closes the terminal like a normal shell exit.
-# This sits above oh-my-zsh on purpose: tmux starts its own zsh, which reads this
-# file again with $TMUX set and falls through, so oh-my-zsh only loads once.
-# Guards, in order: interactive shells only (not scripts, `zsh -c`, or the shells
-# Claude Code spawns); not already inside tmux; not a terminal embedded in an
-# editor that drives its own UI; not a bare TTY or dumb terminal (no powerline
-# glyphs there); and only where tmux actually exists (the Steam Deck has none).
-if [[ -o interactive ]] && [[ -z "$TMUX" ]] \
-    && [[ -z "$VSCODE_INJECTION" && -z "$INSIDE_EMACS" && -z "$NVIM" \
-          && "$TERMINAL_EMULATOR" != "JetBrains-JediTerm" ]] \
-    && [[ "$TERM" != "dumb" && "$TERM" != "linux" ]] \
-    && command -v tmux >/dev/null; then
-    exec tmux new-session
-fi
-
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.oh-my-zsh"
 
@@ -31,9 +14,8 @@ plugins=(
   git
 )
 
-# Prompt, matched to the tmux status bar (~/.tmux.conf.local): agnoster's
-# user@host segment is black by default, which GNOME's palette renders purple -
-# give it the same grey the bar's pills use. These have to be set before the theme
+# Prompt: agnoster's user@host segment is black by default, which GNOME's
+# palette renders purple - make it a neutral grey. These have to be set before the theme
 # loads, because it fills them in with `: ${VAR:=black}`.
 AGNOSTER_CONTEXT_BG='#303030'
 AGNOSTER_CONTEXT_FG='#e4e4e4'
@@ -43,8 +25,8 @@ if [ -d "$ZSH" ]; then
 fi
 
 # The rest of the look, which agnoster exposes no variables for: segments abut
-# flat instead of being joined by a chevron, and the prompt ends in the same round
-# cap the bar's pills do (U+E0B4, not agnoster's U+E0B0). This is agnoster's own
+# flat instead of being joined by a chevron, and the prompt ends in a round cap
+# (U+E0B4, a Nerd Font glyph, not agnoster's U+E0B0). This is agnoster's own
 # prompt_end with the glyph swapped; %b drops bold first, so a terminal that
 # brightens bold text can't draw the cap a lighter shade than the segment it caps.
 SEGMENT_SEPARATOR=''
@@ -64,11 +46,8 @@ source ~/.aliases
 # No custom keybindings: oh-my-zsh already ships the ones .bashrc had to set
 # by hand (prefix history search on Up/Down, Ctrl-arrow word movement)
 
-# Greet the session with the snail. This has to sit below the tmux block above,
-# not with it: `exec tmux` replaces this shell and clears the screen, so a
-# greeting printed up there would never be seen. Tmux's own zsh re-reads this
-# file with $TMUX set, falls through that block, and prints the snail here.
-# Guarded on cowsay existing because the Steam Deck installs no dnf/apt packages.
+# Greet the session with the snail. Guarded on cowsay existing because the
+# Steam Deck installs no dnf/apt packages.
 #if [[ -o interactive ]] && command -v cowsay >/dev/null; then
 #  cowsay -f "$HOME/.local/share/cows/snail.cow" "mornin dink"
 #fi

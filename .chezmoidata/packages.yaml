@@ -1,7 +1,7 @@
 # Single source of truth for packages on every machine.
 # Editing this file makes the package script re-run on the next `chezmoi apply`.
 #
-# Profile split: `gamedev`-suffixed lists only install on gamedev-profile
+# Profile split: `gamedev`-suffixed (or -named) lists only install on gamedev-profile
 # machines (Godot, art, media). `ai`-suffixed lists install on every profile
 # EXCEPT coding-noai (Claude Code and its MCP-server runtimes). Everything
 # else installs on every profile, so keep work-computer-safe
@@ -20,11 +20,10 @@ packages:
       - fd-find
       - unzip
       - neovim
-      - powerline-fonts # separators only; the tmux battery/bolt glyphs need a Nerd Font, installed by run_once_before_15-nerd-font.sh on GUI machines
+      - powerline-fonts # separators only; the prompt's round cap needs a Nerd Font, installed by run_once_before_15-nerd-font.sh on GUI machines
       - fastfetch
       - p7zip
       - zsh # default interactive shell (oh-my-zsh)
-      - tmux # multiplexer (oh-my-tmux); zsh launches into it on login
       - cowsay # the snail that greets each shell (~/.local/share/cows/snail.cow)
     # All Fedora machines, every profile except coding-noai
     ai:
@@ -61,7 +60,6 @@ packages:
       - fastfetch
       - p7zip-full
       - zsh # default interactive shell (oh-my-zsh)
-      - tmux # multiplexer (oh-my-tmux); zsh launches into it on login
       - cowsay # the snail that greets each shell (~/.local/share/cows/snail.cow)
     # Every profile except coding-noai
     ai:
@@ -96,7 +94,6 @@ packages:
     common:
       - chezmoi # permanent install; the README one-liner only fetches a throwaway copy
       - nerd-fonts-cascadiacode # powerline/nerd glyphs for oh-my-zsh in WSL; Terminal config uses it
-      - psmux # native-Windows tmux (reads ~/.psmux.conf); WSL gets real tmux
       - autohotkey
       - git
       - gh # GitHub CLI
@@ -120,6 +117,47 @@ packages:
       - stremio
       - obs-studio
       - audacity
+  # macOS (Homebrew). Compilers, make and unzip come with the Xcode Command
+  # Line Tools, which the Homebrew installer sets up; zsh ships with macOS.
+  # Casks for apps already in /Applications are adopted, not reinstalled.
+  brew:
+    # All Macs
+    common:
+      - git # newer than Apple's /usr/bin/git
+      - gh # GitHub CLI
+      - glab # GitLab CLI
+      - just # command runner (justfiles)
+      - ripgrep
+      - fd
+      - neovim
+      - fastfetch
+      - p7zip # `7z`, for the encrypt alias
+      - cowsay # the snail that greets each shell (~/.local/share/cows/snail.cow)
+      - bitwarden-cli # bw, for bwu / install-age-key
+    # Every profile except coding-noai
+    ai:
+      - node # runs the npx-based MCP servers in claude.yaml
+    casks:
+      # All Macs
+      common:
+        - iterm2 # terminal; profiles in Library/Application Support/iTerm2/DynamicProfiles
+        - hammerspoon # global hotkeys (~/.hammerspoon/init.lua), the hotkeys.ahk twin
+        - font-jetbrains-mono-nerd-font # the prompt's powerline glyphs, same font as Linux
+        - firefox
+        - obsidian
+        - visual-studio-code
+      # gamedev profile only (mirrors flatpak.gui_gamedev; Foliate,
+      # VideoDownloader and NetworkDisplays are Linux-only)
+      gamedev:
+        - godot
+        - godot-mono
+        - dotnet-sdk # for Godot .NET builds
+        - gimp
+        - pinta
+        - vlc
+        - stremio
+        - obs
+        - audacity
   gnome_extensions:
     - ddterm@amezin.github.com # https://extensions.gnome.org/extension/3780/ddterm/
     - hotedge@jonathan.jdoda.ca # https://extensions.gnome.org/extension/4222/hot-edge/

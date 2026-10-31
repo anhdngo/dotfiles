@@ -1,0 +1,29 @@
+{{ if eq (default "gamedev" (get . "profile")) "gamedev" -}}
+#!/bin/bash
+# Clears the way for the Godot settings symlink (gamedev profile only).
+# chezmoi makes ~/Library/Application Support/Godot a symlink into
+# ~/.config/godot, so one copy of the editor settings serves every OS (see
+# Library/Application Support/symlink_Godot.tmpl), but it won't replace a real
+# directory - and opening Godot even once creates one. Move it aside, carry
+# over what chezmoi doesn't manage (app_userdata, export_templates, ...), and
+# leave the replaced settings in Godot.bak for comparison.
+set -eu
+
+support="$HOME/Library/Application Support"
+if [ -d "$support/Godot" ] && [ ! -L "$support/Godot" ]; then
+    backup="$support/Godot.bak"
+    [ -e "$backup" ] && backup="$backup.$(date +%Y%m%d%H%M%S)"
+    echo "==> Moving existing Godot settings to $backup"
+    mv "$support/Godot" "$backup"
+
+    mkdir -p "$HOME/.config/godot"
+    for entry in "$backup"/*; do
+        [ -e "$entry" ] || continue
+        name=$(basename "$entry")
+        case "$name" in
+        editor_settings-*.tres | editor_layouts.cfg) continue ;;
+        esac
+        [ -e "$HOME/.config/godot/$name" ] || mv "$entry" "$HOME/.config/godot/"
+    done
+fi
+{{ end -}}

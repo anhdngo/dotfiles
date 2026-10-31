@@ -189,11 +189,10 @@ do
 
 	-- Copy a mouse selection to the system clipboard.
 	--
-	-- Because 'mouse' is set above, tmux sees #{mouse_any_flag} and forwards the
-	-- whole drag here rather than running its own MouseDragEnd1Pane binding, so
-	-- the copy-to-clipboard that every other pane gets never fires inside nvim.
-	-- The drag would otherwise end in visual mode and reach no clipboard at all
-	-- - not tmux's, not the terminal's, which never sees the drag either.
+	-- Because 'mouse' is set above, the terminal forwards the whole drag here
+	-- instead of making its own selection, so its copy-on-select never fires
+	-- inside nvim. The drag would otherwise end in visual mode and reach no
+	-- clipboard at all.
 	--
 	-- 'y' goes to the + register via 'clipboard' above; 'gv' puts back the
 	-- selection that yanking clears, so the drag ends how it looks like it ended.
