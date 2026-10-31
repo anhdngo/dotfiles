@@ -11,7 +11,8 @@
 {{-   $s = fromJson .chezmoi.stdin -}}
 {{- end -}}
 {{- $s = setValueAtPath "env.GODOT_PATH" "/opt/Godot_v4.7-stable_linux.x86_64" $s -}}
-{{- $s = setValueAtPath "model" "claude-fable-5[1m]" $s -}}
+{{- /* No pinned model: Claude Code picks its own default */ -}}
+{{- $s = unset $s "model" -}}
 {{- $s = setValueAtPath "effortLevel" "high" $s -}}
 {{- $s = setValueAtPath "theme" "dark" $s -}}
 {{- $s = setValueAtPath "attribution" (dict "commit" "" "pr" "") $s -}}
