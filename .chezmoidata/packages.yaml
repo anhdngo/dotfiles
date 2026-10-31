@@ -142,6 +142,7 @@ packages:
       common:
         - iterm2 # terminal; profiles in Library/Application Support/iTerm2/DynamicProfiles
         - hammerspoon # global hotkeys (~/.hammerspoon/init.lua), the hotkeys.ahk twin
+        - middleclick # three-finger tap = middle click (turn off Trackpad > "Look up" tap)
         - font-jetbrains-mono-nerd-font # the prompt's powerline glyphs, same font as Linux
         - firefox
         - obsidian
