@@ -1,0 +1,18 @@
+{{- /* chezmoi:modify-template */ -}}
+{{- /*
+  Merged into ~/.claude/settings.json rather than replacing it: Claude Code and
+  iTerm2's Claude Code integration both write their own keys (hooks, status
+  line, ...) into this file, and a plain managed file wiped those on every
+  `chezmoi update`. Only the keys set below are enforced; everything else in
+  the live file is left alone.
+*/ -}}
+{{- $s := dict -}}
+{{- if .chezmoi.stdin | trim -}}
+{{-   $s = fromJson .chezmoi.stdin -}}
+{{- end -}}
+{{- $s = setValueAtPath "env.GODOT_PATH" "/opt/Godot_v4.7-stable_linux.x86_64" $s -}}
+{{- $s = setValueAtPath "model" "claude-fable-5[1m]" $s -}}
+{{- $s = setValueAtPath "effortLevel" "high" $s -}}
+{{- $s = setValueAtPath "theme" "dark" $s -}}
+{{- $s = setValueAtPath "attribution" (dict "commit" "" "pr" "") $s -}}
+{{- toPrettyJson $s -}}
