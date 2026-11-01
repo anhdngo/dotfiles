@@ -1,7 +1,7 @@
 #!/bin/bash
 # macOS settings that are easy to forget, applied once on a fresh Mac (a
 # migrated one brings them, and chezmoi's state, along). Change them in the UI
-# afterwards; this never re-runs. Spaces settings need a logout to take effect.
+# afterwards; this never re-runs.
 set -eu
 
 echo "==> Applying macOS settings"
@@ -9,9 +9,8 @@ echo "==> Applying macOS settings"
 # Holding a key repeats it instead of popping up the accent picker (vim hjkl)
 defaults write -g ApplePressAndHoldEnabled -bool false
 
-# Desktops stay in a fixed order and span all displays
+# Desktops stay in a fixed order instead of rearranging by recent use
 defaults write com.apple.dock mru-spaces -bool false
-defaults write com.apple.spaces spans-displays -bool true
 
 defaults write -g AppleShowAllExtensions -bool true
 defaults write com.apple.finder FXEnableExtensionChangeWarning -bool false

@@ -34,14 +34,20 @@ remapWatcher = hs.caffeinate.watcher.new(function(event)
 end):start()
 
 -- Caps Lock (F18) is a hyper key: hold it and press a letter for the hotkeys
--- below. Tapping it alone does nothing.
+-- below; tap it alone for Mission Control.
 hyper = hs.hotkey.modal.new()
-hs.hotkey.bind({}, "f18", function() hyper:enter() end, function() hyper:exit() end)
+hs.hotkey.bind({}, "f18",
+  function() hyper.used = false; hyper:enter() end,
+  function()
+    hyper:exit()
+    if not hyper.used then hs.spaces.toggleMissionControl() end
+  end)
 
 -- Bring an app forward: focus its window, restore one if all are minimized,
 -- or launch/reopen it (which gives Finder and the rest a fresh window).
 local function focusOrOpen(bundleID)
   return function()
+    hyper.used = true
     local app = hs.application.get(bundleID)
     if app then
       local minimized

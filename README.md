@@ -39,8 +39,8 @@ sudo dnf install -y gawk tar git && cd ~ && sh -c "$(curl -fsLS get.chezmoi.io/l
 
 - **Everywhere:** open a new shell so `chezmoi` is on PATH.
 - **GNOME:** log out and back in so the shell extensions load.
-- **macOS:** open Hammerspoon and grant it Accessibility access, restart
-  iTerm2, and log out and back in for the Spaces settings.
+- **macOS:** open Hammerspoon and grant it Accessibility access, and restart
+  iTerm2.
 
 ## Everyday commands
 
