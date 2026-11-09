@@ -39,8 +39,9 @@ sudo dnf install -y gawk tar git && cd ~ && sh -c "$(curl -fsLS get.chezmoi.io/l
 
 - **Everywhere:** open a new shell so `chezmoi` is on PATH.
 - **GNOME:** log out and back in so the shell extensions load.
-- **macOS:** open Hammerspoon and grant it Accessibility access, and restart
-  iTerm2.
+- **macOS:** open Hammerspoon and grant it Accessibility access, restart
+  iTerm2, and approve the Firefox profile in System Settings > General >
+  Device Management.
 
 ## Everyday commands
 
@@ -68,6 +69,7 @@ so on are in [docs/adding-things.md](docs/adding-things.md).
 | macOS hotkeys, Caps Lock | `dot_hammerspoon/init.lua` |
 | iTerm2 profiles | `Library/Application Support/iTerm2/DynamicProfiles/dotfiles.json` |
 | macOS settings for new Macs | `.chezmoiscripts/darwin/run_once_after_40-defaults.sh` |
+| Locked Firefox extensions (Linux, macOS) | `firefox-policies.json` |
 | Windows hotkeys | `AppData/…/Startup/hotkeys.ahk` |
 | Windows Terminal | change it in the UI, then `chezmoi re-add` |
 | Godot editor settings (all OSes) | `dot_config/godot/` |

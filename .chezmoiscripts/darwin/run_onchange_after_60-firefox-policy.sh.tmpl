@@ -1,0 +1,75 @@
+{{- $locked := (include "firefox-policies.json" | fromJson).policies.Extensions.Locked -}}
+#!/bin/bash
+# Locks the extensions listed in firefox-policies.json, the macOS twin of
+# /etc/firefox/policies/policies.json on Linux. macOS won't install a profile
+# from the command line, so this hands it to System Settings to approve.
+# Re-runs when the list changes; the fixed identifier replaces the old profile.
+set -eu
+
+profile="$(mktemp -d)/firefox-policies.mobileconfig"
+cat > "$profile" <<'EOF'
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>PayloadDisplayName</key>
+  <string>Firefox Policies</string>
+  <key>PayloadDescription</key>
+  <string>Stops the listed Firefox extensions from being disabled or removed.</string>
+  <key>PayloadIdentifier</key>
+  <string>me.anhngo.firefox-policies</string>
+  <key>PayloadUUID</key>
+  <string>6F1C2A54-3B7E-4D19-A2C6-8E5D0B47F3A1</string>
+  <key>PayloadType</key>
+  <string>Configuration</string>
+  <key>PayloadScope</key>
+  <string>System</string>
+  <key>PayloadVersion</key>
+  <integer>1</integer>
+  <key>PayloadContent</key>
+  <array>
+    <dict>
+      <key>PayloadDisplayName</key>
+      <string>Firefox Extension Lock</string>
+      <key>PayloadIdentifier</key>
+      <string>me.anhngo.firefox-policies.preferences</string>
+      <key>PayloadUUID</key>
+      <string>B94E7D10-6C2F-4A83-9E15-2D7A6C03E8F4</string>
+      <key>PayloadType</key>
+      <string>com.apple.ManagedClient.preferences</string>
+      <key>PayloadVersion</key>
+      <integer>1</integer>
+      <key>PayloadContent</key>
+      <dict>
+        <key>org.mozilla.firefox</key>
+        <dict>
+          <key>Forced</key>
+          <array>
+            <dict>
+              <key>mcx_preference_settings</key>
+              <dict>
+                <key>EnterprisePoliciesEnabled</key>
+                <true/>
+                <key>Extensions</key>
+                <dict>
+                  <key>Locked</key>
+                  <array>
+{{- range $locked }}
+                    <string>{{ . }}</string>
+{{- end }}
+                  </array>
+                </dict>
+              </dict>
+            </dict>
+          </array>
+        </dict>
+      </dict>
+    </dict>
+  </array>
+</dict>
+</plist>
+EOF
+
+echo "==> Firefox policies: approve the profile in System Settings > General > Device Management"
+open "$profile" || echo "warning: could not open $profile - install it by hand" >&2
+open "x-apple.systempreferences:com.apple.Profiles-Settings.extension" || true
